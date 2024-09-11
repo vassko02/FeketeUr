@@ -7,7 +7,12 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("klikk");
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("SampleScene");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Level1");
+    }
+    public void Quit()
+    {
+        Debug.Log("asd");    
+        Application.Quit();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
