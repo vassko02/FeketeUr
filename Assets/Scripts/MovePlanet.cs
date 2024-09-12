@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class MoveAsteroid : MonoBehaviour
+public class MovePlanet : MonoBehaviour
 {
-    public float speed = 5;
-    public float deadZone =-7;
+    public float speed = 1;
+    public float deadZone =-15;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
