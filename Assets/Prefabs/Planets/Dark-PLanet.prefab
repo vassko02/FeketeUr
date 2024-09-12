@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8601809228380502787}
   - component: {fileID: 508579806217424372}
-  - component: {fileID: 1217173652364131720}
+  - component: {fileID: -5053317974287967336}
   m_Layer: 0
   m_Name: Dark-PLanet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1217173652364131720
+--- !u!114 &-5053317974287967336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

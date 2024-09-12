@@ -8,8 +8,7 @@ public class MoveAsteroid : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Vector3 screenBottom = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z));
-        deadZone = screenBottom.y;
+
     }
 
     // Update is called once per frame

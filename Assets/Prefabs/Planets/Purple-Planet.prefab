@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8828996766487279573}
   - component: {fileID: 6343731226298269417}
-  - component: {fileID: 7549567886992151175}
+  - component: {fileID: -7550986568529688479}
   m_Layer: 0
   m_Name: Purple-Planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7549567886992151175
+--- !u!114 &-7550986568529688479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

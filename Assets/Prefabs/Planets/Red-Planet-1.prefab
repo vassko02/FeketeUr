@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9152669381435128377}
   - component: {fileID: 6388401593628944809}
-  - component: {fileID: -4272350210315373715}
+  - component: {fileID: -4595545230506676636}
   m_Layer: 0
   m_Name: Red-Planet-1
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4272350210315373715
+--- !u!114 &-4595545230506676636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

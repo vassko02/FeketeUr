@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323428942437564322}
   - component: {fileID: 4402496009903540350}
-  - component: {fileID: -9046999164411169912}
+  - component: {fileID: 7659451416718427303}
   m_Layer: 0
   m_Name: Red-Planet-With-Ice
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9046999164411169912
+--- !u!114 &7659451416718427303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

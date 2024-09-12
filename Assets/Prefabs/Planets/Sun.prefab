@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8551350502958950918}
   - component: {fileID: 5427913422283404431}
-  - component: {fileID: -5963321698425738419}
+  - component: {fileID: 4778237719160055881}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5963321698425738419
+--- !u!114 &4778237719160055881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

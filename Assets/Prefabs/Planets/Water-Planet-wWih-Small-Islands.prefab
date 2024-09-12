@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4683742501245752279}
   - component: {fileID: 806341031783207481}
-  - component: {fileID: 5336562395146631833}
+  - component: {fileID: 6755951181021271586}
   m_Layer: 0
   m_Name: Water-Planet-wWih-Small-Islands
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5336562395146631833
+--- !u!114 &6755951181021271586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

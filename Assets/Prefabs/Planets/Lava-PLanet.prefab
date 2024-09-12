@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8229709118548609506}
   - component: {fileID: 8493789124399563983}
-  - component: {fileID: 6418739350551410746}
+  - component: {fileID: -8422333658156549986}
   m_Layer: 0
   m_Name: Lava-PLanet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6418739350551410746
+--- !u!114 &-8422333658156549986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

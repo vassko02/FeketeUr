@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3655241953428286856}
   - component: {fileID: 4652640688019803893}
-  - component: {fileID: -9061116111933209891}
+  - component: {fileID: 1309251544385914644}
   m_Layer: 0
   m_Name: Orange-Planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9061116111933209891
+--- !u!114 &1309251544385914644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

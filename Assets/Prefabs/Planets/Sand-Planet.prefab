@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4214185582422054878}
   - component: {fileID: 1595625290146517179}
-  - component: {fileID: 5661564763590406731}
+  - component: {fileID: -2229988927064884956}
   m_Layer: 0
   m_Name: Sand-Planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5661564763590406731
+--- !u!114 &-2229988927064884956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

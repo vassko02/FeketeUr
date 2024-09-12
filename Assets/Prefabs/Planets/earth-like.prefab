@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2824753794404958059}
   - component: {fileID: 6960314929782844987}
-  - component: {fileID: 9097005675191986922}
+  - component: {fileID: -4712233454276903394}
   m_Layer: 0
   m_Name: earth-like
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9097005675191986922
+--- !u!114 &-4712233454276903394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

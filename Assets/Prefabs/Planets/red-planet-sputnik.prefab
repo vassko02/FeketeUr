@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3103829963224609800}
   - component: {fileID: 9196048721068661690}
-  - component: {fileID: -8547845740458998079}
+  - component: {fileID: -6823966582678380835}
   m_Layer: 0
   m_Name: red-planet-sputnik
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-8547845740458998079
+--- !u!114 &-6823966582678380835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

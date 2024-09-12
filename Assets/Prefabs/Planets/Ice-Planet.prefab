@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1621034494621857419}
   - component: {fileID: 6531926299009578534}
-  - component: {fileID: -675518899984436802}
+  - component: {fileID: 1192630314594613548}
   m_Layer: 0
   m_Name: Ice-Planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-675518899984436802
+--- !u!114 &1192630314594613548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

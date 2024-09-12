@@ -35,8 +35,8 @@ public class SpawnPlanets : MonoBehaviour
     void spawn()
     {
 
-        float leftPoint = -15f;
-        float rightPoint = 15f;
+        float leftPoint = -11f;
+        float rightPoint = 11f;
 
         // Véletlenszerûen kiválasztunk egy bolygó prefab-et a listából
         int randomIndex = Random.Range(0, planetPrefabs.Count);

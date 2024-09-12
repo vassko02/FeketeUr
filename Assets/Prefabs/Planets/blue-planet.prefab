@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5788633774875401369}
   - component: {fileID: 7716336227496633996}
-  - component: {fileID: -5769726285316522904}
+  - component: {fileID: 2470624701668788094}
   m_Layer: 0
   m_Name: blue-planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5769726285316522904
+--- !u!114 &2470624701668788094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

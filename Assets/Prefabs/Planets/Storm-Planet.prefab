@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7299578991699153174}
   - component: {fileID: 4103104615811285868}
-  - component: {fileID: 7683422800123666902}
+  - component: {fileID: -8326357731573766029}
   m_Layer: 0
   m_Name: Storm-Planet
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7683422800123666902
+--- !u!114 &-8326357731573766029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

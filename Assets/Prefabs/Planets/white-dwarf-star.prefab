@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6853287400868179789}
   - component: {fileID: 602310309897379961}
-  - component: {fileID: -4332003215300590787}
+  - component: {fileID: 457834226319273048}
   m_Layer: 0
   m_Name: white-dwarf-star
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4332003215300590787
+--- !u!114 &457834226319273048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10

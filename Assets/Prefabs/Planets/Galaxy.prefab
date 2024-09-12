@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8474468644188420398}
   - component: {fileID: 7566273215674587762}
-  - component: {fileID: 4346359667537309859}
+  - component: {fileID: 4098111472640364606}
   m_Layer: 0
   m_Name: Galaxy
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4346359667537309859
+--- !u!114 &4098111472640364606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,4 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  deadZone: -15
+  deadZone: -10
