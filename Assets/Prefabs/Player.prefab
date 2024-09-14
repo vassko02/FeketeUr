@@ -106,3 +106,6 @@ MonoBehaviour:
   firePointLeft: {fileID: 0}
   moveSpeed: 5
   fireRate: 0.5
+  maxHealt: 100
+  currentHealth: 0
+  healthBar: {fileID: 0}

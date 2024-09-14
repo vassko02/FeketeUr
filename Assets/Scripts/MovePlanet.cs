@@ -14,7 +14,6 @@ public class MovePlanet : MonoBehaviour
     void Update()
     {
         transform.position = transform.position + (Vector3.down * speed) * Time.deltaTime;
-        Debug.Log(deadZone);
 
         if (transform.position.y < deadZone)
         {
