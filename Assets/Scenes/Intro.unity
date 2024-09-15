@@ -147,8 +147,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1169585495}
+  m_Children: []
   m_Father: {fileID: 1964680039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -221,15 +220,15 @@ RectTransform:
   m_GameObject: {fileID: 1169585494}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 881502850}
+  m_Father: {fileID: 1964680039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.1398399, y: 16.668787}
-  m_SizeDelta: {x: -11.39843, y: -47.92754}
+  m_AnchoredPosition: {x: 47.601555, y: 242.34395}
+  m_SizeDelta: {x: -1831.3984, y: -1027.9276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1169585496
 MonoBehaviour:
@@ -671,9 +670,9 @@ MonoBehaviour:
   text: {fileID: 1532524823}
   speed: 200
   deadzone: 2160
-  maincharacter: {fileID: 1272164154}
-  textbubble: {fileID: 881502849}
-  charactertext: {fileID: 1169585496}
+  introtext: {fileID: 1532524825}
+  textFileName: IntroText
+  playeddialog: 0
 --- !u!1 &1755062323
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +743,56 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755062323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1817324648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817324650}
+  - component: {fileID: 1817324649}
+  m_Layer: 0
+  m_Name: Dialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1817324649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817324648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44bde08e369ad7409e8d995e1a543b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textbubble: {fileID: 881502849}
+  dialogText: {fileID: 1169585496}
+  currentTalkKey: '#TALK1'
+  dialog:
+    name: 
+    sentences: []
+--- !u!4 &1817324650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817324648}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -849,6 +898,7 @@ RectTransform:
   - {fileID: 1532524824}
   - {fileID: 1272164153}
   - {fileID: 881502850}
+  - {fileID: 1169585495}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -998,6 +1048,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2039416278}
+  - {fileID: 1817324650}
   - {fileID: 1964680039}
   - {fileID: 1434118235}
   - {fileID: 1755062326}
