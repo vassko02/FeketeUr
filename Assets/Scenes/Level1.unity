@@ -568,7 +568,6 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -694,18 +693,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dc1c82710c9edf46a57b9c026b8fa16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &589071680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,6 +1427,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1933332507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2677739805289773744, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+  m_PrefabInstance: {fileID: 2067141229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2067141229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,6 +1443,10 @@ PrefabInstance:
     - target: {fileID: 2677739805289773744, guid: 65cd392f47718124883afa65b15f672b, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3375537969175810935, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7275114255482683375, guid: 65cd392f47718124883afa65b15f672b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1659,6 +1655,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4575937218533981000, guid: 1e765877f1203cf419e01f6fab2f6168, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1933332507}
+    - target: {fileID: 4575937218533981000, guid: 1e765877f1203cf419e01f6fab2f6168, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985202217573907947, guid: 1e765877f1203cf419e01f6fab2f6168, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7360129667325245599, guid: 1e765877f1203cf419e01f6fab2f6168, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

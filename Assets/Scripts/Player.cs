@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, firePointLeft.position, firePointLeft.rotation * Quaternion.Euler(0, 0, 90));
 
             //Hang egyszeri lejátszása, ha gyorsan lõ egymás után akkor sem rétegezõdnek a hangok
-            audioSource.PlayOneShot(audioSource.clip);
+            //audioSource.PlayOneShot(audioSource.clip);
         }
 
     }
@@ -127,6 +127,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(35);
+            Destroy(collision.gameObject);
+
         }
     }
 }
