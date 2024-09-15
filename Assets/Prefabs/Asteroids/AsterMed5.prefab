@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2806072086401992452}
   - component: {fileID: 7825342402610969130}
   - component: {fileID: -3333806762504718049}
+  - component: {fileID: 8149514013894758404}
   m_Layer: 0
   m_Name: AsterMed5
   m_TagString: Asteroid
@@ -189,4 +190,16 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
+--- !u!114 &8149514013894758404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463868490130589043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6732372eadb93d40a291d34b6e4f81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

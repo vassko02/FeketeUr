@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-
     public GameObject bulletPrefabRight; // A lövedék prefabja
     public GameObject bulletPrefabLeft; // A lövedék prefabja
     public Transform firePointRight; // A jobb oldali lövedék indítási pontja
@@ -15,14 +14,9 @@ public class Player : MonoBehaviour
     private Vector2 screenBounds; // A képernyõ szélei
     private float objectWidth;
     private float objectHeight;
-    private float nextFireTime = 0f;
-    private AudioSource audioSource; //Lövés hang
 
     public int maxHealt = 100;
     public int currentHealth;
-    public HealthBar healthBar;
-    public GameObject gameOverScreen;
-
     void Start()
     {
         // A képernyõ széleinek kiszámítása
@@ -33,10 +27,7 @@ public class Player : MonoBehaviour
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
 
-        audioSource = GetComponent<AudioSource>();
-
         currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt);
 
     }
 
@@ -52,13 +43,9 @@ public class Player : MonoBehaviour
         keepPlayerInBounds();
 
         // Lövés
-        if (Input.GetMouseButtonDown(0)) // Bal egérgomb lenyomása
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Time.time >= nextFireTime)
-            {
-                Shoot();
-                nextFireTime = Time.time + fireRate;
-            }
+            Shoot();        
         }
         void keepPlayerInBounds()
         {
@@ -77,11 +64,8 @@ public class Player : MonoBehaviour
         void Shoot()
         {
             // Lövedékek létrehozása
-            GameObject bulletRight = Instantiate(bulletPrefabRight, firePointRight.position, firePointRight.rotation * Quaternion.Euler(0, 0, 90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, firePointLeft.position, firePointLeft.rotation * Quaternion.Euler(0, 0, 90));
-
-            //Hang egyszeri lejátszása, ha gyorsan lõ egymás után akkor sem rétegezõdnek a hangok
-            audioSource.PlayOneShot(audioSource.clip);
+            GameObject bulletRight = Instantiate(bulletPrefabRight, firePointRight.position, firePointRight.rotation * Quaternion.Euler(0, 0, -90));
+            GameObject bulletLeft = Instantiate(bulletPrefabLeft, firePointLeft.position, firePointLeft.rotation * Quaternion.Euler(0, 0, -90));
         }
 
     }
@@ -95,38 +79,19 @@ public class Player : MonoBehaviour
         {
             currentHealth -= damage;
             Destroy(gameObject);
-            gameOverScreen.SetActive(true);
 
         }
-        healthBar.setHealth(currentHealth);
-    }
-    public void Heal(int heal)
-    {
-        if (currentHealth + heal > maxHealt)
-        {
-            currentHealth = maxHealt;
-        }
-        else
-        {
-            currentHealth += heal;
-        }
-        healthBar.setHealth(currentHealth);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            TakeDamage(20);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject); // Az aszteroida eltávolítása
         }
-        if (collision.gameObject.CompareTag("EnemyProjectile"))
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
-            TakeDamage(25);
-            Destroy(collision.gameObject);
-        }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            TakeDamage(35);
+            Destroy(collision.gameObject); // Az aszteroida eltávolítása
+            TakeDamage(50);
         }
     }
 }
