@@ -79,9 +79,6 @@ public class Player : MonoBehaviour
             // Lövedékek létrehozása
             GameObject bulletRight = Instantiate(bulletPrefabRight, firePointRight.position, firePointRight.rotation * Quaternion.Euler(0, 0, 90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, firePointLeft.position, firePointLeft.rotation * Quaternion.Euler(0, 0, 90));
-
-            //Hang egyszeri lejátszása, ha gyorsan lõ egymás után akkor sem rétegezõdnek a hangok
-            //audioSource.PlayOneShot(audioSource.clip);
         }
 
     }
@@ -94,6 +91,7 @@ public class Player : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            //itt ki kell kapcsolni az enemyspawnert lehet
             Destroy(gameObject);
             gameOverScreen.SetActive(true);
 

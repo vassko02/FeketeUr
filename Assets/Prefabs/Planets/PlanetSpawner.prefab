@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3093546519367820214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6747851620894338821}
+  - component: {fileID: 8441225114852938117}
+  m_Layer: 0
+  m_Name: PlanetSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6747851620894338821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093546519367820214}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8441225114852938117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093546519367820214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31804f375a42e36428ab0ad812d0c83e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetPrefabs:
+  - {fileID: 1592692664696499770, guid: aa20c507020106745acb9fddfa44133a, type: 3}
+  - {fileID: 5353310422800594998, guid: eee704cce2ba1fd4da1860a9d2a73ab1, type: 3}
+  - {fileID: 1181495177777393027, guid: 012e090a9c358514d96b60a67f4c3da2, type: 3}
+  - {fileID: 2313620822863064193, guid: 63cf518032031e344b3fa86ba4bba58d, type: 3}
+  - {fileID: 498861832306874508, guid: 1fa82c45770aa81489c066801a7c3096, type: 3}
+  - {fileID: 1666668126637484479, guid: af3f8459ebf690d44a12449797b7d6db, type: 3}
+  - {fileID: 3026249587830467269, guid: e17c6742eb9b2af42a106aebd3352b33, type: 3}
+  - {fileID: 6450416510471272537, guid: b0e2e6895da28744ab88bee664856cde, type: 3}
+  - {fileID: 4463642993278883968, guid: bcb6cb404b3382f4496d8ccf481fa287, type: 3}
+  - {fileID: 1566935639892885325, guid: 1c5d5a4febe24db458cf721570de393e, type: 3}
+  - {fileID: 8477316367780790112, guid: 2924f042c1622924ca66be35842b84fb, type: 3}
+  - {fileID: 7115957816108775337, guid: 673ba4e8b349e2646bf2028361c7ee4d, type: 3}
+  - {fileID: 4454414697835147577, guid: 853641b13ee4ebb4fbed185816df59e5, type: 3}
+  - {fileID: 7857634765254237567, guid: 8069bfe2ac2180647978d1329827b613, type: 3}
+  - {fileID: 405043691085432629, guid: 564927a5c87cc964c8656c31ff37764b, type: 3}
+  - {fileID: 6594073619866476429, guid: b6ba1172806dc6e4b88e9f7e2aa1f41e, type: 3}
+  - {fileID: 8856412699644354563, guid: a1bb9acf72aeef24e86f3703753a2e7b, type: 3}
+  spawnRate: 14
+  minSize: 0.3
+  maxSize: 1

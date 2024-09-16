@@ -104,14 +104,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefabRight: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
   bulletPrefabLeft: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
-  firePointRight: {fileID: 2634041441307769559, guid: 4f9fa1703475529408d75701fe86119a, type: 3}
-  firePointLeft: {fileID: 7315408714235370524, guid: 99725de21e60c634597826d118a36abf, type: 3}
+  firePointRight: {fileID: 2454266805793149606, guid: b9b090470a64916478751f2d8ed14294, type: 3}
+  firePointLeft: {fileID: 8654079151043927944, guid: 31395deaa985645428a2008e06b82ea9, type: 3}
   moveSpeed: 5
   fireRate: 0.5
   maxHealt: 100
   currentHealth: 100
-  healthBar: {fileID: 0}
-  gameOverScreen: {fileID: 0}
+  healthBar: {fileID: 7342878177188402131, guid: 60da9da7be1b23e4db73a122216c9254, type: 3}
+  gameOverScreen: {fileID: 1659028421659203562, guid: 88673d2c0ac737446ae563e753a4863f, type: 3}
 --- !u!50 &-7387240489761417081
 Rigidbody2D:
   serializedVersion: 5
