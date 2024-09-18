@@ -1,19 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f; // Lövedék sebessége
-    public float deadZone = 7; // Az a zóna ahol a lövedéket töröljük
+    public float speed = 10f; // LÃ¶vedÃ©k sebessÃ©ge
+    public float deadZone = 7; // Az a zÃ³na, ahol a lÃ¶vedÃ©ket tÃ¶rÃ¶ljÃ¼k
+    public Vector3 direction = Vector3.right; // Az irÃ¡ny, amerre a lÃ¶vedÃ©k mozog
 
     void Update()
     {
-        // A lövedék mozgatása
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        // A lÃ¶vedÃ©k mozgatÃ¡sa az irÃ¡ny szerint
+        transform.Translate(direction * speed * Time.deltaTime);
 
-        // A lövedék törlése, ha a képernyõn kívülre kerül
-        if (transform.position.y > deadZone)
+        // A lÃ¶vedÃ©k tÃ¶rlÃ©se, ha a kÃ©pernyÅ‘n kÃ­vÃ¼lre kerÃ¼l
+        if (deadZone>0)
         {
-            Destroy(gameObject);
+            if (transform.position.y > deadZone)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            if (transform.position.y < deadZone)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
