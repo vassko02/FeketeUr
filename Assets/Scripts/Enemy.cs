@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public GameObject bulletPrefabLeft; // A lövedék prefabja
     public float moveSpeed = 5f; // Player mozgási sebessége
     public float fireRate = 0.5f; // Lövések közötti idõköz
-
+    public float shootRange = 2f;
     private float nextFireTime = 0f;
 
     private Transform playerTransform; // A player pozíciójának tárolására
@@ -21,8 +21,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealt;
-        // A hajó méretének kiszámítása
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         player = GameObject.FindWithTag("Player");
         if (player != null)
@@ -33,35 +31,36 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-
         FollowPlayer();
 
         // Az ellenség lövése
         if (Time.time > nextFireTime)
         {
-            if (player!=null)
+            if (player != null)
             {
-                if (player.transform.position.x == transform.position.x)
+                // Ellenõrizzük, hogy a játékos X pozíciója közel van-e az ellenség X pozíciójához
+                if (Mathf.Abs(player.transform.position.x - transform.position.x) <= shootRange)
                 {
                     Shoot();
                     nextFireTime = Time.time + fireRate;
-
                 }
             }
         }
+
         // Lövés
         void Shoot()
         {
             // Lövedékek létrehozása
-            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + 0.50f, transform.position.y - 0.5f, transform.position.z), Quaternion.Euler(0, 0, -90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - 0.50f, transform.position.y - 0.5f, transform.position.z), Quaternion.Euler(0, 0, -90));
+            float offset = 0.5f;
+            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
+            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
         }
         void FollowPlayer()
         {
             if (playerTransform != null)
             {
                 // Az aktuális objektum X pozícióját folyamatosan a player X pozíciójához igazítjuk
-                Vector3 newPosition = new Vector3(playerTransform.position.x, transform.position.y, transform.position.z);
+                Vector3 newPosition = new Vector3(playerTransform.position.x, 3, transform.position.z);
                 transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
             }
         }
@@ -90,6 +89,10 @@ public class Enemy : MonoBehaviour
         {
             Destroy(collision.gameObject);
             TakeDamage(50);
+        }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("crash");
         }
     }
 }

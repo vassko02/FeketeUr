@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9098381573189317513}
   - component: {fileID: 7893371138748057170}
   - component: {fileID: 3767974063966716297}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!114 &3767974063966716297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,5 +244,6 @@ MonoBehaviour:
   bulletPrefabLeft: {fileID: 990349162650704236, guid: 913d270a650d9de4ebca20d475b9aa7e, type: 3}
   moveSpeed: 3
   fireRate: 0.5
+  shootRange: 2
   maxHealt: 100
   currentHealth: 100

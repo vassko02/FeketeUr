@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7753810761336178466}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 2677739805289773744}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -3.81, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: f6d9e7337b90b9e4ba6d44379335a759, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -104,14 +104,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefabRight: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
   bulletPrefabLeft: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
-  firePointRight: {fileID: 2454266805793149606, guid: b9b090470a64916478751f2d8ed14294, type: 3}
-  firePointLeft: {fileID: 8654079151043927944, guid: 31395deaa985645428a2008e06b82ea9, type: 3}
   moveSpeed: 5
   fireRate: 0.5
   maxHealt: 100
   currentHealth: 100
-  healthBar: {fileID: 7342878177188402131, guid: 60da9da7be1b23e4db73a122216c9254, type: 3}
-  gameOverScreen: {fileID: 1659028421659203562, guid: 88673d2c0ac737446ae563e753a4863f, type: 3}
+  healthBar: {fileID: 0}
+  gameOverScreen: {fileID: 0}
 --- !u!50 &-7387240489761417081
 Rigidbody2D:
   serializedVersion: 5

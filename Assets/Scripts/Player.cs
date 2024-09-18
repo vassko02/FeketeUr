@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 
     public GameObject bulletPrefabRight; // A lövedék prefabja
     public GameObject bulletPrefabLeft; // A lövedék prefabja
-    public Transform firePointRight; // A jobb oldali lövedék indítási pontja
-    public Transform firePointLeft; // A bal oldali lövedék indítási pontja
     public float moveSpeed = 5f; // Player mozgási sebessége
     public float fireRate = 0.5f; // Lövések közötti idõköz
 
@@ -77,8 +75,9 @@ public class Player : MonoBehaviour
         void Shoot()
         {
             // Lövedékek létrehozása
-            GameObject bulletRight = Instantiate(bulletPrefabRight, firePointRight.position, firePointRight.rotation * Quaternion.Euler(0, 0, 90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, firePointLeft.position, firePointLeft.rotation * Quaternion.Euler(0, 0, 90));
+            float offset = 0.4f;
+            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
         }
 
     }
@@ -91,7 +90,14 @@ public class Player : MonoBehaviour
         else
         {
             currentHealth -= damage;
-            //itt ki kell kapcsolni az enemyspawnert lehet
+
+            GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
+
+            if (enemySpawner != null)
+            {
+                enemySpawner.SetActive(false);
+            }
+
             Destroy(gameObject);
             gameOverScreen.SetActive(true);
 
