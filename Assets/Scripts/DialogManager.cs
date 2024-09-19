@@ -12,12 +12,12 @@ public class DialogManager : MonoBehaviour
     public TextMeshProUGUI dialogText;
     private Queue<string> sentences;
     public string currentTalkKey;
+    public GameObject rightCharacter;
+    public GameObject leftCharacter;
+    public Transform parent;
     public Dialog dialog;
-    public 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string nextScene;
+    public void Start()
     {
         sentences = new Queue<string>();
 
@@ -32,7 +32,11 @@ public class DialogManager : MonoBehaviour
         }
 
         currentTalkKey = talkKey;
-        Debug.Log("Start with " + dialog.name);
+        GameObject characterInstance = Instantiate(rightCharacter, parent);
+        characterInstance.transform.localPosition = new Vector3(650, -180, 0);
+
+        GameObject characterInstance2 = Instantiate(leftCharacter, parent);
+        characterInstance2.transform.localPosition = new Vector3(-600, -180, 0);
 
         sentences.Clear();
 
@@ -95,7 +99,7 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadSceneAsync("Level1");
+                SceneManager.LoadSceneAsync(nextScene);
 
             }
         }
