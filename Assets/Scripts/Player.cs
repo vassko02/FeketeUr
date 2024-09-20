@@ -92,12 +92,16 @@ public class Player : MonoBehaviour
             currentHealth -= damage;
 
             GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
+            GameObject buffSpawner = GameObject.FindWithTag("EnemySpawner");
 
             if (enemySpawner != null)
             {
                 enemySpawner.SetActive(false);
             }
-
+            if (buffSpawner != null)
+            {
+                buffSpawner.SetActive(false);
+            }
             Destroy(gameObject);
             gameOverScreen.SetActive(true);
 
@@ -132,7 +136,17 @@ public class Player : MonoBehaviour
         {
             TakeDamage(35);
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("HealBuff"))
+        {
+            Heal(20);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("DamageBuff"))
+        {
 
+
+            Destroy(collision.gameObject);
         }
     }
 }
