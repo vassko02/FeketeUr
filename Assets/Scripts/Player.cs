@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public TMP_Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
+    private float buffTimer; // Visszaszámláló idõzítõ
 
     public GameObject bulletPrefabRight; // A lövedék prefabja
     public GameObject bulletPrefabLeft; // A lövedék prefabja
@@ -20,7 +24,12 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public HealthBar healthBar;
     public GameObject gameOverScreen;
+    public GameObject DamageBuffUI;
 
+    private bool hasDamageBuff=false;
+    private float buffDuration = 10f; // Mennyi ideig tart a buff
+    private int normalBulletDamage = 50; // Normál lövedék sebzése
+    private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
     void Start()
     {
         // A képernyõ széleinek kiszámítása
@@ -36,6 +45,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealt;
         healthBar.SetMaxHealth(maxHealt);
 
+        buffTimer = buffDuration;
     }
 
     void Update()
@@ -48,7 +58,14 @@ public class Player : MonoBehaviour
 
         // A játékos képernyõn belül tartása
         keepPlayerInBounds();
+        if (hasDamageBuff)
+        {
+            // Csökkentjük az idõzítõt
+            buffTimer -= Time.deltaTime;
 
+            // Frissítjük a visszaszámlálót a UI-on
+            countdownText.text = Mathf.Round(buffTimer).ToString();
+        }
         // Lövés
         if (Input.GetMouseButtonDown(0)) // Bal egérgomb lenyomása
         {
@@ -76,8 +93,21 @@ public class Player : MonoBehaviour
         {
             // Lövedékek létrehozása
             float offset = 0.4f;
+            int bulletDamage = hasDamageBuff ? buffedBulletDamage : normalBulletDamage; // A sebzés meghatározása
+
             GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+
+            Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
+            if (bulletScriptL != null)
+            {
+                bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            }
+            Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
+            if (bulletScriptR != null)
+            {
+                bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            }
         }
 
     }
@@ -89,6 +119,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+            DamageBuffUI.SetActive(false);
+
             currentHealth -= damage;
 
             GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
@@ -144,9 +176,27 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("DamageBuff"))
         {
-
-
+            ActivateDamageBuff();
             Destroy(collision.gameObject);
         }
+
+    }
+    void ActivateDamageBuff()
+    {
+        hasDamageBuff = true; // Buff aktiválva
+        DamageBuffUI.SetActive(true);
+        StartCoroutine(BuffTimer());
+    }
+    private void EndBuff()
+    {
+        hasDamageBuff = false; // Buff kikapcsolása
+        DamageBuffUI.SetActive(false);
+        buffTimer = buffDuration;
+
+    }
+    IEnumerator BuffTimer()
+    {
+        yield return new WaitForSeconds(buffDuration); // Várakozás a buff idejéig
+        EndBuff();
     }
 }

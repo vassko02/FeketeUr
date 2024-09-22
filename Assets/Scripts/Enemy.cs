@@ -104,10 +104,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.CompareTag("PlayerProjectile"))
-        {
-            Destroy(collision.gameObject);
-            TakeDamage(50);
-        }
+
     }
 }
