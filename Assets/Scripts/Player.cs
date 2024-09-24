@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt);
+        healthBar.SetMaxHealth(maxHealt,false);
 
         buffTimer = buffDuration;
     }
@@ -169,6 +169,10 @@ public class Player : MonoBehaviour
             TakeDamage(35);
             Destroy(collision.gameObject);
         }
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("HealBuff"))
         {
             Heal(20);
@@ -179,7 +183,14 @@ public class Player : MonoBehaviour
             ActivateDamageBuff();
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("MaxHealthBuff"))
+        {
 
+            maxHealt += 20;
+            healthBar.SetMaxHealth(maxHealt,true);
+
+            Destroy(collision.gameObject);
+        }
     }
     void ActivateDamageBuff()
     {
