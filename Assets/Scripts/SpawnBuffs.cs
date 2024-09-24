@@ -41,7 +41,7 @@ public class SpawnBuffs : MonoBehaviour
 
         if (buff != null)
         {
-            GameObject newBuff = Instantiate(buff, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0, 180));
+            GameObject newBuff = Instantiate(buff, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0, 0));
 
         }
     }

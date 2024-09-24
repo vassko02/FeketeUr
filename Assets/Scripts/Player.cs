@@ -24,12 +24,23 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public HealthBar healthBar;
     public GameObject gameOverScreen;
-    public GameObject DamageBuffUI;
+    public GameObject BuffUI;
 
+    private bool hasShiledBuff=false;
     private bool hasDamageBuff=false;
     private float buffDuration = 10f; // Mennyi ideig tart a buff
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
+
+    public Sprite shieldBuffIcon;
+    public Sprite damageBuffIcon;
+
+    private Image shieldBuffUIImage; // Az Image komponens referencia
+    private Image damageBuffUIImage; // Az Image komponens referencia
+
+    private Image buffUIImage; // Az Image komponens referencia
+    private Text buffUIText;   // A Text komponens referencia
+
     void Start()
     {
         // A képernyõ széleinek kiszámítása
@@ -46,6 +57,9 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealt,false);
 
         buffTimer = buffDuration;
+
+        buffUIImage = BuffUI.transform.Find("Icon").GetComponent<Image>();
+        buffUIText = BuffUI.GetComponentInChildren<Text>();
     }
 
     void Update()
@@ -59,6 +73,14 @@ public class Player : MonoBehaviour
         // A játékos képernyõn belül tartása
         keepPlayerInBounds();
         if (hasDamageBuff)
+        {
+            // Csökkentjük az idõzítõt
+            buffTimer -= Time.deltaTime;
+
+            // Frissítjük a visszaszámlálót a UI-on
+            countdownText.text = Mathf.Round(buffTimer).ToString();
+        }
+        if (hasShiledBuff)
         {
             // Csökkentjük az idõzítõt
             buffTimer -= Time.deltaTime;
@@ -119,7 +141,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            DamageBuffUI.SetActive(false);
+            BuffUI.SetActive(false);
 
             currentHealth -= damage;
 
@@ -156,17 +178,26 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            TakeDamage(20);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(20);
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
-            TakeDamage(25);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(25);
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(35);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(35);
+            }
             Destroy(collision.gameObject);
         }
 
@@ -183,25 +214,37 @@ public class Player : MonoBehaviour
             ActivateDamageBuff();
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("ShieldBuff"))
+        {
+            ActivateShieldBuff();
+            Destroy(collision.gameObject);
+        }
         if (collision.gameObject.CompareTag("MaxHealthBuff"))
         {
-
             maxHealt += 20;
             healthBar.SetMaxHealth(maxHealt,true);
-
             Destroy(collision.gameObject);
         }
     }
     void ActivateDamageBuff()
     {
         hasDamageBuff = true; // Buff aktiválva
-        DamageBuffUI.SetActive(true);
+        buffUIImage.sprite = damageBuffIcon;
+        BuffUI.SetActive(true);
+        StartCoroutine(BuffTimer());
+    }
+    void ActivateShieldBuff()
+    {
+        hasShiledBuff = true; // Buff aktiválva
+        buffUIImage.sprite = shieldBuffIcon;
+        BuffUI.SetActive(true);
         StartCoroutine(BuffTimer());
     }
     private void EndBuff()
     {
+        hasShiledBuff = false; // Buff kikapcsolása
         hasDamageBuff = false; // Buff kikapcsolása
-        DamageBuffUI.SetActive(false);
+        BuffUI.SetActive(false);
         buffTimer = buffDuration;
 
     }
