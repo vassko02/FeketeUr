@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fcd10e1f9b04e03458b0c8b5b9ce1420
+guid: 20dbb78320651ad49ada4bc7959d0cb4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4320295261928297051
-    second: logo_0
+      213: 5773987887198937718
+    second: shield-xxl_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: logo_0
+      name: shield-xxl_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 18
         y: 0
-        width: 1024
-        height: 1024
+        width: 220
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ade5f3695a3b04c0800000000000000
-      internalID: -4320295261928297051
+      spriteID: 672a6e93463512050800000000000000
+      internalID: 5773987887198937718
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      logo_0: -4320295261928297051
+      shield-xxl_0: 5773987887198937718
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

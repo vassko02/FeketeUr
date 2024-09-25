@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
     public int maxHealt = 100;
     public int currentHealth;
 
+    public float separationRadius = 1.5f; // Minimális távolság az ellenségek között
+    public LayerMask enemyLayer;
+
     void Start()
     {
         currentHealth = maxHealt;
@@ -32,6 +35,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         FollowPlayer();
+        SeparateEnemies(); // Elkülönítés hozzáadása
 
         // Az ellenség lövése
         if (Time.time > nextFireTime)
@@ -55,6 +59,7 @@ public class Enemy : MonoBehaviour
             GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
         }
+
         void FollowPlayer()
         {
             if (playerTransform != null)
@@ -65,6 +70,20 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        void SeparateEnemies()
+        {
+            // Környezetben lévõ ellenségek keresése a separationRadius távolságon belül
+            Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, separationRadius, enemyLayer);
+
+            foreach (Collider enemy in nearbyEnemies)
+            {
+                if (enemy.gameObject != gameObject) // Ne ellenõrizze önmagát
+                {
+                    Vector3 directionAway = transform.position - enemy.transform.position; // Távolság számítása
+                    transform.position += directionAway.normalized * moveSpeed * Time.deltaTime; // Elmozdítás az ellenségtõl
+                }
+            }
+        }
     }
 
     public void TakeDamage(int damage)
@@ -85,14 +104,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.CompareTag("PlayerProjectile"))
-        {
-            Destroy(collision.gameObject);
-            TakeDamage(50);
-        }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("crash");
-        }
+
     }
 }

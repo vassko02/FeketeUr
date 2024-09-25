@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public TMP_Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
+    private float buffTimer; // Visszaszámláló idõzítõ
 
     public GameObject bulletPrefabRight; // A lövedék prefabja
     public GameObject bulletPrefabLeft; // A lövedék prefabja
@@ -20,6 +24,17 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public HealthBar healthBar;
     public GameObject gameOverScreen;
+    public GameObject BuffUI;
+
+    private bool hasShiledBuff=false;
+    private bool hasDamageBuff=false;
+    private float buffDuration = 10f; // Mennyi ideig tart a buff
+    private int normalBulletDamage = 50; // Normál lövedék sebzése
+    private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
+
+
+    public GameObject shieldBuffUIImage; // Az Image komponens referencia
+    public GameObject damageBuffUIImage; // Az Image komponens referencia
 
     void Start()
     {
@@ -34,7 +49,9 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt);
+        healthBar.SetMaxHealth(maxHealt,false);
+
+        buffTimer = buffDuration;
 
     }
 
@@ -48,7 +65,22 @@ public class Player : MonoBehaviour
 
         // A játékos képernyõn belül tartása
         keepPlayerInBounds();
+        if (hasDamageBuff)
+        {
+            // Csökkentjük az idõzítõt
+            buffTimer -= Time.deltaTime;
 
+            // Frissítjük a visszaszámlálót a UI-on
+            countdownText.text = Mathf.Round(buffTimer).ToString();
+        }
+        if (hasShiledBuff)
+        {
+            // Csökkentjük az idõzítõt
+            buffTimer -= Time.deltaTime;
+
+            // Frissítjük a visszaszámlálót a UI-on
+            countdownText.text = Mathf.Round(buffTimer).ToString();
+        }
         // Lövés
         if (Input.GetMouseButtonDown(0)) // Bal egérgomb lenyomása
         {
@@ -76,8 +108,21 @@ public class Player : MonoBehaviour
         {
             // Lövedékek létrehozása
             float offset = 0.4f;
+            int bulletDamage = hasDamageBuff ? buffedBulletDamage : normalBulletDamage; // A sebzés meghatározása
+
             GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+
+            Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
+            if (bulletScriptL != null)
+            {
+                bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            }
+            Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
+            if (bulletScriptR != null)
+            {
+                bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            }
         }
 
     }
@@ -89,15 +134,21 @@ public class Player : MonoBehaviour
         }
         else
         {
+            BuffUI.SetActive(false);
+
             currentHealth -= damage;
 
             GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
+            GameObject buffSpawner = GameObject.FindWithTag("EnemySpawner");
 
             if (enemySpawner != null)
             {
                 enemySpawner.SetActive(false);
             }
-
+            if (buffSpawner != null)
+            {
+                buffSpawner.SetActive(false);
+            }
             Destroy(gameObject);
             gameOverScreen.SetActive(true);
 
@@ -120,19 +171,82 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            TakeDamage(20);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(20);
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
-            TakeDamage(25);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(25);
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(35);
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(35);
+            }
             Destroy(collision.gameObject);
-
         }
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("HealBuff"))
+        {
+            Heal(20);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("DamageBuff"))
+        {
+            ActivateDamageBuff();
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("ShieldBuff"))
+        {
+            ActivateShieldBuff();
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("MaxHealthBuff"))
+        {
+            maxHealt += 20;
+            healthBar.SetMaxHealth(maxHealt,true);
+            Destroy(collision.gameObject);
+        }
+    }
+    void ActivateDamageBuff()
+    {
+        hasDamageBuff = true; // Buff aktiválva
+        shieldBuffUIImage.SetActive(false);
+        damageBuffUIImage.SetActive(true);
+        BuffUI.SetActive(true);
+        StartCoroutine(BuffTimer());
+    }
+    void ActivateShieldBuff()
+    {
+        hasShiledBuff = true; // Buff aktiválva
+        shieldBuffUIImage.SetActive(true);
+        damageBuffUIImage.SetActive(false);
+
+        BuffUI.SetActive(true);
+        StartCoroutine(BuffTimer());
+    }
+    private void EndBuff()
+    {
+        hasShiledBuff = false; // Buff kikapcsolása
+        hasDamageBuff = false; // Buff kikapcsolása
+        BuffUI.SetActive(false);
+        buffTimer = buffDuration;
+
+    }
+    IEnumerator BuffTimer()
+    {
+        yield return new WaitForSeconds(buffDuration); // Várakozás a buff idejéig
+        EndBuff();
     }
 }
