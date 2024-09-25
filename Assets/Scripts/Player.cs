@@ -32,14 +32,9 @@ public class Player : MonoBehaviour
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
 
-    public Sprite shieldBuffIcon;
-    public Sprite damageBuffIcon;
 
-    private Image shieldBuffUIImage; // Az Image komponens referencia
-    private Image damageBuffUIImage; // Az Image komponens referencia
-
-    private Image buffUIImage; // Az Image komponens referencia
-    private Text buffUIText;   // A Text komponens referencia
+    public GameObject shieldBuffUIImage; // Az Image komponens referencia
+    public GameObject damageBuffUIImage; // Az Image komponens referencia
 
     void Start()
     {
@@ -58,8 +53,6 @@ public class Player : MonoBehaviour
 
         buffTimer = buffDuration;
 
-        buffUIImage = BuffUI.transform.Find("Icon").GetComponent<Image>();
-        buffUIText = BuffUI.GetComponentInChildren<Text>();
     }
 
     void Update()
@@ -229,14 +222,17 @@ public class Player : MonoBehaviour
     void ActivateDamageBuff()
     {
         hasDamageBuff = true; // Buff aktiválva
-        buffUIImage.sprite = damageBuffIcon;
+        shieldBuffUIImage.SetActive(false);
+        damageBuffUIImage.SetActive(true);
         BuffUI.SetActive(true);
         StartCoroutine(BuffTimer());
     }
     void ActivateShieldBuff()
     {
         hasShiledBuff = true; // Buff aktiválva
-        buffUIImage.sprite = shieldBuffIcon;
+        shieldBuffUIImage.SetActive(true);
+        damageBuffUIImage.SetActive(false);
+
         BuffUI.SetActive(true);
         StartCoroutine(BuffTimer());
     }
