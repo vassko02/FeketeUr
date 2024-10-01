@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class Player : MonoBehaviour
 {
+    public bool newGame;
+    public string playerName;
+    private Vector3 playerPosition; // Játékos pozíciója
+    public string saveFilePath;
+
+
     public TMP_Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
     private float buffTimer; // Visszaszámláló idõzítõ
 
@@ -26,8 +33,8 @@ public class Player : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject BuffUI;
 
-    private bool hasShiledBuff=false;
-    private bool hasDamageBuff=false;
+    private bool hasShiledBuff = false;
+    private bool hasDamageBuff = false;
     private float buffDuration = 10f; // Mennyi ideig tart a buff
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
@@ -36,8 +43,21 @@ public class Player : MonoBehaviour
     public GameObject shieldBuffUIImage; // Az Image komponens referencia
     public GameObject damageBuffUIImage; // Az Image komponens referencia
 
+
+    public int score = 0;
+    public float scoreIncreaseRate = 0.5f; // Milyen gyakran növekszik a score (másodpercben)
+    public int scoreIncrement = 5; // Mennyivel növekszik a score
+    private float nextScoreIncreaseTime = 0f;
+
+    public TMP_Text scoreText; // UI Text, ami megjeleníti a score-t
+
+
     void Start()
     {
+        if (!newGame)
+        {
+            LoadGame();
+        }
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
@@ -49,10 +69,14 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt,false);
+        healthBar.SetMaxHealth(maxHealt, false);
 
         buffTimer = buffDuration;
 
+        UpdateScoreUI();
+        saveFilePath = Application.persistentDataPath+"savefile.json";
+
+        InvokeRepeating("SaveGame", 10f, 10f);
     }
 
     void Update()
@@ -125,6 +149,13 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (Time.time >= nextScoreIncreaseTime)
+        {
+            score += scoreIncrement;
+            nextScoreIncreaseTime = Time.time + scoreIncreaseRate;
+            UpdateScoreUI();
+        }
+
     }
     public void TakeDamage(int damage)
     {
@@ -154,6 +185,17 @@ public class Player : MonoBehaviour
 
         }
         healthBar.setHealth(currentHealth);
+    }
+
+    public void AddToScore(int amount)
+    {
+        score += amount;
+        UpdateScoreUI();
+    }
+
+    void UpdateScoreUI()
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
     public void Heal(int heal)
     {
@@ -215,7 +257,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("MaxHealthBuff"))
         {
             maxHealt += 20;
-            healthBar.SetMaxHealth(maxHealt,true);
+            healthBar.SetMaxHealth(maxHealt, true);
             Destroy(collision.gameObject);
         }
     }
@@ -248,5 +290,45 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(buffDuration); // Várakozás a buff idejéig
         EndBuff();
+    }
+
+    public void SaveGame()
+    {
+        SaveData saveData = new SaveData
+        {
+            playerName = this.playerName,
+            score = this.score,
+            maxHealth = this.maxHealt,
+            currentHealth = this.currentHealth,
+            playerPosition = transform.position
+        };
+
+        string json = JsonUtility.ToJson(saveData);
+        File.WriteAllText(saveFilePath, json);
+        Debug.Log("Game saved to " +saveFilePath);
+    }
+    public void LoadGame()
+    {
+        if (string.IsNullOrEmpty(saveFilePath))
+        {
+            saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+        }
+        if (File.Exists(saveFilePath))
+        {
+            string json = File.ReadAllText(saveFilePath);
+            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+
+            this.playerName = loadedData.playerName;
+            this.score = loadedData.score;
+            this.maxHealt = loadedData.maxHealth;
+            this.currentHealth = loadedData.currentHealth;
+            transform.position = loadedData.playerPosition;
+
+            Debug.Log("Game Loaded");
+        }
+        else
+        {
+            Debug.LogWarning("No save file found.");
+        }
     }
 }

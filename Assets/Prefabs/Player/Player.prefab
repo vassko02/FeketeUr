@@ -112,8 +112,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   gameOverScreen: {fileID: 0}
   BuffUI: {fileID: 0}
-  shieldBuffIcon: {fileID: 0}
-  damageBuffIcon: {fileID: 0}
+  shieldBuffUIImage: {fileID: 0}
+  damageBuffUIImage: {fileID: 0}
 --- !u!50 &-7387240489761417081
 Rigidbody2D:
   serializedVersion: 5

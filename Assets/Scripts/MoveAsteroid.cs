@@ -4,11 +4,16 @@ public class MoveAsteroid : MonoBehaviour
 {
     public float speed = 5;
     public float deadZone =-7;
+    private Player playerScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerScript = playerObject.GetComponent<Player>();
+        }
     }
 
     // Update is called once per frame
@@ -25,8 +30,8 @@ public class MoveAsteroid : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             Destroy(collision.gameObject);
+            playerScript.AddToScore(10);
             Destroy(gameObject);
-
         }
     }
 }

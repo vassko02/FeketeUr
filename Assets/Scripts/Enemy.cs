@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
 
     public float separationRadius = 1.5f; // Minimális távolság az ellenségek között
     public LayerMask enemyLayer;
+    private Player playerScript;
 
     void Start()
     {
@@ -29,7 +30,10 @@ public class Enemy : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
+            playerScript = player.GetComponent<Player>();
+
         }
+
     }
 
     void Update()
@@ -95,6 +99,7 @@ public class Enemy : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            playerScript.AddToScore(20);
             Destroy(gameObject);
         }
     }
