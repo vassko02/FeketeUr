@@ -1,29 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 public class MainMenu : MonoBehaviour
 {
-    public Player player; // Referencia a játékosra
-
-
-    // Ez a függvény hívódik, amikor az "Új játék" gombra kattintanak
-    public void OnNewGameButtonClick()
+    public Button continueButton; // Hozzáadás: Referencia a Continue gombhoz
+    private string saveFilePath;
+    void Start()
     {
-        // Átváltunk a Level1 scene-re
+        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+        if (File.Exists(saveFilePath))
+        {
+            string json = File.ReadAllText(saveFilePath);
+            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
 
+            // Ha a mentett értékek nullázva vannak, akkor letiltjuk a gombot
+            if (loadedData==null)
+            {
+                continueButton.interactable = false; // Continue gomb letiltása
+            }
+        }
+        else
+        {
+            // Ha nincs mentés, akkor a Continue gombot szintén letiltjuk
+            continueButton.interactable = false;
+        }
     }
 
-    // Ez a függvény hívódik, amikor a "Continue" gombra kattintanak
-    public void OnContinueButtonClick()
-    {
-
-        // Átváltunk a Level1 scene-re
-        SceneManager.LoadScene("Level1");
-
-        // Folytatjuk a mentett játékot
-        StartCoroutine(WaitForSceneLoad(true));
-    }
 
     // Coroutine, amely várja a scene betöltését, és keresi a játékost
     private IEnumerator WaitForSceneLoad(bool isContinuing)
@@ -40,39 +45,30 @@ public class MainMenu : MonoBehaviour
             yield break;
         }
 
-        // Ha folytatjuk a játékot, akkor meghívjuk a LoadGame függvényt
         if (isContinuing)
         {
-            player.newGame = false;
-
             player.LoadGame();
+
         }
         else
         {
-            player.newGame = true;
-            player.LoadGame(); // Vagy hagyhatod üresen, ha nem kell új játékhoz betölteni
+            player.InitializePlayer(true);
         }
     }
     public void PlayGame()
+    { 
+        SceneManager.LoadScene("Level1");
+
+        StartCoroutine(WaitForSceneLoad(false));
+    }
+    public void OnContinueButtonClick()
     {
         SceneManager.LoadScene("Level1");
 
-        // Új játékhoz nincs szükség mentés betöltésére
-        StartCoroutine(WaitForSceneLoad(false));
+        StartCoroutine(WaitForSceneLoad(true));
     }
     public void Quit()
     {
         Application.Quit();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

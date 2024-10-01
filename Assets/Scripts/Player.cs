@@ -51,12 +51,29 @@ public class Player : MonoBehaviour
 
     public TMP_Text scoreText; // UI Text, ami megjeleníti a score-t
 
+    public void InitializePlayer(bool isNewGame)
+    {
+        this.newGame = isNewGame;
 
+        if (isNewGame)
+        {
+            ResetToNewGameDefaults();
+        }
+
+    }
     void Start()
     {
-        if (!newGame)
+        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+        if (File.Exists(saveFilePath))
         {
-            LoadGame();
+            string json = File.ReadAllText(saveFilePath);
+            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+
+            // Ha a mentett értékek nullázva vannak, akkor letiltjuk a gombot
+            if (loadedData != null)
+            {
+                LoadGame();
+            }
         }
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
@@ -68,15 +85,11 @@ public class Player : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt, false);
-
         buffTimer = buffDuration;
 
         UpdateScoreUI();
-        saveFilePath = Application.persistentDataPath+"savefile.json";
 
-        InvokeRepeating("SaveGame", 10f, 10f);
+        InvokeRepeating("SaveGame", 5f, 5f);
     }
 
     void Update()
@@ -170,7 +183,7 @@ public class Player : MonoBehaviour
             currentHealth -= damage;
 
             GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
-            GameObject buffSpawner = GameObject.FindWithTag("EnemySpawner");
+            GameObject buffSpawner = GameObject.FindWithTag("BuffSpawner");
 
             if (enemySpawner != null)
             {
@@ -182,6 +195,13 @@ public class Player : MonoBehaviour
             }
             Destroy(gameObject);
             gameOverScreen.SetActive(true);
+
+            if (string.IsNullOrEmpty(saveFilePath))
+            {
+                saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
+            }
+
+            File.WriteAllText(saveFilePath, null);
 
         }
         healthBar.setHealth(currentHealth);
@@ -305,7 +325,18 @@ public class Player : MonoBehaviour
 
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(saveFilePath, json);
-        Debug.Log("Game saved to " +saveFilePath);
+        Debug.Log("Saved");
+    }
+    public void ResetToNewGameDefaults()
+    {
+        // Az alapértelmezett értékek beállítása új játék esetén
+        this.playerName = "Player";  // Alapértelmezett név
+        this.score = 0;              // Kezdõ pontszám
+
+        healthBar.SetMaxHealth(maxHealt, true);
+        healthBar.setHealth(currentHealth);
+        // Ha vannak más kezdeti értékek, itt beállíthatod õket
+        Debug.Log("Player values reset to new game defaults.");
     }
     public void LoadGame()
     {
@@ -313,22 +344,21 @@ public class Player : MonoBehaviour
         {
             saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
         }
-        if (File.Exists(saveFilePath))
-        {
-            string json = File.ReadAllText(saveFilePath);
-            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
 
-            this.playerName = loadedData.playerName;
-            this.score = loadedData.score;
-            this.maxHealt = loadedData.maxHealth;
-            this.currentHealth = loadedData.currentHealth;
-            transform.position = loadedData.playerPosition;
 
-            Debug.Log("Game Loaded");
-        }
-        else
-        {
-            Debug.LogWarning("No save file found.");
-        }
+        string json = File.ReadAllText(saveFilePath);
+        SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+
+        this.playerName = loadedData.playerName;
+        this.score = loadedData.score;
+        this.maxHealt = loadedData.maxHealth;
+        this.currentHealth = loadedData.currentHealth;
+        transform.position = loadedData.playerPosition;
+
+        healthBar.SetMaxHealth(maxHealt, true);
+        healthBar.setHealth(currentHealth);
+
+        Debug.Log("Game Loaded");
+
     }
 }

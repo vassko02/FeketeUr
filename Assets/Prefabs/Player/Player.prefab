@@ -102,6 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cb1666bdb29c547aee17d1402510b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newGame: 0
+  playerName: 
+  saveFilePath: 
   countdownText: {fileID: 0}
   bulletPrefabRight: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
   bulletPrefabLeft: {fileID: 1853612668382174326, guid: c1a1f3db430ef5e4b872ded6d81fa6b2, type: 3}
@@ -114,6 +117,10 @@ MonoBehaviour:
   BuffUI: {fileID: 0}
   shieldBuffUIImage: {fileID: 0}
   damageBuffUIImage: {fileID: 0}
+  score: 0
+  scoreIncreaseRate: 0.5
+  scoreIncrement: 5
+  scoreText: {fileID: 0}
 --- !u!50 &-7387240489761417081
 Rigidbody2D:
   serializedVersion: 5
