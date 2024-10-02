@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public string saveFilePath;
 
 
-    public TMP_Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
+    public Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
     private float buffTimer; // Visszaszámláló idõzítõ
 
     public GameObject bulletPrefabRight; // A lövedék prefabja
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     public int scoreIncrement = 5; // Mennyivel növekszik a score
     private float nextScoreIncreaseTime = 0f;
 
-    public TMP_Text scoreText; // UI Text, ami megjeleníti a score-t
+    public Text scoreText; // UI Text, ami megjeleníti a score-t
 
     public void InitializePlayer(bool isNewGame)
     {
