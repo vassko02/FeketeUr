@@ -10,8 +10,6 @@ public class Player : MonoBehaviour
     public bool newGame;
     public string playerName;
     private Vector3 playerPosition; // Játékos pozíciója
-    public string saveFilePath;
-
 
     public Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
     private float buffTimer; // Visszaszámláló idõzítõ
@@ -30,6 +28,7 @@ public class Player : MonoBehaviour
     public int maxHealt = 100;
     public int currentHealth;
     public HealthBar healthBar;
+
     public GameObject gameOverScreen;
     public GameObject BuffUI;
 
@@ -43,6 +42,7 @@ public class Player : MonoBehaviour
     public GameObject shieldBuffUIImage; // Az Image komponens referencia
     public GameObject damageBuffUIImage; // Az Image komponens referencia
 
+    public ProgressManager progressManager;
 
     public int score = 0;
     public float scoreIncreaseRate = 0.5f; // Milyen gyakran növekszik a score (másodpercben)
@@ -63,17 +63,10 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
-        if (File.Exists(saveFilePath))
+        if (PlayerPrefs.GetInt("score", 0) != 0)
         {
-            string json = File.ReadAllText(saveFilePath);
-            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
 
-            // Ha a mentett értékek nullázva vannak, akkor letiltjuk a gombot
-            if (loadedData != null)
-            {
                 LoadGame();
-            }
         }
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
@@ -178,35 +171,37 @@ public class Player : MonoBehaviour
         }
         else
         {
-            BuffUI.SetActive(false);
-
             currentHealth -= damage;
 
-            GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
-            GameObject buffSpawner = GameObject.FindWithTag("BuffSpawner");
-
-            if (enemySpawner != null)
-            {
-                enemySpawner.SetActive(false);
-            }
-            if (buffSpawner != null)
-            {
-                buffSpawner.SetActive(false);
-            }
-            Destroy(gameObject);
-            gameOverScreen.SetActive(true);
-
-            if (string.IsNullOrEmpty(saveFilePath))
-            {
-                saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
-            }
-
-            File.WriteAllText(saveFilePath, null);
-
+            GameOver();
         }
         healthBar.setHealth(currentHealth);
     }
+    public void GameOver()
+    {
+        BuffUI.SetActive(false);
 
+
+        GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
+        GameObject buffSpawner = GameObject.FindWithTag("BuffSpawner");
+
+        if (enemySpawner != null)
+        {
+            enemySpawner.SetActive(false);
+        }
+        if (buffSpawner != null)
+        {
+            buffSpawner.SetActive(false);
+        }
+        Destroy(gameObject);
+        gameOverScreen.SetActive(true);
+
+        PlayerPrefs.SetString("playerName","");
+        PlayerPrefs.SetInt("score", 0);
+        PlayerPrefs.SetInt("maxHealth", 100);
+        PlayerPrefs.SetInt("currentHealth", 100);
+        PlayerPrefs.SetFloat("progress", 0);
+    }
     public void AddToScore(int amount)
     {
         score += amount;
@@ -314,17 +309,13 @@ public class Player : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveData saveData = new SaveData
-        {
-            playerName = this.playerName,
-            score = this.score,
-            maxHealth = this.maxHealt,
-            currentHealth = this.currentHealth,
-            playerPosition = transform.position
-        };
 
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(saveFilePath, json);
+        PlayerPrefs.SetString("playerName", playerName);
+        PlayerPrefs.SetInt("score", score);
+        PlayerPrefs.SetInt("maxHealth", maxHealt);
+        PlayerPrefs.SetInt("currentHealth",currentHealth);
+        PlayerPrefs.SetFloat("progress", 0);
+
         Debug.Log("Saved");
     }
     public void ResetToNewGameDefaults()
@@ -340,25 +331,13 @@ public class Player : MonoBehaviour
     }
     public void LoadGame()
     {
-        if (string.IsNullOrEmpty(saveFilePath))
-        {
-            saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
-        }
-
-
-        string json = File.ReadAllText(saveFilePath);
-        SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
-
-        this.playerName = loadedData.playerName;
-        this.score = loadedData.score;
-        this.maxHealt = loadedData.maxHealth;
-        this.currentHealth = loadedData.currentHealth;
-        transform.position = loadedData.playerPosition;
+        this.currentHealth = PlayerPrefs.GetInt("currentHealth", maxHealt);
+        this.maxHealt = PlayerPrefs.GetInt("maxHealt", maxHealt);
+        this.score = PlayerPrefs.GetInt("currentHealth", 0);
+        this.playerName = PlayerPrefs.GetString("playerName", "Player");
+        progressManager.elapsedTime= PlayerPrefs.GetFloat("progress", 0);
 
         healthBar.SetMaxHealth(maxHealt, true);
         healthBar.setHealth(currentHealth);
-
-        Debug.Log("Game Loaded");
-
     }
 }

@@ -481,6 +481,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 262443547}
+--- !u!1 &374841222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9097545833578044661, guid: ccb331134475d4e49b3427b23566d7af, type: 3}
+  m_PrefabInstance: {fileID: 1774192490419796860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &408935184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1019,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 20dbb78320651ad49ada4bc7959d0cb4, type: 3}
     - target: {fileID: 7506917256792788974, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+      propertyPath: progressManager
+      value: 
+      objectReference: {fileID: 1077108454}
+    - target: {fileID: 7506917256792788974, guid: 65cd392f47718124883afa65b15f672b, type: 3}
       propertyPath: damageBuffUIImage
       value: 
       objectReference: {fileID: 1404671898}
@@ -1383,7 +1392,7 @@ MonoBehaviour:
   - {fileID: 891219990182606169, guid: 9041dc0c9d85ad44a8c5fad96a048385, type: 3}
   - {fileID: 5251068166364753572, guid: 1cfafe33e0029dc44aa1c2cbc6d4bbcb, type: 3}
   - {fileID: 4194529989643242772, guid: f1e0af0008de2184988316a4696a1a0a, type: 3}
-  spawnRate: 3
+  spawnRate: 20
 --- !u!4 &891102708
 Transform:
   m_ObjectHideFlags: 0
@@ -1478,6 +1487,54 @@ RectTransform:
   m_AnchoredPosition: {x: 295.93365, y: -62}
   m_SizeDelta: {x: 530.8472, y: 71.7073}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1077108453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077108455}
+  - component: {fileID: 1077108454}
+  m_Layer: 0
+  m_Name: ProgressManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1077108454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077108453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1894bfacc4ece9a49a18fe0dc1f42afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffSpawnerObject: {fileID: 891102706}
+  enemySpawnerObject: {fileID: 374841222}
+  asteroidSpawnerObject: {fileID: 1850221421}
+  elapsedTime: 0
+--- !u!4 &1077108455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077108453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.47, z: -0.079444006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1235451500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,3 +2374,4 @@ SceneRoots:
   - {fileID: 123883413}
   - {fileID: 802036363}
   - {fileID: 676934487}
+  - {fileID: 1077108455}

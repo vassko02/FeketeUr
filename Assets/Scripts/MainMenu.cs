@@ -10,22 +10,15 @@ public class MainMenu : MonoBehaviour
     private string saveFilePath;
     void Start()
     {
-        saveFilePath = Path.Combine(Application.persistentDataPath, "savefile.json");
-        if (File.Exists(saveFilePath))
+        if (PlayerPrefs.GetInt("score", 0)==0)
         {
-            string json = File.ReadAllText(saveFilePath);
-            SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+            continueButton.interactable = false; // Continue gomb letiltása
 
-            // Ha a mentett értékek nullázva vannak, akkor letiltjuk a gombot
-            if (loadedData==null)
-            {
-                continueButton.interactable = false; // Continue gomb letiltása
-            }
         }
         else
         {
-            // Ha nincs mentés, akkor a Continue gombot szintén letiltjuk
             continueButton.interactable = false;
+
         }
     }
 
