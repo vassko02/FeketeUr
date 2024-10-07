@@ -1392,7 +1392,7 @@ MonoBehaviour:
   - {fileID: 891219990182606169, guid: 9041dc0c9d85ad44a8c5fad96a048385, type: 3}
   - {fileID: 5251068166364753572, guid: 1cfafe33e0029dc44aa1c2cbc6d4bbcb, type: 3}
   - {fileID: 4194529989643242772, guid: f1e0af0008de2184988316a4696a1a0a, type: 3}
-  spawnRate: 20
+  spawnRate: 15
 --- !u!4 &891102708
 Transform:
   m_ObjectHideFlags: 0
@@ -1951,6 +1951,7 @@ MonoBehaviour:
   asteroid2: {fileID: 4563440555789966398, guid: 16b1345e0eb049e459f96141b68cdf3f, type: 3}
   asteroid3: {fileID: 4463868490130589043, guid: 67e2e02d4ad59114a9da14708daadc4b, type: 3}
   spawnRate: 0.5
+  asteroidsPerSpawn: 2
 --- !u!4 &1850221423
 Transform:
   m_ObjectHideFlags: 0

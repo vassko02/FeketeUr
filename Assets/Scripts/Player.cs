@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     private bool hasShiledBuff = false;
     private bool hasDamageBuff = false;
-    private float buffDuration = 10f; // Mennyi ideig tart a buff
+    private float buffDuration = 5f; // Mennyi ideig tart a buff
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
 
@@ -51,23 +51,16 @@ public class Player : MonoBehaviour
 
     public Text scoreText; // UI Text, ami megjeleníti a score-t
 
-    public void InitializePlayer(bool isNewGame)
-    {
-        this.newGame = isNewGame;
-
-        if (isNewGame)
-        {
-            ResetToNewGameDefaults();
-        }
-
-    }
     void Start()
     {
-        if (PlayerPrefs.GetInt("score", 0) != 0)
+        if (PlayerPrefs.GetInt("isAlive") != 0 && PlayerPrefs.GetInt("continue")==1)
         {
 
                 LoadGame();
         }
+
+        PlayerPrefs.SetInt("isAlive", 1);
+
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
@@ -196,11 +189,13 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
         gameOverScreen.SetActive(true);
 
-        PlayerPrefs.SetString("playerName","");
+        PlayerPrefs.SetString("playerName",playerName);
         PlayerPrefs.SetInt("score", 0);
         PlayerPrefs.SetInt("maxHealth", 100);
         PlayerPrefs.SetInt("currentHealth", 100);
         PlayerPrefs.SetFloat("progress", 0);
+        PlayerPrefs.SetInt("isAlive", 1);
+
     }
     public void AddToScore(int amount)
     {
@@ -316,26 +311,13 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetFloat("progress", 0);
 
-        Debug.Log("Saved");
-    }
-    public void ResetToNewGameDefaults()
-    {
-        // Az alapértelmezett értékek beállítása új játék esetén
-        this.playerName = "Player";  // Alapértelmezett név
-        this.score = 0;              // Kezdõ pontszám
-
-        healthBar.SetMaxHealth(maxHealt, true);
-        healthBar.setHealth(currentHealth);
-        // Ha vannak más kezdeti értékek, itt beállíthatod õket
-        Debug.Log("Player values reset to new game defaults.");
     }
     public void LoadGame()
     {
         this.currentHealth = PlayerPrefs.GetInt("currentHealth", maxHealt);
         this.maxHealt = PlayerPrefs.GetInt("maxHealt", maxHealt);
-        this.score = PlayerPrefs.GetInt("currentHealth", 0);
+        this.score = PlayerPrefs.GetInt("score", 0);
         this.playerName = PlayerPrefs.GetString("playerName", "Player");
-        progressManager.elapsedTime= PlayerPrefs.GetFloat("progress", 0);
 
         healthBar.SetMaxHealth(maxHealt, true);
         healthBar.setHealth(currentHealth);

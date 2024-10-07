@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+
 public class SpawnAsteroid : MonoBehaviour
 {
     public GameObject asteroid1;
@@ -9,13 +9,15 @@ public class SpawnAsteroid : MonoBehaviour
 
     public double spawnRate = 0.5;
     private float timer = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // Új paraméter: Hány aszteroidát spawnol egyszerre
+    public int asteroidsPerSpawn = 2;
+
     void Start()
     {
-        spawn();
+        spawn();  // Elsõ spawn indításkor
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (timer < spawnRate)
@@ -24,28 +26,42 @@ public class SpawnAsteroid : MonoBehaviour
         }
         else
         {
-            spawn();
+            spawn();  // Spawnolás idõközönként
             timer = 0;
         }
     }
+
     void spawn()
     {
         float leftPoint = -10;
         float rightPoint = 10;
-        int id=Random.Range(1,4);
-        GameObject asteroid = null;
-        switch (id)
-        {
-            case 1: asteroid = asteroid1;break;
-            case 2: asteroid = asteroid2; break;
-            case 3: asteroid = asteroid3; break;
 
-            default:
-                break;
-        }
-        if (asteroid != null)
+        // Spawnolás az asteroidsPerSpawn paraméter szerint
+        for (int i = 0; i < asteroidsPerSpawn; i++)
         {
-            Instantiate(asteroid, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0, Random.Range(0f, 360f)));
+            int id = Random.Range(1, 4);  // Véletlenszerûen kiválaszt egy aszteroidát
+            GameObject asteroid = null;
+
+            switch (id)
+            {
+                case 1:
+                    asteroid = asteroid1;
+                    break;
+                case 2:
+                    asteroid = asteroid2;
+                    break;
+                case 3:
+                    asteroid = asteroid3;
+                    break;
+                default:
+                    break;
+            }
+
+            if (asteroid != null)
+            {
+                // Instanciálja az aszteroidát véletlenszerû helyen és forgatással
+                Instantiate(asteroid, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0, Random.Range(0f, 360f)));
+            }
         }
     }
 }

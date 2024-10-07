@@ -6,6 +6,7 @@ public class SpawnEnemy : MonoBehaviour
     public GameObject enemy;
 
     public double spawnRate = 3;
+    public int enemiesPerSpawn = 1;
     private float timer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,7 +30,11 @@ public class SpawnEnemy : MonoBehaviour
     {
         float leftPoint = -10;
         float rightPoint = 10;
-        Instantiate(enemy, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0,180));
+        for (int i = 0; i < enemiesPerSpawn; i++)
+        {
+            Instantiate(enemy, new Vector3(Random.Range(leftPoint, rightPoint), transform.position.y, 0), Quaternion.Euler(0, 0, 180));
+        }
+
 
     }
 }
