@@ -16,7 +16,7 @@ public class ProgressManager : MonoBehaviour
     private float totalTimerDuration = 600f; // Teljes idõtartam
     public float elapsedTime = 0f;
 
-
+    private bool midBossFight = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,9 +39,11 @@ public class ProgressManager : MonoBehaviour
             // Idõzített események különbözõ idõpontokban
             if (elapsedTime == 0f)
             {
+                enemySpawner.enemyLimit = 3;
                 ToggleSpawner(buffSpawnerObject,true);
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, true);
+                enemySpawner.spawnColor = Color.red;
                 asteroidSpawner.spawnRate = 1f;
                 asteroidSpawner.asteroidsPerSpawn = 1;
 
@@ -64,21 +66,69 @@ public class ProgressManager : MonoBehaviour
             else if (elapsedTime==35f)
             {
                 enemySpawner.enemiesPerSpawn = 2;
-                enemySpawner.spawnRate = 3f;
+                enemySpawner.spawnRate = 4f;
                 buffSpawner.spawnRate = 11f;
             }
-            else if (elapsedTime == 43f)
+            else if (elapsedTime == 45f)
             {
                 ToggleSpawner(asteroidSpawnerObject,true);
                 asteroidSpawner.spawnRate = 2f;
             }
+            else if (elapsedTime == 60f)
+            {
+                ToggleSpawner(enemySpawnerObject, false);
+                asteroidSpawner.asteroidsPerSpawn = 3;
+                buffSpawner.spawnRate = 7f;
+            }
+            else if (elapsedTime == 75f)
+            {
+                ToggleSpawner(asteroidSpawnerObject, false);
+                ToggleSpawner(enemySpawnerObject, true);
+                enemySpawner.spawnRate = 2f;
+                enemySpawner.enemiesPerSpawn = 2;
+            }
+
             else if (elapsedTime==90f)
             {
-                //ELSÕ BOSS
+                ToggleSpawner(enemySpawnerObject,false); 
+                ToggleSpawner(asteroidSpawnerObject, false);
+
+                midBossFight = true;
+                //ELSÕ BOSS DIALOG
+
+                //ELSÕ BOSSFIGHT
+
+                //DIALOG A BOSS UTÁN
+
             }
-                // Egy másodperc várakozás
-                yield return new WaitForSeconds(1f);
-            elapsedTime += 1f;
+
+            else if (elapsedTime == 180f)
+            {
+                midBossFight = true;
+                //MÁSODIK BOSS DIALOG
+
+                //MÁSODIK BOSSFIGHT
+
+                //MÁSODIK A BOSS UTÁN
+
+            }
+
+            else if (elapsedTime == 270f)
+            {
+                midBossFight = true;
+                //MÁSODIK BOSS DIALOG
+
+                //MÁSODIK BOSSFIGHT
+
+                //MÁSODIK A BOSS UTÁN
+
+            }
+            // Egy másodperc várakozás
+            if (!midBossFight)
+            {
+                elapsedTime += 1f;
+            }
+            yield return new WaitForSeconds(1f);
             Debug.Log(elapsedTime);
         }
 
