@@ -268,8 +268,16 @@ public class Player : MonoBehaviour
         {
             maxHealt += 20;
             healthBar.SetMaxHealth(maxHealt, true);
+            Heal(20);
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("ScoreBuff"))
+        {
+            scoreIncrement += 2;
+            Destroy(collision.gameObject);
+
+        }
+
     }
     void ActivateDamageBuff()
     {

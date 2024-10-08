@@ -94,34 +94,82 @@ public class ProgressManager : MonoBehaviour
                 ToggleSpawner(asteroidSpawnerObject, false);
 
                 midBossFight = true;
+
                 //ELSÕ BOSS DIALOG
 
                 //ELSÕ BOSSFIGHT
 
-                //DIALOG A BOSS UTÁN
+                //DIALOG A BOSS UTÁN DIALOG
 
+                midBossFight = false;
             }
-
+            else if (elapsedTime==91f)
+            {
+                enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
+                enemySpawner.enemyLimit = 4;
+                buffSpawner.spawnRate = 15f;
+                ToggleSpawner(asteroidSpawnerObject, true);
+                asteroidSpawner.asteroidsPerSpawn = 3;
+                asteroidSpawner.spawnRate = 1.5f;
+            }
+            else if (elapsedTime==110f)
+            {
+                ToggleSpawner(asteroidSpawnerObject,false);
+                ToggleSpawner(enemySpawnerObject,true);
+                enemySpawner.spawnRate = 3f;
+                enemySpawner.enemiesPerSpawn = 2;
+                buffSpawner.spawnRate = 10f;
+            }
+            else if (elapsedTime==125f)
+            {
+                ToggleSpawner(asteroidSpawnerObject, true);
+                asteroidSpawner.asteroidsPerSpawn = 2;
+                asteroidSpawner.spawnRate = 3f;
+            }
+            else if(elapsedTime==135f)
+            {
+                ToggleSpawner(enemySpawnerObject, false);
+                asteroidSpawner.spawnRate = 2f;
+            }
+            else if (elapsedTime == 155f)
+            {
+                ToggleSpawner(asteroidSpawnerObject, false);
+                ToggleSpawner(enemySpawnerObject,true);
+                enemySpawner.spawnRate = 1f;
+                enemySpawner.enemiesPerSpawn = 1;
+            }
             else if (elapsedTime == 180f)
             {
                 midBossFight = true;
+
                 //MÁSODIK BOSS DIALOG
 
                 //MÁSODIK BOSSFIGHT
 
-                //MÁSODIK A BOSS UTÁN
+                //MÁSODIK A BOSS UTÁN DIALOG
 
+                midBossFight = false;
             }
-
+            else if (elapsedTime==181)
+            {
+                enemySpawner.spawnColor = Color.yellow;
+                enemySpawner.enemyLimit = 5;
+                buffSpawner.spawnRate = 20f;
+                ToggleSpawner(enemySpawnerObject, true);
+                ToggleSpawner(asteroidSpawnerObject,false);
+            }
             else if (elapsedTime == 270f)
             {
                 midBossFight = true;
-                //MÁSODIK BOSS DIALOG
+                //HARMADIK BOSS DIALOG
 
-                //MÁSODIK BOSSFIGHT
+                //HARMADIK BOSSFIGHT
 
-                //MÁSODIK A BOSS UTÁN
+                //HARMADIK A BOSS UTÁN DIALOG
 
+                //WIN SCREEN
+
+                midBossFight = false;
             }
             // Egy másodperc várakozás
             if (!midBossFight)

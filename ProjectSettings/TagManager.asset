@@ -15,6 +15,7 @@ TagManager:
   - MaxHealthBuff
   - BuffSpawner
   - ShieldBuff
+  - ScoreBuff
   layers:
   - Default
   - TransparentFX
