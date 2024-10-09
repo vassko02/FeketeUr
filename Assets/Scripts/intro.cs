@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class intro : MonoBehaviour
 {
+  
     public GameObject text;
-    public float speed = 5;
+    public float speed = 3;
     public float deadzone = 1080;
     public TextMeshProUGUI introtext;
     public string textFileName = "IntroText";  
@@ -34,9 +35,8 @@ public class intro : MonoBehaviour
     }
     void Update()
     {
-        //transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
-        //transform.position.y > deadzone &&
-        if (playeddialog == false)
+        transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
+        if (transform.position.y > deadzone && playeddialog == false)
         {
             TriggerDialog();
             playeddialog = true;

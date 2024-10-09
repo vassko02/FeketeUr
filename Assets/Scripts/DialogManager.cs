@@ -4,24 +4,32 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
 
 public class DialogManager : MonoBehaviour
 {
-    public GameObject textbubble;
-
+    
+    public string textfilename;
     public TextMeshProUGUI dialogText;
     private Queue<string> sentences;
     public string currentTalkKey;
+    public GameObject textbubble;
     public GameObject rightCharacter;
     public GameObject leftCharacter;
     public Transform parent;
     public Dialog dialog;
     public string nextScene;
+
+    private GameObject characterInstance;
+    private GameObject characterInstance2;
+    private GameObject textbubbleinstance;
     public void Start()
     {
         sentences = new Queue<string>();
 
-        LoadDialogFromResources("IntroText");
+        LoadDialogFromResources(textfilename);
+        StartDialog(currentTalkKey);
     }
     public void StartDialog(string talkKey)
     {
@@ -30,13 +38,18 @@ public class DialogManager : MonoBehaviour
             Debug.LogError("Dialog is not set!");
             return;
         }
-
+      
         currentTalkKey = talkKey;
-        GameObject characterInstance = Instantiate(rightCharacter, parent);
+        characterInstance = Instantiate(rightCharacter, parent);
         characterInstance.transform.localPosition = new Vector3(650, -180, 0);
 
-        GameObject characterInstance2 = Instantiate(leftCharacter, parent);
+        characterInstance2 = Instantiate(leftCharacter, parent);
         characterInstance2.transform.localPosition = new Vector3(-600, -180, 0);
+
+        textbubbleinstance = Instantiate(textbubble, parent);
+        textbubbleinstance.transform.localPosition = new Vector3(20, 256, 0);
+        textbubbleinstance.transform.SetAsFirstSibling();
+
 
         sentences.Clear();
 
@@ -85,12 +98,12 @@ public class DialogManager : MonoBehaviour
 
                 if (sentences.Peek().Split(':')[0] != "Ryder")
                 {
-                    textbubble.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    textbubbleinstance.transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
                 else
                 {
 
-                    textbubble.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    textbubbleinstance.transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
                 DisplayNextSentence();
 
@@ -99,7 +112,6 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadSceneAsync(nextScene);
 
             }
         }
