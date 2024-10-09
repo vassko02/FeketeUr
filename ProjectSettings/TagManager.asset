@@ -16,6 +16,8 @@ TagManager:
   - BuffSpawner
   - ShieldBuff
   - ScoreBuff
+  - Kronis
+  - KronisAttack
   layers:
   - Default
   - TransparentFX

@@ -50,5 +50,14 @@ public class Bullet : MonoBehaviour
             // Lövedék törlése ütközés után
             Destroy(gameObject);
         }
+        if (collision.gameObject.CompareTag("Kronis"))
+        {
+            Kronis kronis = collision.gameObject.GetComponent<Kronis>();
+            if (kronis!=null)
+            {
+                kronis.TakeDamage(bulletDamage);
+            }
+            Destroy(gameObject);
+        }
     }
 }

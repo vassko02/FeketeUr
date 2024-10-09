@@ -24,11 +24,13 @@ public class ProgressManager : MonoBehaviour
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
 
-        if (PlayerPrefs.GetInt("continue")==1)
-        {
-            elapsedTime = PlayerPrefs.GetFloat("progress",0);
+        //if (PlayerPrefs.GetInt("continue")==1)
+        //{
+        //    elapsedTime = PlayerPrefs.GetFloat("progress",0);
 
-        }
+        //}
+        elapsedTime = 90f;
+        midBossFight = true;
         StartCoroutine(Progress());
 
     }
@@ -43,7 +45,7 @@ public class ProgressManager : MonoBehaviour
                 ToggleSpawner(buffSpawnerObject,true);
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, true);
-                enemySpawner.spawnColor = Color.red;
+                enemySpawner.spawnColor = Color.green;
                 asteroidSpawner.spawnRate = 1f;
                 asteroidSpawner.asteroidsPerSpawn = 1;
 
@@ -101,7 +103,6 @@ public class ProgressManager : MonoBehaviour
 
                 //DIALOG A BOSS UTÁN DIALOG
 
-                midBossFight = false;
             }
             else if (elapsedTime==91f)
             {
@@ -177,7 +178,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
         }
 
     }

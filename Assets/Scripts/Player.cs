@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
 
+    public float bulletSpeed =10f;
 
     public GameObject shieldBuffUIImage; // Az Image komponens referencia
     public GameObject damageBuffUIImage; // Az Image komponens referencia
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
         buffTimer = buffDuration;
 
         UpdateScoreUI();
+
 
         InvokeRepeating("SaveGame", 5f, 5f);
     }
@@ -140,11 +142,14 @@ public class Player : MonoBehaviour
             if (bulletScriptL != null)
             {
                 bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+                bulletScriptL.speed = bulletSpeed;
             }
             Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
             if (bulletScriptR != null)
             {
                 bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+                bulletScriptR.speed = bulletSpeed;
+
             }
         }
 
@@ -195,6 +200,7 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("currentHealth", 100);
         PlayerPrefs.SetFloat("progress", 0);
         PlayerPrefs.SetInt("isAlive", 1);
+        PlayerPrefs.SetInt("scoreIncrement", 5);
 
     }
     public void AddToScore(int amount)
@@ -227,6 +233,10 @@ public class Player : MonoBehaviour
             {
                 TakeDamage(20);
             }
+            else
+            {
+                AddToScore(10);
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("EnemyProjectile"))
@@ -245,7 +255,13 @@ public class Player : MonoBehaviour
             }
             Destroy(collision.gameObject);
         }
-
+        if (collision.gameObject.CompareTag("Kronis"))
+        {
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(50);
+            }
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -318,7 +334,7 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("maxHealth", maxHealt);
         PlayerPrefs.SetInt("currentHealth",currentHealth);
         PlayerPrefs.SetFloat("progress", 0);
-
+        PlayerPrefs.SetInt("scoreIncement",scoreIncrement);
     }
     public void LoadGame()
     {
@@ -326,7 +342,7 @@ public class Player : MonoBehaviour
         this.maxHealt = PlayerPrefs.GetInt("maxHealt", maxHealt);
         this.score = PlayerPrefs.GetInt("score", 0);
         this.playerName = PlayerPrefs.GetString("playerName", "Player");
-
+        this.scoreIncrement = PlayerPrefs.GetInt("scoreIncrement",5);
         healthBar.SetMaxHealth(maxHealt, true);
         healthBar.setHealth(currentHealth);
     }
