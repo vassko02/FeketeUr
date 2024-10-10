@@ -18,6 +18,7 @@ TagManager:
   - ScoreBuff
   - Kronis
   - KronisAttack
+  - ProgressManager
   layers:
   - Default
   - TransparentFX

@@ -15,8 +15,9 @@ public class ProgressManager : MonoBehaviour
 
     private float totalTimerDuration = 600f; // Teljes idõtartam
     public float elapsedTime = 0f;
+    public List<GameObject> bosses;
 
-    private bool midBossFight = false;
+    public bool midBossFight = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,8 +30,6 @@ public class ProgressManager : MonoBehaviour
         //    elapsedTime = PlayerPrefs.GetFloat("progress",0);
 
         //}
-        elapsedTime = 90f;
-        midBossFight = true;
         StartCoroutine(Progress());
 
     }
@@ -99,7 +98,7 @@ public class ProgressManager : MonoBehaviour
 
                 //ELSÕ BOSS DIALOG
 
-                //ELSÕ BOSSFIGHT
+                bosses[0].SetActive(true);
 
                 //DIALOG A BOSS UTÁN DIALOG
 
@@ -178,7 +177,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            //Debug.Log(elapsedTime);
+            Debug.Log(elapsedTime);
         }
 
     }

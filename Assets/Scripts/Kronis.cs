@@ -28,27 +28,32 @@ public class Kronis : MonoBehaviour
     public float attackInterval = 1.0f; // Támadási intervallum (másodperc)
     private float attackTimer = 0f; // Idõzítõ a támadáshoz
 
-
+    private GameObject progressManager;
+    private ProgressManager progressManagerScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
+        progressManager = GameObject.FindWithTag("ProgressManager");
+        progressManagerScript = progressManager.GetComponent<ProgressManager>();
+
         player = GameObject.FindWithTag("Player");
+
         if (player != null)
         {
             playerScript = player.GetComponent<Player>();
             playerTransform = player.transform;
         }
+
         healthBar.gameObject.SetActive(true);
+
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth,false);
+        healthBar.SetMaxHealth(maxHealth, false);
 
         rightPosition = new Vector3(10f, 3.8f, transform.position.z); // Jobb szél
         leftPosition = new Vector3(-10f, 3.8f, transform.position.z);  // Bal szél
         targetPosition = leftPosition;
         BoostPlayerSpeed();
-
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -99,6 +104,9 @@ public class Kronis : MonoBehaviour
             playerScript.bulletSpeed = 10f;
 
             healthBar.gameObject.SetActive(false);
+
+            progressManagerScript.midBossFight = false;
+            progressManagerScript.elapsedTime++;
             GameObject[] kronisAttacks = GameObject.FindGameObjectsWithTag("KronisAttack");
 
             // Destroy the found GameObjects
@@ -115,13 +123,16 @@ public class Kronis : MonoBehaviour
     public void Attack()
     {
         // Játékos aktuális pozíciójának lekérése
-        Vector3 targetPosition = playerTransform.position;
+        if (playerTransform!=null)
+        {
+            Vector3 targetPosition = playerTransform.position;
 
-        // Jelölõ létrehozása a játékos pozícióján
-        GameObject marker = Instantiate(target, targetPosition, Quaternion.identity);
+            // Jelölõ létrehozása a játékos pozícióján
+            GameObject marker = Instantiate(target, targetPosition, Quaternion.identity);
 
-        // Jelölõ eltûnik egy idõ után, majd támadás következik
-        StartCoroutine(ExecuteAttack(marker, targetPosition));
+            // Jelölõ eltûnik egy idõ után, majd támadás következik
+            StartCoroutine(ExecuteAttack(marker, targetPosition));
+        }
     }
 
     private IEnumerator ExecuteAttack(GameObject marker, Vector3 targetPosition)
