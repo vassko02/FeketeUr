@@ -59,5 +59,14 @@ public class Bullet : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        if (collision.gameObject.CompareTag("Orion"))
+        {
+            Orion orion = collision.gameObject.GetComponent<Orion>();
+            if (orion != null)
+            {
+                orion.TakeDamage(bulletDamage);
+            }
+            Destroy(gameObject);
+        }
     }
 }

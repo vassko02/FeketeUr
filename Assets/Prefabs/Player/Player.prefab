@@ -114,6 +114,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   gameOverScreen: {fileID: 0}
   BuffUI: {fileID: 0}
+  bulletSpeed: 10
   shieldBuffUIImage: {fileID: 0}
   damageBuffUIImage: {fileID: 0}
   progressManager: {fileID: 0}

@@ -19,6 +19,7 @@ TagManager:
   - Kronis
   - KronisAttack
   - ProgressManager
+  - Orion
   layers:
   - Default
   - TransparentFX

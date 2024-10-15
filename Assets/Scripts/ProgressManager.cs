@@ -21,6 +21,7 @@ public class ProgressManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         buffSpawner = buffSpawnerObject.GetComponent<SpawnBuffs>();
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
@@ -140,12 +141,17 @@ public class ProgressManager : MonoBehaviour
             }
             else if (elapsedTime == 180f)
             {
+                ToggleSpawner(enemySpawnerObject, false);
+                ToggleSpawner(asteroidSpawnerObject, false);
+
                 midBossFight = true;
 
                 //MÁSODIK BOSS DIALOG
 
-                //MÁSODIK BOSSFIGHT
 
+                //ELSÕ BOSS DIALOG
+
+                bosses[1].SetActive(true);
                 //MÁSODIK A BOSS UTÁN DIALOG
 
                 midBossFight = false;

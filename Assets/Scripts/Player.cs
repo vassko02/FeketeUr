@@ -262,6 +262,13 @@ public class Player : MonoBehaviour
                 TakeDamage(50);
             }
         }
+        if (collision.gameObject.CompareTag("Orion"))
+        {
+            if (hasShiledBuff == false)
+            {
+                TakeDamage(50);
+            }
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
