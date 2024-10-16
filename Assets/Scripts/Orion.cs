@@ -18,11 +18,11 @@ public class Orion : MonoBehaviour
     public float rushSpeed = 10f; // Ráhajtási sebesség
 
     private float attackTimer = 0f; // Idõzítõ a támadáshoz
-    public float attackInterval = 5f; // Támadási intervallum (másodperc)
+    public float attackInterval = 3f; // Támadási intervallum (másodperc)
     public float waitTimeBeforeRush = 1.5f; // Várakozási idõ a ráhajtás elõtt
 
     private float shootTimer = 0f;
-    public float shootInterval = 3f;
+    public float shootInterval = 2f;
 
 
     private GameObject progressManager;
@@ -78,11 +78,13 @@ public class Orion : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("shoot");
         Vector3 spawnPosition = transform.position;
 
-        GameObject rocket = Instantiate(Missile, spawnPosition, Quaternion.Euler(0, 0, 180));
+        // Generálj egy véletlenszerû irányt
+        float randomAngle = UnityEngine.Random.Range(0f, 360f); // Véletlenszerû szög (0-360 fok)
+        Quaternion randomRotation = Quaternion.Euler(0, 0, randomAngle); // Forgatás Quaternion formában
 
+        GameObject rocket = Instantiate(Missile, spawnPosition, randomRotation);
     }
 
     private IEnumerator Attack()

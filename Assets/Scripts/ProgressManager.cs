@@ -26,11 +26,11 @@ public class ProgressManager : MonoBehaviour
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
 
-        //if (PlayerPrefs.GetInt("continue")==1)
-        //{
-        //    elapsedTime = PlayerPrefs.GetFloat("progress",0);
+        if (PlayerPrefs.GetInt("continue")==1)
+        {
+            elapsedTime = PlayerPrefs.GetFloat("progress",0);
 
-        //}
+        }
         StartCoroutine(Progress());
 
     }
@@ -148,9 +148,6 @@ public class ProgressManager : MonoBehaviour
 
                 //MÁSODIK BOSS DIALOG
 
-
-                //ELSÕ BOSS DIALOG
-
                 bosses[1].SetActive(true);
                 //MÁSODIK A BOSS UTÁN DIALOG
 
@@ -183,7 +180,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
         }
 
     }

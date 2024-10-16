@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Build;
+using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float speed = 10f; // Lövedék sebessége
     public float deadZone = 7; // Az a zóna, ahol a lövedéket töröljük
     public Vector3 direction = Vector3.right; // Az irány, amerre a lövedék mozog
+    public GameObject explosion;
     private int bulletDamage;
     void Update()
     {
@@ -35,38 +37,49 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ha az objektum amivel ütközött az Enemy taggel rendelkezik
-        if (collision.gameObject.CompareTag("Enemy"))
+        Debug.Log(collision.gameObject.tag);
+        if ((gameObject.tag == "PlayerProjectile" && collision.gameObject.tag == "Player")||(collision.gameObject.tag=="Asteroid")||collision.gameObject.tag=="EnemyProjectile" || collision.gameObject.tag == "PlayerProjectile") { }
+        else
         {
-            // Megkeresi az Enemy scriptet az objektumon
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            GameObject explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
+            SpriteRenderer explosionRenderer = explosionInstance.GetComponent<SpriteRenderer>();
+            if (explosionRenderer != null)
+            {
+                explosionRenderer.sortingOrder = 10; // Válassz egy elég magas értéket
+            }
+            // Ha az objektum amivel ütközött az Enemy taggel rendelkezik
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                // Megkeresi az Enemy scriptet az objektumon
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
-            // Ha van ilyen script, meghívja a TakeDamage függvényt
-            if (enemy != null)
-            {
-                enemy.TakeDamage(bulletDamage);
-            }
+                // Ha van ilyen script, meghívja a TakeDamage függvényt
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(bulletDamage);
+                }
 
-            // Lövedék törlése ütközés után
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.CompareTag("Kronis"))
-        {
-            Kronis kronis = collision.gameObject.GetComponent<Kronis>();
-            if (kronis!=null)
-            {
-                kronis.TakeDamage(bulletDamage);
+                // Lövedék törlése ütközés után
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.CompareTag("Orion"))
-        {
-            Orion orion = collision.gameObject.GetComponent<Orion>();
-            if (orion != null)
+            if (collision.gameObject.CompareTag("Kronis"))
             {
-                orion.TakeDamage(bulletDamage);
+                Kronis kronis = collision.gameObject.GetComponent<Kronis>();
+                if (kronis != null)
+                {
+                    kronis.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
-        }
+            if (collision.gameObject.CompareTag("Orion"))
+            {
+                Orion orion = collision.gameObject.GetComponent<Orion>();
+                if (orion != null)
+                {
+                    orion.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
+            }
+        }      
     }
 }

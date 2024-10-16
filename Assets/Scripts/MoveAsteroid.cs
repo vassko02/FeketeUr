@@ -5,6 +5,7 @@ public class MoveAsteroid : MonoBehaviour
     public float speed = 5;
     public float deadZone =-7;
     private Player playerScript;
+    public GameObject explosion;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,8 @@ public class MoveAsteroid : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Instantiate(explosion, transform.position, Quaternion.identity);
+
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             Destroy(collision.gameObject);

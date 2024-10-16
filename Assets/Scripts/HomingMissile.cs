@@ -13,24 +13,30 @@ public class HomingMissile : MonoBehaviour
     {
         playerGO = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
-        playerScript = playerGO.GetComponent<Player>();
+        if (playerGO != null)
+        {
+            playerScript = playerGO.GetComponent<Player>();
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Irány meghatározása a célpont felé
-        Vector2 direction = (Vector2)playerGO.transform.position - rb.position;
-        direction.Normalize();
+        if (playerGO != null) 
+        {
+            // Irány meghatározása a célpont felé
+            Vector2 direction = (Vector2)playerGO.transform.position - rb.position;
+            direction.Normalize();
 
-        // Fordulás irányának meghatározása
-        float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            // Fordulás irányának meghatározása
+            float rotateAmount = Vector3.Cross(direction, transform.up).z;
 
-        // Rakéta forgatása
-        rb.angularVelocity = -rotateAmount * rotateSpeed;
+            // Rakéta forgatása
+            rb.angularVelocity = -rotateAmount * rotateSpeed;
 
-        // Mozgatás a rakéta elõre mutató irányába (linearVelocity használata)
-        rb.linearVelocity = transform.up * speed;
+            // Mozgatás a rakéta elõre mutató irányába (linearVelocity használata)
+            rb.linearVelocity = transform.up * speed;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
