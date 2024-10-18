@@ -8,7 +8,9 @@ public class HomingMissile : MonoBehaviour
     private Rigidbody2D rb;
     private Player playerScript;
     private GameObject playerGO;
-    public Transform playerTransfrom;
+    public GameObject explosion;
+    public float lifeSpan = 10f; // A rakéta élettartama
+
     void Start()
     {
         playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -40,19 +42,25 @@ public class HomingMissile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag =="Player") {
-            Destroy(gameObject);
-            playerScript.TakeDamage(35);
-        }
-        else if (collision.gameObject.tag == "Asteroid")
+        if (collision.gameObject.tag!="Orion")
         {
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            if (collision.gameObject.tag == "Player")
+            {
+                playerScript.TakeDamage(35);
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.tag == "Asteroid")
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+            }
+            else if (collision.gameObject.tag == "PlayerProjectile")
+            {
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+            }
         }
-        else if (collision.gameObject.tag == "PlayerProjectile")
-        {
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
-        }
+
     }
 }

@@ -32,8 +32,10 @@ public class Orion : MonoBehaviour
     private Vector3 originalPosition; // A boss eredeti pozíciója
     private bool isAttacking = false; // Egy támadás folyamatban van-e
 
-    public GameObject Missile;
+    public float rocketTimeSpan = 10f;
 
+    public GameObject Missile;
+    public GameObject Target;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnEnable()
     {
@@ -89,13 +91,12 @@ public class Orion : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        Debug.Log("attack start");
         isAttacking = true; // Megjelöljük, hogy támadás folyamatban van
-
         // Játékos aktuális pozíciójának lekérése
         if (playerTransform != null)
         {
             Vector3 targetPosition = playerTransform.position;
+             GameObject targetInstance= Instantiate(Target, targetPosition, Quaternion.identity);
 
             // 1. A boss ráfordul a játékosra
             Vector3 directionToPlayer = (targetPosition - transform.position).normalized;
@@ -111,7 +112,7 @@ public class Orion : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, rushSpeed * Time.deltaTime);
                 yield return null;
             }
-
+            Destroy(targetInstance);
             // 4. Visszatérés az eredeti pozícióra
             while (Vector3.Distance(transform.position, originalPosition) > 0.1f)
             {

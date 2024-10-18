@@ -666,12 +666,14 @@ MonoBehaviour:
   maxHealth: 2000
   currentHealth: 2000
   healthBar: {fileID: 807946326}
-  speed: 5
-  rushSpeed: 10
-  attackInterval: 5
-  waitTimeBeforeRush: 1.5
-  shootInterval: 3
+  speed: 7
+  rushSpeed: 15
+  attackInterval: 3
+  waitTimeBeforeRush: 0.5
+  shootInterval: 2
+  rocketTimeSpan: 10
   Missile: {fileID: 2009487048241353558, guid: e8f8122447c351446b38f6b54cb76a9a, type: 3}
+  Target: {fileID: 5470422795944919962, guid: 428ab89f360327346a2e4ef5436b08cb, type: 3}
 --- !u!61 &425768640
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1722,8 +1724,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede8260c9f089794fbfd6ab350b05e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 1500
+  currentHealth: 1500
   healthBar: {fileID: 807946326}
   moveSpeed: 3
   explosion: {fileID: 4074708492655225739, guid: cb9e49516cb333447badc6ad94f4c485, type: 3}
@@ -2992,11 +2994,11 @@ PrefabInstance:
       objectReference: {fileID: 807946326}
     - target: {fileID: 2601587399829052533, guid: ffacfa5167eb9eb4389d636cbbdc909c, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 2601587399829052533, guid: ffacfa5167eb9eb4389d636cbbdc909c, type: 3}
       propertyPath: currentHealth
-      value: 100
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 8150214229143813800, guid: ffacfa5167eb9eb4389d636cbbdc909c, type: 3}
       propertyPath: m_Name

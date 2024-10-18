@@ -28,11 +28,10 @@ public class ProgressManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("continue")==1)
         {
-            elapsedTime = PlayerPrefs.GetFloat("progress",0);
+            elapsedTime = PlayerPrefs.GetFloat("progress");
 
         }
         StartCoroutine(Progress());
-
     }
     private IEnumerator Progress()
     {
@@ -41,7 +40,7 @@ public class ProgressManager : MonoBehaviour
             // Idõzített események különbözõ idõpontokban
             if (elapsedTime == 0f)
             {
-                enemySpawner.enemyLimit = 3;
+                enemySpawner.enemyLimit = 2;
                 ToggleSpawner(buffSpawnerObject,true);
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, true);
@@ -107,7 +106,7 @@ public class ProgressManager : MonoBehaviour
             else if (elapsedTime==91f)
             {
                 enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
-                enemySpawner.enemyLimit = 4;
+                enemySpawner.enemyLimit = 3;
                 buffSpawner.spawnRate = 15f;
                 ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.asteroidsPerSpawn = 3;
@@ -151,12 +150,11 @@ public class ProgressManager : MonoBehaviour
                 bosses[1].SetActive(true);
                 //MÁSODIK A BOSS UTÁN DIALOG
 
-                midBossFight = false;
             }
             else if (elapsedTime==181)
             {
                 enemySpawner.spawnColor = Color.yellow;
-                enemySpawner.enemyLimit = 5;
+                enemySpawner.enemyLimit = 4;
                 buffSpawner.spawnRate = 20f;
                 ToggleSpawner(enemySpawnerObject, true);
                 ToggleSpawner(asteroidSpawnerObject,false);
@@ -180,7 +178,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            //Debug.Log(elapsedTime);
+            Debug.Log(elapsedTime);
         }
 
     }

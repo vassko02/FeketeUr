@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotateSpeed: 200
-  playerTransfrom: {fileID: 0}
+  explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!50 &3217014781413115250
 Rigidbody2D:
   serializedVersion: 5

@@ -42,12 +42,8 @@ public class Bullet : MonoBehaviour
         else
         {
             GameObject explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-            SpriteRenderer explosionRenderer = explosionInstance.GetComponent<SpriteRenderer>();
-            if (explosionRenderer != null)
-            {
-                explosionRenderer.sortingOrder = 10; // Válassz egy elég magas értéket
-            }
-            // Ha az objektum amivel ütközött az Enemy taggel rendelkezik
+            Destroy(explosionInstance, 3f); // Például ha 3 másodpercig tart az animáció
+
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 // Megkeresi az Enemy scriptet az objektumon

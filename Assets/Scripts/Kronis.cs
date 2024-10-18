@@ -62,7 +62,7 @@ public class Kronis : MonoBehaviour
         attackTimer += Time.deltaTime;
 
         // Ha elérte az intervallumot, támadj
-        if (attackTimer >= attackInterval)
+        if (attackTimer >= attackInterval&&player!=null)
         {
             Attack();
             attackTimer = 0f; // Reseteld az idõzítõt
@@ -93,7 +93,7 @@ public class Kronis : MonoBehaviour
         {
             currentHealth -= damage;
             CheckStage();
-
+            Attack();
         }
         else
         {
@@ -117,7 +117,6 @@ public class Kronis : MonoBehaviour
             Destroy(gameObject);
         }
         healthBar.setHealth(currentHealth);
-        Attack();
     }
 
     public void Attack()
@@ -187,14 +186,22 @@ public class Kronis : MonoBehaviour
     }
     void BoostPlayerSpeed()
     {
-        playerScript.moveSpeed = 8f;
-        playerScript.bulletSpeed = 8f;
-        moveSpeed = 6f;
+        if (player!=null)
+        {
+            playerScript.moveSpeed = 8f;
+            playerScript.bulletSpeed = 8f;
+            moveSpeed = 6f;
+        }
+
     }
     void SlowPLayerSpeed()
     {
-        playerScript.moveSpeed = 3f;
-        playerScript.bulletSpeed = 3f;
-        moveSpeed = 7f;
+        if (player != null)
+        {
+            playerScript.moveSpeed = 3f;
+            playerScript.bulletSpeed = 3f;
+            moveSpeed = 7f;
+        }
+
     }
 }
