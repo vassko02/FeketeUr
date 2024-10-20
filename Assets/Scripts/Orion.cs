@@ -39,7 +39,7 @@ public class Orion : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnEnable()
     {
-        originalPosition = transform.position;
+        originalPosition = new Vector3(0, 0, 0);
         originalRotation = transform.rotation;
 
         progressManager = GameObject.FindWithTag("ProgressManager");
@@ -77,7 +77,6 @@ public class Orion : MonoBehaviour
             shootTimer = 0f; // Az idõzítõ visszaállítása
         }
     }
-
     private void Shoot()
     {
         Vector3 spawnPosition = transform.position;

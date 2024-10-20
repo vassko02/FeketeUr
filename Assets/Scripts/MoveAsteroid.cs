@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class MoveAsteroid : MonoBehaviour
 {
-    public float speed = 5;
+    private float speed ;
+    public float minSpeed = 3;
+    public float maxSpeed = 7;
     public float deadZone =-7;
     private Player playerScript;
     public GameObject explosion;
@@ -15,6 +17,8 @@ public class MoveAsteroid : MonoBehaviour
         {
             playerScript = playerObject.GetComponent<Player>();
         }
+        speed = Random.Range(minSpeed, maxSpeed);
+
     }
 
     // Update is called once per frame
@@ -28,13 +32,17 @@ public class MoveAsteroid : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Instantiate(explosion, transform.position, Quaternion.identity);
-
-        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        if (collision.gameObject.tag != "Asteroid")
         {
-            Destroy(collision.gameObject);
-            playerScript.AddToScore(10);
-            Destroy(gameObject);
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
+            if (collision.gameObject.CompareTag("PlayerProjectile"))
+            {
+                Destroy(collision.gameObject);
+                playerScript.AddToScore(10);
+                Destroy(gameObject);
+            }
         }
+
     }
 }

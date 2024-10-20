@@ -31,6 +31,12 @@ public class ProgressManager : MonoBehaviour
             elapsedTime = PlayerPrefs.GetFloat("progress");
 
         }
+        elapsedTime = 271f;
+        midBossFight=true;
+        ToggleSpawner(enemySpawnerObject, false);
+        ToggleSpawner(asteroidSpawnerObject, false);
+        ToggleSpawner(buffSpawnerObject, false);
+
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
@@ -93,7 +99,7 @@ public class ProgressManager : MonoBehaviour
             {
                 ToggleSpawner(enemySpawnerObject,false); 
                 ToggleSpawner(asteroidSpawnerObject, false);
-
+                DestroyAllEnemies();
                 midBossFight = true;
 
                 //ELSÕ BOSS DIALOG
@@ -142,7 +148,7 @@ public class ProgressManager : MonoBehaviour
             {
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, false);
-
+                DestroyAllEnemies();
                 midBossFight = true;
 
                 //MÁSODIK BOSS DIALOG
@@ -151,13 +157,36 @@ public class ProgressManager : MonoBehaviour
                 //MÁSODIK A BOSS UTÁN DIALOG
 
             }
-            else if (elapsedTime==181)
+            else if (elapsedTime==181f)
             {
-                enemySpawner.spawnColor = Color.yellow;
+                enemySpawner.spawnColor = Color.white;
                 enemySpawner.enemyLimit = 4;
-                buffSpawner.spawnRate = 20f;
+                buffSpawner.spawnRate = 6f;
                 ToggleSpawner(enemySpawnerObject, true);
-                ToggleSpawner(asteroidSpawnerObject,false);
+                enemySpawner.enemiesPerSpawn = 2;
+                enemySpawner.spawnRate = 3f;
+                ToggleSpawner(asteroidSpawnerObject,true);
+                asteroidSpawner.spawnRate = 1f;
+                asteroidSpawner.asteroidsPerSpawn = 2;
+            }
+            else if (elapsedTime == 200f)
+            {
+                ToggleSpawner(enemySpawnerObject,false);
+                asteroidSpawner.asteroidsPerSpawn= 5;
+            }
+            else if (elapsedTime == 220f)
+            {
+                ToggleSpawner(asteroidSpawnerObject, false);
+                ToggleSpawner(enemySpawnerObject,true);
+                enemySpawner.enemiesPerSpawn = 3;
+                enemySpawner.spawnRate = 3f;
+            }
+            else if(elapsedTime==250f)
+            {
+                ToggleSpawner(enemySpawnerObject,false);
+                ToggleSpawner(asteroidSpawnerObject,true);
+                asteroidSpawner.asteroidsPerSpawn = 4;
+                asteroidSpawner.spawnRate = 3f;
             }
             else if (elapsedTime == 270f)
             {
@@ -169,8 +198,6 @@ public class ProgressManager : MonoBehaviour
                 //HARMADIK A BOSS UTÁN DIALOG
 
                 //WIN SCREEN
-
-                midBossFight = false;
             }
             // Egy másodperc várakozás
             if (!midBossFight)
@@ -205,5 +232,13 @@ public class ProgressManager : MonoBehaviour
     void ToggleSpawner(GameObject spawner, bool active)
     {
         spawner.SetActive(active);
+    }
+     void DestroyAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
     }
 }

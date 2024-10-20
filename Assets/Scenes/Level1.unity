@@ -430,6 +430,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 0.5
+--- !u!1 &168372422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2677739805289773744, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+  m_PrefabInstance: {fileID: 676934487}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &168372428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168372422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6e206052bf4c543b051ca383b0905e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRadius: 5
 --- !u!1 &262443547
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +663,7 @@ Transform:
   m_GameObject: {fileID: 425768636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.03, y: 3.8, z: 0}
+  m_LocalPosition: {x: -0.03, y: 6.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1219,7 +1237,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2677739805289773744, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 168372428}
   m_SourcePrefab: {fileID: 100100000, guid: 65cd392f47718124883afa65b15f672b, type: 3}
 --- !u!1 &678603235
 GameObject:
@@ -1911,8 +1932,8 @@ MonoBehaviour:
   - {fileID: 5251068166364753572, guid: 1cfafe33e0029dc44aa1c2cbc6d4bbcb, type: 3}
   - {fileID: 4194529989643242772, guid: f1e0af0008de2184988316a4696a1a0a, type: 3}
   - {fileID: 7141837119454658375, guid: 60cf783eb8e32bb49904e09c8f233aa5, type: 3}
-  - {fileID: 5251068166364753572, guid: 1cfafe33e0029dc44aa1c2cbc6d4bbcb, type: 3}
   - {fileID: 891219990182606169, guid: 9041dc0c9d85ad44a8c5fad96a048385, type: 3}
+  - {fileID: 5251068166364753572, guid: 1cfafe33e0029dc44aa1c2cbc6d4bbcb, type: 3}
   spawnRate: 15
 --- !u!4 &891102708
 Transform:

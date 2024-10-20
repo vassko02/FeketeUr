@@ -133,22 +133,37 @@ public class Player : MonoBehaviour
         {
             // Lövedékek létrehozása
             float offset = 0.4f;
-            int bulletDamage = hasDamageBuff ? buffedBulletDamage : normalBulletDamage; // A sebzés meghatározása
-
+            int bulletDamage;
+            Color bulletColor;
+            if (hasDamageBuff)
+            {
+                bulletDamage = buffedBulletDamage;
+                bulletColor = Color.yellow;
+            }
+            else
+            {
+                bulletDamage = normalBulletDamage;
+                bulletColor = Color.white;
+            }
             GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
 
             Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
+            SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
             if (bulletScriptL != null)
             {
                 bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
                 bulletScriptL.speed = bulletSpeed;
+                renderer.color = bulletColor;
             }
             Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
+             renderer = bulletRight.GetComponent<SpriteRenderer>();
+
             if (bulletScriptR != null)
             {
                 bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
                 bulletScriptR.speed = bulletSpeed;
+                renderer.color = bulletColor;
 
             }
         }
