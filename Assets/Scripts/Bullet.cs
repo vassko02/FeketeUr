@@ -76,6 +76,15 @@ public class Bullet : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
+            if (collision.gameObject.CompareTag("Nyx"))
+            {
+                Nyx nyx = collision.gameObject.GetComponent<Nyx>();
+                if (nyx != null)
+                {
+                    nyx.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
+            }
         }      
     }
 }
