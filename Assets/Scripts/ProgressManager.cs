@@ -31,8 +31,6 @@ public class ProgressManager : MonoBehaviour
             elapsedTime = PlayerPrefs.GetFloat("progress");
 
         }
-        elapsedTime = 271f;
-        midBossFight=true;
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, false);
@@ -190,10 +188,13 @@ public class ProgressManager : MonoBehaviour
             }
             else if (elapsedTime == 270f)
             {
+                ToggleSpawner(enemySpawnerObject, false);
+                ToggleSpawner(asteroidSpawnerObject, false);
+                DestroyAllEnemies();
                 midBossFight = true;
                 //HARMADIK BOSS DIALOG
 
-                //HARMADIK BOSSFIGHT
+                bosses[2].SetActive(true);
 
                 //HARMADIK A BOSS UTÁN DIALOG
 
@@ -208,7 +209,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            //Debug.Log(elapsedTime);
+            Debug.Log(elapsedTime);
         }
 
     }

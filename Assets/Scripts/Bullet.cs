@@ -37,7 +37,6 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if ((gameObject.tag == "PlayerProjectile" && collision.gameObject.tag == "Player")||(collision.gameObject.tag=="Asteroid")||collision.gameObject.tag=="EnemyProjectile" || collision.gameObject.tag == "PlayerProjectile") { }
         else
         {
