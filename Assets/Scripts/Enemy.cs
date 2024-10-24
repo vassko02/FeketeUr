@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         SeparateEnemies(); // Elkülönítés hozzáadása
 
         // Az ellenség lövése
-        if (Time.time > nextFireTime)
+        if (Time.deltaTime > nextFireTime)
         {
             if (player != null)
             {
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
                 if (Mathf.Abs(player.transform.position.x - transform.position.x) <= shootRange)
                 {
                     Shoot();
-                    nextFireTime = Time.time + fireRate;
+                    nextFireTime = Time.deltaTime + fireRate;
                 }
             }
         }

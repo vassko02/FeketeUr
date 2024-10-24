@@ -1426,7 +1426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &714874807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1442,8 +1442,16 @@ MonoBehaviour:
   maxHealth: 2500
   currentHealth: 0
   healthBar: {fileID: 807946326}
-  moveSpeed: 3
   overlay: {fileID: 485472222}
+  cursedFieldObject: {fileID: 3032667068889680216, guid: 4921810a8dd83ea4db6b9c59add49cc7, type: 3}
+  minWidth: 3
+  maxWidth: 10
+  minHeight: 3
+  maxHeight: 10
+  damage: 20
+  delayBeforeDamage: 1.3
+  attackInterval: 5
+  moveSpeed: 6
 --- !u!212 &714874808
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1487,7 +1495,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 73e2bbb1a5116924abf0a2bd87976b0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1508,7 +1516,7 @@ Transform:
   m_GameObject: {fileID: 714874806}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 3.26, z: 0}
+  m_LocalPosition: {x: 0.85, y: 6.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2420,6 +2428,7 @@ MonoBehaviour:
   bosses:
   - {fileID: 863725203}
   - {fileID: 425768636}
+  - {fileID: 714874806}
   midBossFight: 0
 --- !u!4 &1077108455
 Transform:

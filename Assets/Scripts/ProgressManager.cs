@@ -197,15 +197,18 @@ public class ProgressManager : MonoBehaviour
 
                 //HARMADIK A BOSS UTÁN DIALOG
 
-                //WIN SCREEN
             }
             // Egy másodperc várakozás
+            else if (elapsedTime==271f)
+            {
+                //WIN SCREEN
+            }
             if (!midBossFight)
             {
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
         }
 
     }

@@ -178,17 +178,21 @@ public class Player : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (currentHealth - damage > 0)
+        if (hasShiledBuff==false)
         {
-            currentHealth -= damage;
-        }
-        else
-        {
-            currentHealth -= damage;
+            if (currentHealth - damage > 0)
+            {
+                currentHealth -= damage;
+            }
+            else
+            {
+                currentHealth -= damage;
 
-            GameOver();
+                GameOver();
+            }
+            healthBar.setHealth(currentHealth);
         }
-        healthBar.setHealth(currentHealth);
+
     }
     public void GameOver()
     {
@@ -244,52 +248,39 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(20);
-            }
-            else
-            {
-                AddToScore(10);
-            }
+            TakeDamage(20);
+            AddToScore(10);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(25);
-            }
+            TakeDamage(25);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(35);
-            }
+            TakeDamage(35);
+            AddToScore(20);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Kronis"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(50);
-            }
+            TakeDamage(50);
         }
         if (collision.gameObject.CompareTag("Orion"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(50);
-            }
+            TakeDamage(50);
+        }
+        if (collision.gameObject.CompareTag("Nyx"))
+        {
+            TakeDamage(50);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("HealBuff"))
         {
-            Heal(20);
+            Heal(30);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("DamageBuff"))
@@ -313,9 +304,7 @@ public class Player : MonoBehaviour
         {
             scoreIncrement += 2;
             Destroy(collision.gameObject);
-
         }
-
     }
     void ActivateDamageBuff()
     {

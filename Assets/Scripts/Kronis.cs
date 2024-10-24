@@ -57,7 +57,10 @@ public class Kronis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (player != null)
+        {
+            Move();
+        }
         // Frissítsd az idõzítõt
         attackTimer += Time.deltaTime;
 
