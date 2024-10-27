@@ -6,10 +6,7 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverScreen;
     public void restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
-    }
-    public void gameOver()
-    {
-        gameOverScreen.SetActive(true);
     }
 }

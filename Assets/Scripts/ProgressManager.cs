@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 
 public class ProgressManager : MonoBehaviour
@@ -18,6 +19,11 @@ public class ProgressManager : MonoBehaviour
     public List<GameObject> bosses;
 
     public bool midBossFight = false;
+
+    public GameObject healthBar;
+    public Text scoreUI;
+    public Text yourScore;
+    public GameObject winScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +41,8 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, false);
 
+        midBossFight=true;
+        elapsedTime = 270f;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
@@ -202,7 +210,14 @@ public class ProgressManager : MonoBehaviour
             // Egy másodperc várakozás
             else if (elapsedTime==271f)
             {
-                //WIN SCREEN
+                PlayerPrefs.SetInt("alive",0);
+                yourScore.text=scoreUI.text;
+
+                healthBar.SetActive(false);
+                scoreUI.gameObject.SetActive(false);
+
+                winScreen.SetActive(true);
+                Time.timeScale = 0f;
             }
             if (!midBossFight)
             {

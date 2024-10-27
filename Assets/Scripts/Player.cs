@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
     private float nextScoreIncreaseTime = 0f;
 
     public Text scoreText; // UI Text, ami megjeleníti a score-t
-
+    public Text buffPicupText;
     void Start()
     {
         if (PlayerPrefs.GetInt("isAlive") != 0 && PlayerPrefs.GetInt("continue")==1)
@@ -196,8 +197,11 @@ public class Player : MonoBehaviour
     }
     public void GameOver()
     {
-        BuffUI.SetActive(false);
+        Time.timeScale = 0f;
 
+        BuffUI.SetActive(false);
+        healthBar.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
 
         GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
         GameObject buffSpawner = GameObject.FindWithTag("BuffSpawner");
@@ -278,23 +282,28 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        buffPicupText.gameObject.SetActive(true);
         if (collision.gameObject.CompareTag("HealBuff"))
         {
+            buffPicupText.text = "Healed for 30 HP!";
             Heal(30);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("DamageBuff"))
         {
             ActivateDamageBuff();
+            buffPicupText.text = "Damage increased for 5s!";
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("ShieldBuff"))
         {
             ActivateShieldBuff();
+            buffPicupText.text = "Shield activated for 5s!";
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("MaxHealthBuff"))
         {
+            buffPicupText.text = "Maximum health increased!";
             maxHealt += 20;
             healthBar.SetMaxHealth(maxHealt, true);
             Heal(20);
@@ -302,10 +311,19 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("ScoreBuff"))
         {
+            buffPicupText.text = "Score multiplier increased!";
             scoreIncrement += 2;
             Destroy(collision.gameObject);
         }
+        StartCoroutine(ToggleBuffPicup(2f));
     }
+
+    private IEnumerator ToggleBuffPicup(float v)
+    {
+        yield return new WaitForSeconds(v);
+        buffPicupText.gameObject.SetActive(false);
+    }
+
     void ActivateDamageBuff()
     {
         hasDamageBuff = true; // Buff aktiválva
