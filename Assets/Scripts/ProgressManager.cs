@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 
 public class ProgressManager : MonoBehaviour
@@ -9,10 +10,12 @@ public class ProgressManager : MonoBehaviour
     public GameObject buffSpawnerObject;
     public GameObject enemySpawnerObject;
     public GameObject asteroidSpawnerObject;
+    public GameObject dialogManagerObject;
 
     private SpawnBuffs buffSpawner;
     private SpawnEnemy enemySpawner;
     private SpawnAsteroid asteroidSpawner;
+    private DialogManager dialogManager;
 
     private float totalTimerDuration = 600f; // Teljes idõtartam
     public float elapsedTime = 0f;
@@ -24,6 +27,9 @@ public class ProgressManager : MonoBehaviour
     public Text scoreUI;
     public Text yourScore;
     public GameObject winScreen;
+    public List<GameObject> dialogIcons;
+    public bool midDialog;
+    public bool doneWithDialog=false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +37,7 @@ public class ProgressManager : MonoBehaviour
         buffSpawner = buffSpawnerObject.GetComponent<SpawnBuffs>();
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
-
+        dialogManager= dialogManagerObject.GetComponent<DialogManager>();
         if (PlayerPrefs.GetInt("continue")==1)
         {
             elapsedTime = PlayerPrefs.GetFloat("progress");
@@ -40,9 +46,6 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, false);
-
-        midBossFight=true;
-        elapsedTime = 270f;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
@@ -52,17 +55,26 @@ public class ProgressManager : MonoBehaviour
             // Idõzített események különbözõ idõpontokban
             if (elapsedTime == 0f)
             {
-                enemySpawner.enemyLimit = 2;
-                ToggleSpawner(buffSpawnerObject,true);
-                ToggleSpawner(enemySpawnerObject, false);
-                ToggleSpawner(asteroidSpawnerObject, true);
-                enemySpawner.spawnColor = Color.green;
-                asteroidSpawner.spawnRate = 1f;
-                asteroidSpawner.asteroidsPerSpawn = 1;
+                if (doneWithDialog!=true)
+                {
+                    midDialog = true;
+                    StartDialog("#TALK1", dialogIcons[3]);
 
+                }
+                if (midDialog==false&&doneWithDialog==true) 
+                {
+                    enemySpawner.enemyLimit = 2;
+                    ToggleSpawner(buffSpawnerObject, true);
+                    ToggleSpawner(enemySpawnerObject, false);
+                    ToggleSpawner(asteroidSpawnerObject, true);
+                    enemySpawner.spawnColor = Color.green;
+                    asteroidSpawner.spawnRate = 1f;
+                    asteroidSpawner.asteroidsPerSpawn = 1;
+                }
             }
             else if (elapsedTime == 10f )
             {
+                doneWithDialog = false;
                 asteroidSpawner.asteroidsPerSpawn = 2;
             }
             else if (elapsedTime == 15f)
@@ -219,7 +231,7 @@ public class ProgressManager : MonoBehaviour
                 winScreen.SetActive(true);
                 Time.timeScale = 0f;
             }
-            if (!midBossFight)
+            if (!midBossFight&&!midDialog)
             {
                 elapsedTime += 1f;
             }
@@ -228,6 +240,16 @@ public class ProgressManager : MonoBehaviour
         }
 
     }
+
+    private void StartDialog(string key,GameObject leftCharacter)
+    {
+        doneWithDialog = true;
+        dialogManager.rightCharacter = dialogIcons[0];
+        dialogManager.leftCharacter = leftCharacter;
+        dialogManager.currentTalkKey = key;
+        dialogManagerObject.SetActive(true);
+    }
+
     // Update is called once per frame
     void Update()
     {

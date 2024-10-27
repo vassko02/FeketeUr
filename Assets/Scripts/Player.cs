@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Time.time >= nextScoreIncreaseTime&&progressManager.gameObject.GetComponent<ProgressManager>().midBossFight==false)
+        if (Time.time >= nextScoreIncreaseTime&&progressManager.gameObject.GetComponent<ProgressManager>().midBossFight==false && progressManager.gameObject.GetComponent<ProgressManager>().midDialog == false)
         {
             score += scoreIncrement;
             nextScoreIncreaseTime = Time.time + scoreIncreaseRate;

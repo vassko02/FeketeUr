@@ -122,6 +122,7 @@ MonoBehaviour:
   scoreIncreaseRate: 0.5
   scoreIncrement: 5
   scoreText: {fileID: 0}
+  buffPicupText: {fileID: 0}
 --- !u!50 &-7387240489761417081
 Rigidbody2D:
   serializedVersion: 5
