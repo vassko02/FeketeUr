@@ -109,3 +109,4 @@ MonoBehaviour:
   maxHealt: 100
   currentHealth: 0
   healthBar: {fileID: 0}
+  gameOverScreen: {fileID: 0}

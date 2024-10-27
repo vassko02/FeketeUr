@@ -36,18 +36,14 @@ public class intro : MonoBehaviour
     void Update()
     {
         transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
-        if (transform.position.y > deadzone && playeddialog == false)
+        if (transform.position.y > deadzone)
         {
-            TriggerDialog();
-            playeddialog = true;
-            //SceneManager.LoadSceneAsync("Level1");
+            
+            SceneManager.LoadSceneAsync("Level1");
 
         }
     }
-    public void TriggerDialog()
-    {
-        FindFirstObjectByType<DialogManager>().StartDialog("#TALK1");
-    }
+ 
     public string GetTextByKeyword(string keyword)
     {
         bool keywordFound = false;
