@@ -107,7 +107,7 @@ public class Kronis : MonoBehaviour
             playerScript.bulletSpeed = 10f;
 
             healthBar.gameObject.SetActive(false);
-
+            progressManagerScript.doneWithDialog = false;
             progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
             GameObject[] kronisAttacks = GameObject.FindGameObjectsWithTag("KronisAttack");
@@ -118,6 +118,7 @@ public class Kronis : MonoBehaviour
                 Destroy(kronisAttack);
             }
             Destroy(gameObject);
+            
         }
         healthBar.setHealth(currentHealth);
     }

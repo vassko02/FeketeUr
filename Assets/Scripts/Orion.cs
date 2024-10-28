@@ -140,7 +140,7 @@ public class Orion : MonoBehaviour
             playerScript.bulletSpeed = 10f;
 
             healthBar.gameObject.SetActive(false);
-
+            progressManagerScript.doneWithDialog = false;
             progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
 

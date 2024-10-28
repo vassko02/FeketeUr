@@ -30,6 +30,7 @@ public class ProgressManager : MonoBehaviour
     public List<GameObject> dialogIcons;
     public bool midDialog;
     public bool doneWithDialog=false;
+    public bool doneWithBoss=false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -46,6 +47,7 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, false);
+        elapsedTime = 269f;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
@@ -59,7 +61,6 @@ public class ProgressManager : MonoBehaviour
                 {
                     midDialog = true;
                     StartDialog("#TALK1", dialogIcons[3]);
-
                 }
                 if (midDialog==false&&doneWithDialog==true) 
                 {
@@ -119,25 +120,41 @@ public class ProgressManager : MonoBehaviour
                 ToggleSpawner(asteroidSpawnerObject, false);
                 DestroyAllEnemies();
                 midBossFight = true;
-
                 //ELSÕ BOSS DIALOG
-
-                bosses[0].SetActive(true);
-
-                //DIALOG A BOSS UTÁN DIALOG
-
+                if (doneWithDialog != true)
+                {
+                    midDialog = true;
+                    StartDialog("#PREKRONIS", dialogIcons[2]);
+                  
+                }
+                if (midDialog == false && doneWithDialog == true)
+                {
+                    bosses[0].SetActive(true);
+                }
             }
             else if (elapsedTime==91f)
             {
-                enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
-                enemySpawner.enemyLimit = 3;
-                buffSpawner.spawnRate = 15f;
-                ToggleSpawner(asteroidSpawnerObject, true);
-                asteroidSpawner.asteroidsPerSpawn = 3;
-                asteroidSpawner.spawnRate = 1.5f;
+                
+                //DIALOG A BOSS UTÁN DIALOG
+                if (doneWithDialog == false)
+                {
+                    midDialog = true;
+                    StartDialog("#AFTERKRONIS", dialogIcons[2]);
+                   
+                }
+                else if (midDialog == false && doneWithDialog == true) 
+                {
+                    enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
+                    enemySpawner.enemyLimit = 3;
+                    buffSpawner.spawnRate = 15f;
+                    ToggleSpawner(asteroidSpawnerObject, true);
+                    asteroidSpawner.asteroidsPerSpawn = 3;
+                    asteroidSpawner.spawnRate = 1.5f;
+                }
             }
             else if (elapsedTime==110f)
             {
+                doneWithDialog = false;
                 ToggleSpawner(asteroidSpawnerObject,false);
                 ToggleSpawner(enemySpawnerObject,true);
                 enemySpawner.spawnRate = 3f;
@@ -170,25 +187,43 @@ public class ProgressManager : MonoBehaviour
                 midBossFight = true;
 
                 //MÁSODIK BOSS DIALOG
+                if (doneWithDialog != true)
+                {
+                    midDialog = true;
+                    StartDialog("#PREORION", dialogIcons[3]);
 
-                bosses[1].SetActive(true);
-                //MÁSODIK A BOSS UTÁN DIALOG
+                }
+                if (midDialog == false && doneWithDialog == true)
+                {
+                    bosses[1].SetActive(true);
+                }
 
             }
             else if (elapsedTime==181f)
             {
-                enemySpawner.spawnColor = Color.white;
-                enemySpawner.enemyLimit = 4;
-                buffSpawner.spawnRate = 6f;
-                ToggleSpawner(enemySpawnerObject, true);
-                enemySpawner.enemiesPerSpawn = 2;
-                enemySpawner.spawnRate = 3f;
-                ToggleSpawner(asteroidSpawnerObject,true);
-                asteroidSpawner.spawnRate = 1f;
-                asteroidSpawner.asteroidsPerSpawn = 2;
+                //MÁSODIK A BOSS UTÁN DIALOG
+                if (doneWithDialog == false)
+                {
+                    midDialog = true;
+                    StartDialog("#AFTERORION", dialogIcons[3]);
+
+                }
+                else if (midDialog == false && doneWithDialog == true)
+                {
+                    enemySpawner.spawnColor = Color.white;
+                    enemySpawner.enemyLimit = 4;
+                    buffSpawner.spawnRate = 6f;
+                    ToggleSpawner(enemySpawnerObject, true);
+                    enemySpawner.enemiesPerSpawn = 2;
+                    enemySpawner.spawnRate = 3f;
+                    ToggleSpawner(asteroidSpawnerObject, true);
+                    asteroidSpawner.spawnRate = 1f;
+                    asteroidSpawner.asteroidsPerSpawn = 2;
+                }
             }
             else if (elapsedTime == 200f)
             {
+                doneWithDialog = false;
                 ToggleSpawner(enemySpawnerObject,false);
                 asteroidSpawner.asteroidsPerSpawn= 5;
             }
@@ -213,8 +248,16 @@ public class ProgressManager : MonoBehaviour
                 DestroyAllEnemies();
                 midBossFight = true;
                 //HARMADIK BOSS DIALOG
+                if (doneWithDialog != true)
+                {
+                    midDialog = true;
+                    StartDialog("#PRENYX", dialogIcons[4]);
 
-                bosses[2].SetActive(true);
+                }
+                if (midDialog == false && doneWithDialog == true)
+                {
+                    bosses[2].SetActive(true);
+                }
 
                 //HARMADIK A BOSS UTÁN DIALOG
 
@@ -222,14 +265,23 @@ public class ProgressManager : MonoBehaviour
             // Egy másodperc várakozás
             else if (elapsedTime==271f)
             {
-                PlayerPrefs.SetInt("alive",0);
-                yourScore.text=scoreUI.text;
+                if (doneWithDialog == false)
+                {
+                    midDialog = true;
+                    StartDialog("#AFTERNYX", dialogIcons[4]);
 
-                healthBar.SetActive(false);
-                scoreUI.gameObject.SetActive(false);
+                }
+                else if (midDialog == false && doneWithDialog == true)
+                {
+                    PlayerPrefs.SetInt("alive", 0);
+                    yourScore.text = scoreUI.text;
 
-                winScreen.SetActive(true);
-                Time.timeScale = 0f;
+                    healthBar.SetActive(false);
+                    scoreUI.gameObject.SetActive(false);
+
+                    winScreen.SetActive(true);
+                    Time.timeScale = 0f;
+                }
             }
             if (!midBossFight&&!midDialog)
             {
@@ -243,7 +295,7 @@ public class ProgressManager : MonoBehaviour
 
     private void StartDialog(string key,GameObject leftCharacter)
     {
-        doneWithDialog = true;
+        
         dialogManager.rightCharacter = dialogIcons[0];
         dialogManager.leftCharacter = leftCharacter;
         dialogManager.currentTalkKey = key;

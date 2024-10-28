@@ -117,6 +117,7 @@ public class DialogManager : MonoBehaviour
         Destroy(characterInstance2);
         Destroy(textbubbleinstance);
         progressManager.midDialog = false;
+        progressManager.doneWithDialog = true;
         dialogText.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
