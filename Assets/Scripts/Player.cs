@@ -357,22 +357,34 @@ public class Player : MonoBehaviour
 
     public void SaveGame()
     {
-
-        PlayerPrefs.SetString("playerName", playerName);
-        PlayerPrefs.SetInt("score", score);
-        PlayerPrefs.SetInt("maxHealth", maxHealt);
-        PlayerPrefs.SetInt("currentHealth",currentHealth);
-        PlayerPrefs.SetFloat("progress", 0);
-        PlayerPrefs.SetInt("scoreIncement",scoreIncrement);
+        SaveManager.Instance.currentRunData.PlayerName = playerName;
+        SaveManager.Instance.currentRunData.CurrentHealth = currentHealth;
+        SaveManager.Instance.currentRunData.MaxHealth = maxHealt;
+        SaveManager.Instance.currentRunData.ScoreIncrement = scoreIncrement;
+        SaveManager.Instance.currentRunData.Score = score;
+        SaveManager.Instance.currentRunData.ElapsedTime = progressManager.elapsedTime;
+        // Mentjük a currentRun adatokat
+        SaveManager.Instance.SaveCurrentRun();
     }
     public void LoadGame()
     {
-        this.currentHealth = PlayerPrefs.GetInt("currentHealth", maxHealt);
-        this.maxHealt = PlayerPrefs.GetInt("maxHealt", maxHealt);
-        this.score = PlayerPrefs.GetInt("score", 0);
-        this.playerName = PlayerPrefs.GetString("playerName", "Player");
-        this.scoreIncrement = PlayerPrefs.GetInt("scoreIncrement",5);
-        healthBar.SetMaxHealth(maxHealt, true);
-        healthBar.setHealth(currentHealth);
+        SaveManager.Instance.LoadCurrentRun();
+        if (SaveManager.Instance.currentRunData != null) // Ellenõrizd, hogy az adatok betöltõdtek
+        {
+            this.currentHealth = SaveManager.Instance.currentRunData.CurrentHealth;
+            this.maxHealt = SaveManager.Instance.currentRunData.MaxHealth;
+            this.score = SaveManager.Instance.currentRunData.Score;
+            this.playerName = SaveManager.Instance.currentRunData.PlayerName;
+            this.scoreIncrement = SaveManager.Instance.currentRunData.ScoreIncrement;
+
+            healthBar.SetMaxHealth(maxHealt, true);
+            healthBar.setHealth(currentHealth);
+
+        }
+        else
+        {
+            Debug.LogError("Failed to load CurrentRun data.");
+        }
+
     }
 }

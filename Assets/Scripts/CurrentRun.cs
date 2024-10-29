@@ -1,5 +1,6 @@
 using System.IO;
 
+[System.Serializable]
 public class CurrentRun
 {
     public string PlayerName { get; set; }
@@ -17,5 +18,9 @@ public class CurrentRun
         this.CurrentHealth = currentHealth;
         this.ScoreIncrement = scoreIncrement;
         this.ElapsedTime = ElapsedTime;
+    }
+    public CurrentRun()
+    {
+            
     }
 }

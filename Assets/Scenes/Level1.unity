@@ -2889,7 +2889,7 @@ MonoBehaviour:
   enemySpawnerObject: {fileID: 374841222}
   asteroidSpawnerObject: {fileID: 1850221421}
   dialogManagerObject: {fileID: 909222938}
-  elapsedTime: 89
+  elapsedTime: 0
   bosses:
   - {fileID: 863725203}
   - {fileID: 425768636}

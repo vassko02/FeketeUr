@@ -287,7 +287,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
         }
 
     }

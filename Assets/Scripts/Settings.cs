@@ -1,3 +1,5 @@
+[System.Serializable]
+
 public class Settings
 {
     public float SFXVolume { get; set; }
