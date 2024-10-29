@@ -12,4 +12,8 @@ public class Settings
         MusicVolume = musicVolume;
         Resolution = resolution;
     }
+    public Settings()
+    {
+            
+    }
 }

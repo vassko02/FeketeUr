@@ -3,12 +3,12 @@ using System.IO;
 [System.Serializable]
 public class CurrentRun
 {
-    public string PlayerName { get; set; }
-    public int Score { get; set; }
-    public float ElapsedTime { get; set; }
-    public int MaxHealth { get; set; }
-    public int CurrentHealth { get; set; }
-    public int ScoreIncrement { get; set; }
+    public string PlayerName;
+    public int Score;
+    public float ElapsedTime;
+    public int MaxHealth;
+    public int CurrentHealth;
+    public int ScoreIncrement;
 
     public CurrentRun(string playerName, int Score,int MaxHealth,int currentHealth, int scoreIncrement,float ElapsedTime)
     {

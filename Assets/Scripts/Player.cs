@@ -57,8 +57,7 @@ public class Player : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("isAlive") != 0 && PlayerPrefs.GetInt("continue")==1)
         {
-
-                LoadGame();
+            LoadGame();
         }
 
         PlayerPrefs.SetInt("isAlive", 1);
@@ -357,25 +356,25 @@ public class Player : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveManager.Instance.currentRunData.PlayerName = playerName;
-        SaveManager.Instance.currentRunData.CurrentHealth = currentHealth;
-        SaveManager.Instance.currentRunData.MaxHealth = maxHealt;
-        SaveManager.Instance.currentRunData.ScoreIncrement = scoreIncrement;
-        SaveManager.Instance.currentRunData.Score = score;
-        SaveManager.Instance.currentRunData.ElapsedTime = progressManager.elapsedTime;
+        SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
+        SaveManager.Instance.saveData.currentRunData.CurrentHealth = currentHealth;
+        SaveManager.Instance.saveData.currentRunData.MaxHealth = maxHealt;
+        SaveManager.Instance.saveData.currentRunData.ScoreIncrement = scoreIncrement;
+        SaveManager.Instance.saveData.currentRunData.Score = score;
+        SaveManager.Instance.saveData.currentRunData.ElapsedTime = progressManager.elapsedTime;
         // Mentjük a currentRun adatokat
-        SaveManager.Instance.SaveCurrentRun();
+        SaveManager.Instance.Save();
     }
     public void LoadGame()
     {
-        SaveManager.Instance.LoadCurrentRun();
-        if (SaveManager.Instance.currentRunData != null) // Ellenõrizd, hogy az adatok betöltõdtek
+        SaveManager.Instance.Load();
+        if (SaveManager.Instance.saveData.currentRunData != null) // Ellenõrizd, hogy az adatok betöltõdtek
         {
-            this.currentHealth = SaveManager.Instance.currentRunData.CurrentHealth;
-            this.maxHealt = SaveManager.Instance.currentRunData.MaxHealth;
-            this.score = SaveManager.Instance.currentRunData.Score;
-            this.playerName = SaveManager.Instance.currentRunData.PlayerName;
-            this.scoreIncrement = SaveManager.Instance.currentRunData.ScoreIncrement;
+            this.currentHealth = SaveManager.Instance.saveData.currentRunData.CurrentHealth;
+            this.maxHealt = SaveManager.Instance.saveData.currentRunData.MaxHealth;
+            this.score = SaveManager.Instance.saveData.currentRunData.Score;
+            this.playerName = SaveManager.Instance.saveData.currentRunData.PlayerName;
+            this.scoreIncrement = SaveManager.Instance.saveData.currentRunData.ScoreIncrement;
 
             healthBar.SetMaxHealth(maxHealt, true);
             healthBar.setHealth(currentHealth);

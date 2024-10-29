@@ -4,11 +4,8 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
-
+    public SaveData saveData;
     // High Scores, Settings, és a Current Session Data
-    public List<HighScore> highScoresData = new List<HighScore>();
-    public Settings settingsData;
-    public CurrentRun currentRunData;
     private void Awake()
     {
         if (Instance == null)
@@ -23,24 +20,47 @@ public class SaveManager : MonoBehaviour
     }
     public void AddHighScore(HighScore newHS)
     {
-        highScoresData.Add(newHS);
-        highScoresData.Sort((a, b) => b.Score.CompareTo(a.Score)); // Descending order
-        if (highScoresData.Count > 10) // Keep only top 10 scores
+        saveData.highScoresData.Add(newHS);
+        saveData.highScoresData.Sort((a, b) => b.Score.CompareTo(a.Score)); // Descending order
+        if (saveData.highScoresData.Count > 10) // Keep only top 10 scores
         {
-            highScoresData.RemoveAt(highScoresData.Count - 1);
+            saveData.highScoresData.RemoveAt(saveData.highScoresData.Count - 1);
         }
     }
-    public void UpdateCurrentRun(string playerName, int score, float elapsedTime, int maxHealth, int currentHealth, int scoreIncrement)
+    public void Save()
     {
-        currentRunData = new CurrentRun(playerName, score, maxHealth, currentHealth, scoreIncrement, elapsedTime);
+        string json = JsonUtility.ToJson(Instance.saveData, true);
+        Debug.Log(json);
+        PlayerPrefs.SetString("GameData", json);
+        PlayerPrefs.Save();
     }
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("GameData"))
+        {
+            string json = PlayerPrefs.GetString("GameData");
+            saveData = JsonUtility.FromJson<SaveData>(json);
+        }
+        else
+        {
+            // Alapértelmezett értékeket állítunk be, ha nincs mentett adat
+            saveData.currentRunData = new CurrentRun("Player", 0, 100, 100, 5, 0f);
+            saveData.settingsData = new Settings(); // vagy alapértelmezett értékek a beállításokhoz
+        }
+    }
+
+
+
+
+
     public void SaveCurrentRun()
     {
-        if (currentRunData != null) // Ellenõrizd, hogy a CurrentRunData be van állítva
+        if (saveData.currentRunData != null) // Ellenõrizd, hogy a CurrentRunData be van állítva
         {
-            string json = JsonUtility.ToJson(currentRunData);
+            string json = JsonUtility.ToJson(saveData.currentRunData);
 
             PlayerPrefs.SetString("CurrentRun", json);
+
             PlayerPrefs.Save(); // Mentjük az adatokat
         }
         else
@@ -54,25 +74,25 @@ public class SaveManager : MonoBehaviour
         if (PlayerPrefs.HasKey("CurrentRun"))
         {
             string json = PlayerPrefs.GetString("CurrentRun");
-            currentRunData = JsonUtility.FromJson<CurrentRun>(json);
+            saveData.currentRunData = JsonUtility.FromJson<CurrentRun>(json);
         }
         else
         {
             // Ha nincs mentett adat, lehet új CurrentRun létrehozása itt
-            currentRunData = new CurrentRun("Player", 0, 100, 100, 5, 0f);
+            saveData.currentRunData = new CurrentRun("Player", 0, 100, 100, 5, 0f);
         }
     }
     public void SaveHighScores()
     {
         // Például a CurrentRun adatok mentése JSON formátumban
-        string json = JsonUtility.ToJson(highScoresData);
+        string json = JsonUtility.ToJson(saveData.highScoresData);
         PlayerPrefs.SetString("HighScores", json);
         PlayerPrefs.Save(); // Mentjük az adatokat
     }
     public void SaveSettings()
     {
         // Például a CurrentRun adatok mentése JSON formátumban
-        string json = JsonUtility.ToJson(settingsData);
+        string json = JsonUtility.ToJson(saveData.settingsData);
         PlayerPrefs.SetString("Settings", json);
         PlayerPrefs.Save(); // Mentjük az adatokat
     }

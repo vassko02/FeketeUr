@@ -31,22 +31,37 @@ public class ProgressManager : MonoBehaviour
     public bool midDialog;
     public bool doneWithDialog=false;
     public bool doneWithBoss=false;
+
+    private int index=0;
+
+    public List<float> obstacleSpawnTimes = new List<float> { 0f, 10f, 15f, 25f, 35f, 45f,60f,75f,90f,91f,110f,125f,135f,155f,180f,181f,200f,220,250f,270f,271f };
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         buffSpawner = buffSpawnerObject.GetComponent<SpawnBuffs>();
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
         dialogManager= dialogManagerObject.GetComponent<DialogManager>();
         if (PlayerPrefs.GetInt("continue")==1)
         {
-            elapsedTime = PlayerPrefs.GetFloat("progress");
-
+            SaveManager.Instance.Load();
+            float timeFromLoad = SaveManager.Instance.saveData.currentRunData.ElapsedTime;
+            Debug.Log(timeFromLoad);
+            for (int i = obstacleSpawnTimes.Count-1; i > 0; i--)
+            {
+                if (timeFromLoad > obstacleSpawnTimes[i])
+                {
+                    elapsedTime = obstacleSpawnTimes[i]-1;
+                    break;
+                }
+            }
         }
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
-        ToggleSpawner(buffSpawnerObject, false);
+        ToggleSpawner(buffSpawnerObject, true);
+        enemySpawner.enemyLimit = 2;
+        enemySpawner.spawnColor = Color.green;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
@@ -54,7 +69,7 @@ public class ProgressManager : MonoBehaviour
         while (elapsedTime < totalTimerDuration)
         {
             // Idõzített események különbözõ idõpontokban
-            if (elapsedTime == 0f)
+            if (elapsedTime == obstacleSpawnTimes[0])
             {
                 if (doneWithDialog!=true)
                 {
@@ -63,49 +78,45 @@ public class ProgressManager : MonoBehaviour
                 }
                 if (midDialog==false&&doneWithDialog==true) 
                 {
-                    enemySpawner.enemyLimit = 2;
-                    ToggleSpawner(buffSpawnerObject, true);
                     ToggleSpawner(enemySpawnerObject, false);
                     ToggleSpawner(asteroidSpawnerObject, true);
-                    enemySpawner.spawnColor = Color.green;
                     asteroidSpawner.spawnRate = 1f;
                     asteroidSpawner.asteroidsPerSpawn = 1;
                 }
             }
-            else if (elapsedTime == 10f )
+            else if (elapsedTime == obstacleSpawnTimes[1])
             {
                 doneWithDialog = false;
                 asteroidSpawner.asteroidsPerSpawn = 2;
             }
-            else if (elapsedTime == 15f)
+            else if (elapsedTime == obstacleSpawnTimes[2])
             {
                 asteroidSpawner.spawnRate = 0.5f;
             }
-            else if(elapsedTime == 25f)
+            else if(elapsedTime == obstacleSpawnTimes[3])
             {
-                ResetAsteroidSpawner();
                 ToggleSpawner(asteroidSpawnerObject, false);
                 ToggleSpawner(enemySpawnerObject,true);
                 enemySpawner.spawnRate = 2f;
             }
-            else if (elapsedTime==35f)
+            else if (elapsedTime== obstacleSpawnTimes[4])
             {
                 enemySpawner.enemiesPerSpawn = 2;
                 enemySpawner.spawnRate = 4f;
                 buffSpawner.spawnRate = 11f;
             }
-            else if (elapsedTime == 45f)
+            else if (elapsedTime == obstacleSpawnTimes[5])
             {
                 ToggleSpawner(asteroidSpawnerObject,true);
                 asteroidSpawner.spawnRate = 2f;
             }
-            else if (elapsedTime == 60f)
+            else if (elapsedTime == obstacleSpawnTimes[6])
             {
                 ToggleSpawner(enemySpawnerObject, false);
                 asteroidSpawner.asteroidsPerSpawn = 3;
                 buffSpawner.spawnRate = 7f;
             }
-            else if (elapsedTime == 75f)
+            else if (elapsedTime == obstacleSpawnTimes[7])
             {
                 ToggleSpawner(asteroidSpawnerObject, false);
                 ToggleSpawner(enemySpawnerObject, true);
@@ -113,7 +124,7 @@ public class ProgressManager : MonoBehaviour
                 enemySpawner.enemiesPerSpawn = 2;
             }
 
-            else if (elapsedTime==90f)
+            else if (elapsedTime== obstacleSpawnTimes[8])
             {
                 ToggleSpawner(enemySpawnerObject,false); 
                 ToggleSpawner(asteroidSpawnerObject, false);
@@ -131,7 +142,7 @@ public class ProgressManager : MonoBehaviour
                     bosses[0].SetActive(true);
                 }
             }
-            else if (elapsedTime==91f)
+            else if (elapsedTime== obstacleSpawnTimes[9])
             {
                 
                 //DIALOG A BOSS UTÁN DIALOG
@@ -151,7 +162,7 @@ public class ProgressManager : MonoBehaviour
                     asteroidSpawner.spawnRate = 1.5f;
                 }
             }
-            else if (elapsedTime==110f)
+            else if (elapsedTime== obstacleSpawnTimes[10])
             {
                 doneWithDialog = false;
                 ToggleSpawner(asteroidSpawnerObject,false);
@@ -160,25 +171,25 @@ public class ProgressManager : MonoBehaviour
                 enemySpawner.enemiesPerSpawn = 2;
                 buffSpawner.spawnRate = 10f;
             }
-            else if (elapsedTime==125f)
+            else if (elapsedTime== obstacleSpawnTimes[11])
             {
                 ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.asteroidsPerSpawn = 2;
                 asteroidSpawner.spawnRate = 3f;
             }
-            else if(elapsedTime==135f)
+            else if(elapsedTime== obstacleSpawnTimes[12])
             {
                 ToggleSpawner(enemySpawnerObject, false);
                 asteroidSpawner.spawnRate = 2f;
             }
-            else if (elapsedTime == 155f)
+            else if (elapsedTime == obstacleSpawnTimes[13])
             {
                 ToggleSpawner(asteroidSpawnerObject, false);
                 ToggleSpawner(enemySpawnerObject,true);
                 enemySpawner.spawnRate = 1f;
                 enemySpawner.enemiesPerSpawn = 1;
             }
-            else if (elapsedTime == 180f)
+            else if (elapsedTime == obstacleSpawnTimes[14])
             {
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, false);
@@ -198,7 +209,7 @@ public class ProgressManager : MonoBehaviour
                 }
 
             }
-            else if (elapsedTime==181f)
+            else if (elapsedTime== obstacleSpawnTimes[15])
             {
                 //MÁSODIK A BOSS UTÁN DIALOG
                 if (doneWithDialog == false)
@@ -220,27 +231,27 @@ public class ProgressManager : MonoBehaviour
                     asteroidSpawner.asteroidsPerSpawn = 2;
                 }
             }
-            else if (elapsedTime == 200f)
+            else if (elapsedTime == obstacleSpawnTimes[16])
             {
                 doneWithDialog = false;
                 ToggleSpawner(enemySpawnerObject,false);
                 asteroidSpawner.asteroidsPerSpawn= 5;
             }
-            else if (elapsedTime == 220f)
+            else if (elapsedTime == obstacleSpawnTimes[17])
             {
                 ToggleSpawner(asteroidSpawnerObject, false);
                 ToggleSpawner(enemySpawnerObject,true);
                 enemySpawner.enemiesPerSpawn = 3;
                 enemySpawner.spawnRate = 3f;
             }
-            else if(elapsedTime==250f)
+            else if(elapsedTime== obstacleSpawnTimes[18])
             {
                 ToggleSpawner(enemySpawnerObject,false);
                 ToggleSpawner(asteroidSpawnerObject,true);
                 asteroidSpawner.asteroidsPerSpawn = 4;
                 asteroidSpawner.spawnRate = 3f;
             }
-            else if (elapsedTime == 270f)
+            else if (elapsedTime == obstacleSpawnTimes[19])
             {
                 ToggleSpawner(enemySpawnerObject, false);
                 ToggleSpawner(asteroidSpawnerObject, false);
@@ -261,8 +272,7 @@ public class ProgressManager : MonoBehaviour
                 //HARMADIK A BOSS UTÁN DIALOG
 
             }
-            // Egy másodperc várakozás
-            else if (elapsedTime==271f)
+            else if (elapsedTime== obstacleSpawnTimes[20])
             {
                 if (doneWithDialog == false)
                 {
@@ -287,7 +297,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            //Debug.Log(elapsedTime);
+            Debug.Log(elapsedTime);
         }
 
     }
@@ -302,15 +312,6 @@ public class ProgressManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
-    void ResetAsteroidSpawner()
-    {
-        asteroidSpawner.spawnRate = 1f;
-        asteroidSpawner.asteroidsPerSpawn = 1;
-    }
     void ResetBuffSpawner()
     {
         buffSpawner.spawnRate = 30f;
