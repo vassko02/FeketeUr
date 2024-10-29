@@ -47,7 +47,6 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, false);
-        elapsedTime = 269f;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()

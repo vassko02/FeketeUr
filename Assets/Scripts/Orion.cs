@@ -144,6 +144,13 @@ public class Orion : MonoBehaviour
             progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
 
+            GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
+
+            // Destroy the found GameObjects
+            foreach (GameObject kronisAttack in rockets)
+            {
+                Destroy(kronisAttack);
+            }
             Destroy(gameObject);
         }
         healthBar.setHealth(currentHealth);

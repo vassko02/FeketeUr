@@ -21,6 +21,7 @@ TagManager:
   - ProgressManager
   - Orion
   - Nyx
+  - Rocket
   layers:
   - Default
   - TransparentFX
