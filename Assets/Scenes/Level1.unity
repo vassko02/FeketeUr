@@ -1615,6 +1615,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 168372428}
   m_SourcePrefab: {fileID: 100100000, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+--- !u!114 &676934488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7506917256792788974, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+  m_PrefabInstance: {fileID: 676934487}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168372422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cb1666bdb29c547aee17d1402510b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &678603235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1894bfacc4ece9a49a18fe0dc1f42afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 676934488}
   buffSpawnerObject: {fileID: 891102706}
   enemySpawnerObject: {fileID: 374841222}
   asteroidSpawnerObject: {fileID: 1850221421}
@@ -2907,7 +2919,28 @@ MonoBehaviour:
   - {fileID: 593462325280480638, guid: e732b02aa9343a44884bd99be4f2e265, type: 3}
   midDialog: 0
   doneWithDialog: 0
-  doneWithBoss: 0
+  obstacleSpawnTimes:
+  - 0
+  - 10
+  - 15
+  - 25
+  - 35
+  - 45
+  - 60
+  - 75
+  - 90
+  - 91
+  - 110
+  - 125
+  - 135
+  - 155
+  - 180
+  - 181
+  - 200
+  - 220
+  - 250
+  - 270
+  - 271
 --- !u!4 &1077108455
 Transform:
   m_ObjectHideFlags: 0

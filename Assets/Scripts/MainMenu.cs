@@ -36,6 +36,11 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("continue",1);
         SceneManager.LoadScene("Level1");
     }
+    public void LoadHighScores()
+    {
+        SaveManager.Instance.AddHighScore(new HighScore("teszdata",1000));
+        SceneManager.LoadScene("Leaderboard");
+    }
     public void Quit()
     {
         Application.Quit();

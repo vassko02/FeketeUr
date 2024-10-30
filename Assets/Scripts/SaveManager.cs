@@ -22,10 +22,6 @@ public class SaveManager : MonoBehaviour
     {
         saveData.highScoresData.Add(newHS);
         saveData.highScoresData.Sort((a, b) => b.Score.CompareTo(a.Score)); // Descending order
-        if (saveData.highScoresData.Count > 10) // Keep only top 10 scores
-        {
-            saveData.highScoresData.RemoveAt(saveData.highScoresData.Count - 1);
-        }
     }
     public void Save()
     {
@@ -48,53 +44,4 @@ public class SaveManager : MonoBehaviour
             saveData.settingsData = new Settings(); // vagy alapértelmezett értékek a beállításokhoz
         }
     }
-
-
-
-
-
-    public void SaveCurrentRun()
-    {
-        if (saveData.currentRunData != null) // Ellenõrizd, hogy a CurrentRunData be van állítva
-        {
-            string json = JsonUtility.ToJson(saveData.currentRunData);
-
-            PlayerPrefs.SetString("CurrentRun", json);
-
-            PlayerPrefs.Save(); // Mentjük az adatokat
-        }
-        else
-        {
-            Debug.LogError("CurrentRunData is null! Cannot save.");
-        }
-    }
-    public void LoadCurrentRun()
-    {
-        // Ellenõrizzük, hogy van-e mentett adat
-        if (PlayerPrefs.HasKey("CurrentRun"))
-        {
-            string json = PlayerPrefs.GetString("CurrentRun");
-            saveData.currentRunData = JsonUtility.FromJson<CurrentRun>(json);
-        }
-        else
-        {
-            // Ha nincs mentett adat, lehet új CurrentRun létrehozása itt
-            saveData.currentRunData = new CurrentRun("Player", 0, 100, 100, 5, 0f);
-        }
-    }
-    public void SaveHighScores()
-    {
-        // Például a CurrentRun adatok mentése JSON formátumban
-        string json = JsonUtility.ToJson(saveData.highScoresData);
-        PlayerPrefs.SetString("HighScores", json);
-        PlayerPrefs.Save(); // Mentjük az adatokat
-    }
-    public void SaveSettings()
-    {
-        // Például a CurrentRun adatok mentése JSON formátumban
-        string json = JsonUtility.ToJson(saveData.settingsData);
-        PlayerPrefs.SetString("Settings", json);
-        PlayerPrefs.Save(); // Mentjük az adatokat
-    }
-
 }

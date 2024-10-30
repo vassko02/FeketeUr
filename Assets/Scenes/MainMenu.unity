@@ -1070,6 +1070,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efdf365837a6654586dc21b439effd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveData:
+    currentRunData:
+      PlayerName: 
+      Score: 0
+      ElapsedTime: 0
+      MaxHealth: 0
+      CurrentHealth: 0
+      ScoreIncrement: 0
+    highScoresData: []
 --- !u!4 &1072977795
 Transform:
   m_ObjectHideFlags: 0
@@ -1278,7 +1287,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 929266122}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: LoadHighScores
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

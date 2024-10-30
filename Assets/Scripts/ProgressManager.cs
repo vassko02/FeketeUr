@@ -7,6 +7,8 @@ using System;
 
 public class ProgressManager : MonoBehaviour
 {
+    public Player player;
+
     public GameObject buffSpawnerObject;
     public GameObject enemySpawnerObject;
     public GameObject asteroidSpawnerObject;
@@ -30,7 +32,6 @@ public class ProgressManager : MonoBehaviour
     public List<GameObject> dialogIcons;
     public bool midDialog;
     public bool doneWithDialog=false;
-    public bool doneWithBoss=false;
 
     private int index=0;
 
@@ -60,12 +61,26 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, true);
-        enemySpawner.enemyLimit = 2;
-        enemySpawner.spawnColor = Color.green;
+        buffSpawner.spawnRate = 8f;
         StartCoroutine(Progress());
     }
     private IEnumerator Progress()
     {
+        if (elapsedTime>=0f&&elapsedTime<90f)
+        {
+            enemySpawner.enemyLimit = 2;
+            enemySpawner.spawnColor = Color.green;
+        }
+        else if (elapsedTime >= 90f && elapsedTime < 180f)
+        {
+            enemySpawner.enemyLimit = 3;
+            enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f);
+        }
+        else if (elapsedTime >= 180f && elapsedTime < 270f)
+        {
+            enemySpawner.spawnColor = Color.blue;
+            enemySpawner.enemyLimit = 4;
+        }
         while (elapsedTime < totalTimerDuration)
         {
             // Idõzített események különbözõ idõpontokban
@@ -87,10 +102,12 @@ public class ProgressManager : MonoBehaviour
             else if (elapsedTime == obstacleSpawnTimes[1])
             {
                 doneWithDialog = false;
+                ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.asteroidsPerSpawn = 2;
             }
             else if (elapsedTime == obstacleSpawnTimes[2])
             {
+                ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.spawnRate = 0.5f;
             }
             else if(elapsedTime == obstacleSpawnTimes[3])
@@ -101,20 +118,21 @@ public class ProgressManager : MonoBehaviour
             }
             else if (elapsedTime== obstacleSpawnTimes[4])
             {
+                ToggleSpawner(enemySpawnerObject, true);
                 enemySpawner.enemiesPerSpawn = 2;
                 enemySpawner.spawnRate = 4f;
-                buffSpawner.spawnRate = 11f;
             }
             else if (elapsedTime == obstacleSpawnTimes[5])
             {
+                ToggleSpawner(enemySpawnerObject, true);
                 ToggleSpawner(asteroidSpawnerObject,true);
                 asteroidSpawner.spawnRate = 2f;
             }
             else if (elapsedTime == obstacleSpawnTimes[6])
             {
                 ToggleSpawner(enemySpawnerObject, false);
+                ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.asteroidsPerSpawn = 3;
-                buffSpawner.spawnRate = 7f;
             }
             else if (elapsedTime == obstacleSpawnTimes[7])
             {
@@ -156,7 +174,6 @@ public class ProgressManager : MonoBehaviour
                 {
                     enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
                     enemySpawner.enemyLimit = 3;
-                    buffSpawner.spawnRate = 15f;
                     ToggleSpawner(asteroidSpawnerObject, true);
                     asteroidSpawner.asteroidsPerSpawn = 3;
                     asteroidSpawner.spawnRate = 1.5f;
@@ -169,16 +186,17 @@ public class ProgressManager : MonoBehaviour
                 ToggleSpawner(enemySpawnerObject,true);
                 enemySpawner.spawnRate = 3f;
                 enemySpawner.enemiesPerSpawn = 2;
-                buffSpawner.spawnRate = 10f;
             }
             else if (elapsedTime== obstacleSpawnTimes[11])
             {
+                ToggleSpawner(enemySpawnerObject, true);
                 ToggleSpawner(asteroidSpawnerObject, true);
                 asteroidSpawner.asteroidsPerSpawn = 2;
                 asteroidSpawner.spawnRate = 3f;
             }
             else if(elapsedTime== obstacleSpawnTimes[12])
             {
+                ToggleSpawner(asteroidSpawnerObject, true);
                 ToggleSpawner(enemySpawnerObject, false);
                 asteroidSpawner.spawnRate = 2f;
             }
@@ -220,9 +238,8 @@ public class ProgressManager : MonoBehaviour
                 }
                 else if (midDialog == false && doneWithDialog == true)
                 {
-                    enemySpawner.spawnColor = Color.white;
+                    enemySpawner.spawnColor = Color.blue;
                     enemySpawner.enemyLimit = 4;
-                    buffSpawner.spawnRate = 6f;
                     ToggleSpawner(enemySpawnerObject, true);
                     enemySpawner.enemiesPerSpawn = 2;
                     enemySpawner.spawnRate = 3f;
@@ -233,6 +250,7 @@ public class ProgressManager : MonoBehaviour
             }
             else if (elapsedTime == obstacleSpawnTimes[16])
             {
+                ToggleSpawner(asteroidSpawnerObject, true);
                 doneWithDialog = false;
                 ToggleSpawner(enemySpawnerObject,false);
                 asteroidSpawner.asteroidsPerSpawn= 5;
@@ -257,7 +275,6 @@ public class ProgressManager : MonoBehaviour
                 ToggleSpawner(asteroidSpawnerObject, false);
                 DestroyAllEnemies();
                 midBossFight = true;
-                //HARMADIK BOSS DIALOG
                 if (doneWithDialog != true)
                 {
                     midDialog = true;
@@ -268,9 +285,6 @@ public class ProgressManager : MonoBehaviour
                 {
                     bosses[2].SetActive(true);
                 }
-
-                //HARMADIK A BOSS UTÁN DIALOG
-
             }
             else if (elapsedTime== obstacleSpawnTimes[20])
             {
@@ -282,6 +296,8 @@ public class ProgressManager : MonoBehaviour
                 }
                 else if (midDialog == false && doneWithDialog == true)
                 {
+                    HighScore newHS = new HighScore(player.playerName,player.score);
+                    SaveManager.Instance.AddHighScore(newHS);
                     PlayerPrefs.SetInt("alive", 0);
                     yourScore.text = scoreUI.text;
 
@@ -301,26 +317,12 @@ public class ProgressManager : MonoBehaviour
         }
 
     }
-
     private void StartDialog(string key,GameObject leftCharacter)
     {
-        
         dialogManager.rightCharacter = dialogIcons[0];
         dialogManager.leftCharacter = leftCharacter;
         dialogManager.currentTalkKey = key;
         dialogManagerObject.SetActive(true);
-    }
-
-    // Update is called once per frame
-    void ResetBuffSpawner()
-    {
-        buffSpawner.spawnRate = 30f;
-
-    }
-    void ResetEnemySpawner()
-    {
-        enemySpawner.spawnRate= 1f;
-        enemySpawner.enemiesPerSpawn = 1;
     }
     void ToggleSpawner(GameObject spawner, bool active)
     {
