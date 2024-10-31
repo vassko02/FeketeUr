@@ -55,12 +55,12 @@ public class Player : MonoBehaviour
     public Text buffPicupText;
     void Start()
     {
-        if (PlayerPrefs.GetInt("isAlive") != 0 && PlayerPrefs.GetInt("continue")==1)
+        SaveManager.Instance.Load();
+        if (PlayerPrefs.GetInt("continue")==1)
         {
             LoadGame();
         }
 
-        PlayerPrefs.SetInt("isAlive", 1);
 
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
@@ -202,27 +202,10 @@ public class Player : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(false);
 
-        GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
-        GameObject buffSpawner = GameObject.FindWithTag("BuffSpawner");
-
-        if (enemySpawner != null)
-        {
-            enemySpawner.SetActive(false);
-        }
-        if (buffSpawner != null)
-        {
-            buffSpawner.SetActive(false);
-        }
         Destroy(gameObject);
         gameOverScreen.SetActive(true);
-
-        PlayerPrefs.SetString("playerName",playerName);
-        PlayerPrefs.SetInt("score", 0);
-        PlayerPrefs.SetInt("maxHealth", 100);
-        PlayerPrefs.SetInt("currentHealth", 100);
-        PlayerPrefs.SetFloat("progress", 0);
-        PlayerPrefs.SetInt("isAlive", 1);
-        PlayerPrefs.SetInt("scoreIncrement", 5);
+        SaveManager.Instance.saveData.currentRunData = null;
+        SaveManager.Instance.Save();
 
     }
     public void AddToScore(int amount)
@@ -356,7 +339,7 @@ public class Player : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
+        //SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
         SaveManager.Instance.saveData.currentRunData.CurrentHealth = currentHealth;
         SaveManager.Instance.saveData.currentRunData.MaxHealth = maxHealt;
         SaveManager.Instance.saveData.currentRunData.ScoreIncrement = scoreIncrement;

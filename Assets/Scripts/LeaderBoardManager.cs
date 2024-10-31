@@ -7,9 +7,9 @@ public class LeaderBoardManager : MonoBehaviour
     public GameObject row;
     private void Start()
     {
-
+        SaveManager.Load();
         var sortedList = SaveManager.saveData.highScoresData;
-        sortedList.Sort((a, b) => a.Score.CompareTo(b.Score));
+        sortedList.Sort((a, b) => b.Score.CompareTo(a.Score));
         for (int i = 0; i < sortedList.Count; i++)
         {
             var obj = Instantiate(row, row.transform.parent);

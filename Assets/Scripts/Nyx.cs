@@ -180,7 +180,6 @@ public class Nyx : MonoBehaviour
             bool isInsideX = Mathf.Abs(playerPos.x - fieldPos.x) < fieldScale.x / 2;
             bool isInsideY = Mathf.Abs(playerPos.y - fieldPos.y) < fieldScale.y / 2;
 
-            Debug.Log("Benne van " + (isInsideX && isInsideX));
             return isInsideX && isInsideY;
 
         }

@@ -11,19 +11,25 @@ using System;
 public class DialogManager : MonoBehaviour
 {
     public string textfilename;
+
     public TextMeshProUGUI dialogText;
     private Queue<string> sentences;
     public string currentTalkKey;
+    public GameObject Descision;
+
     public GameObject textbubble;
     public GameObject rightCharacter;
     public GameObject leftCharacter;
     public Transform parent;
+
     private Dialog dialog;
     public ProgressManager progressManager;
 
     private GameObject characterInstance;
     private GameObject characterInstance2;
     private GameObject textbubbleinstance;
+
+    private bool DoneWithDescision = false;
     private void OnEnable()
     {
         dialogText.gameObject.SetActive(true);
@@ -107,7 +113,14 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                ContinueGame();
+                if (currentTalkKey!="#AFTERNYX"||DoneWithDescision)
+                {
+                    ContinueGame();
+                }
+                else
+                {
+                    Descision.SetActive(true);
+                }
             }
         }
     }
@@ -156,4 +169,17 @@ public class DialogManager : MonoBehaviour
         dialog.sentences = sentencesList.ToArray();
     }
 
+    public void Choose(string choice)
+    {
+        currentTalkKey = choice;
+        DoneWithDescision = true;
+
+        Destroy(characterInstance);
+        Destroy(characterInstance2);
+        Destroy(textbubbleinstance);
+
+        LoadDialogFromResources(textfilename);
+        Descision.SetActive(false);
+        StartDialog();
+    }
 }

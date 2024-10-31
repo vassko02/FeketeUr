@@ -3,8 +3,8 @@ using System;
 
 public class HighScore
 {
-    public string PlayerName { get; private set; }
-    public int Score { get; private set; }
+    public string PlayerName;
+    public int Score;
 
     public HighScore(string playerName, int score)
     {

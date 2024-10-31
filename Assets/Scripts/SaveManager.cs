@@ -21,13 +21,14 @@ public class SaveManager : MonoBehaviour
     public void AddHighScore(HighScore newHS)
     {
         saveData.highScoresData.Add(newHS);
-        saveData.highScoresData.Sort((a, b) => b.Score.CompareTo(a.Score)); // Descending order
+
     }
     public void Save()
     {
         string json = JsonUtility.ToJson(Instance.saveData, true);
-        Debug.Log(json);
         PlayerPrefs.SetString("GameData", json);
+        Debug.Log("Saved"+json);
+
         PlayerPrefs.Save();
     }
     public void Load()
@@ -36,12 +37,14 @@ public class SaveManager : MonoBehaviour
         {
             string json = PlayerPrefs.GetString("GameData");
             saveData = JsonUtility.FromJson<SaveData>(json);
+            Debug.Log("Loaded"+json);
         }
         else
         {
             // Alapértelmezett értékeket állítunk be, ha nincs mentett adat
             saveData.currentRunData = new CurrentRun("Player", 0, 100, 100, 5, 0f);
             saveData.settingsData = new Settings(); // vagy alapértelmezett értékek a beállításokhoz
+            saveData.highScoresData = new List<HighScore>();
         }
     }
 }

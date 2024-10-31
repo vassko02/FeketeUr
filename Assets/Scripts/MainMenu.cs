@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     private string saveFilePath;
     void Start()
     {
-        if (PlayerPrefs.GetInt("isAlive")==0)
+        if (SaveManager.Instance.saveData.currentRunData == null|| SaveManager.Instance.saveData.currentRunData.MaxHealth==0)
         {
             continueButton.interactable = false; // Continue gomb letiltása
 
@@ -38,7 +38,6 @@ public class MainMenu : MonoBehaviour
     }
     public void LoadHighScores()
     {
-        SaveManager.Instance.AddHighScore(new HighScore("teszdata",1000));
         SceneManager.LoadScene("Leaderboard");
     }
     public void Quit()

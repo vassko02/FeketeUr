@@ -33,37 +33,43 @@ public class ProgressManager : MonoBehaviour
     public bool midDialog;
     public bool doneWithDialog=false;
 
-    private int index=0;
-
     public List<float> obstacleSpawnTimes = new List<float> { 0f, 10f, 15f, 25f, 35f, 45f,60f,75f,90f,91f,110f,125f,135f,155f,180f,181f,200f,220,250f,270f,271f };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SaveManager.Instance.Load();
         buffSpawner = buffSpawnerObject.GetComponent<SpawnBuffs>();
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
         dialogManager= dialogManagerObject.GetComponent<DialogManager>();
         if (PlayerPrefs.GetInt("continue")==1)
         {
-            SaveManager.Instance.Load();
-            float timeFromLoad = SaveManager.Instance.saveData.currentRunData.ElapsedTime;
-            Debug.Log(timeFromLoad);
-            for (int i = obstacleSpawnTimes.Count-1; i > 0; i--)
-            {
-                if (timeFromLoad > obstacleSpawnTimes[i])
-                {
-                    elapsedTime = obstacleSpawnTimes[i]-1;
-                    break;
-                }
-            }
+            LoadData();
+
         }
         ToggleSpawner(enemySpawnerObject, false);
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, true);
         buffSpawner.spawnRate = 8f;
+        elapsedTime = 269f;
         StartCoroutine(Progress());
     }
+
+    private void LoadData()
+    {
+        float timeFromLoad = SaveManager.Instance.saveData.currentRunData.ElapsedTime;
+        for (int i = obstacleSpawnTimes.Count - 1; i > 0; i--)
+        {
+            if (timeFromLoad > obstacleSpawnTimes[i])
+            {
+                elapsedTime = obstacleSpawnTimes[i] - 1;
+                Debug.Log(elapsedTime);
+                break;
+            }
+        }
+    }
+
     private IEnumerator Progress()
     {
         if (elapsedTime>=0f&&elapsedTime<90f)
@@ -296,9 +302,6 @@ public class ProgressManager : MonoBehaviour
                 }
                 else if (midDialog == false && doneWithDialog == true)
                 {
-                    HighScore newHS = new HighScore(player.playerName,player.score);
-                    SaveManager.Instance.AddHighScore(newHS);
-                    PlayerPrefs.SetInt("alive", 0);
                     yourScore.text = scoreUI.text;
 
                     healthBar.SetActive(false);
@@ -306,6 +309,12 @@ public class ProgressManager : MonoBehaviour
 
                     winScreen.SetActive(true);
                     Time.timeScale = 0f;
+
+                    HighScore newHS = new HighScore(player.playerName, player.score);
+
+                    SaveManager.Instance.saveData.currentRunData = null;
+                    SaveManager.Instance.AddHighScore(newHS);
+                    SaveManager.Instance.Save();
                 }
             }
             if (!midBossFight&&!midDialog)
@@ -313,7 +322,7 @@ public class ProgressManager : MonoBehaviour
                 elapsedTime += 1f;
             }
             yield return new WaitForSeconds(1f);
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
         }
 
     }

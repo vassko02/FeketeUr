@@ -1,10 +1,11 @@
-[System.Serializable]
+using System;
 
+[System.Serializable]
 public class Settings
 {
-    public float SFXVolume { get; set; }
-    public float MusicVolume { get; set; }
-    public string Resolution { get; set; }
+    public float SFXVolume;
+    public float MusicVolume;
+    public string Resolution;
 
     public Settings(float sfxVolume, float musicVolume, string resolution)
     {
