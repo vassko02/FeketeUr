@@ -635,7 +635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7c993462875a94ebf4ef61445f7f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 262443547}
 --- !u!1 &268482926
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,8 +998,8 @@ GameObject:
   - component: {fileID: 425768638}
   - component: {fileID: 425768637}
   - component: {fileID: 425768639}
-  - component: {fileID: 425768640}
   - component: {fileID: 425768641}
+  - component: {fileID: 425768642}
   m_Layer: 0
   m_Name: Orion
   m_TagString: Orion
@@ -1101,8 +1100,35 @@ MonoBehaviour:
   rocketTimeSpan: 10
   Missile: {fileID: 2009487048241353558, guid: e8f8122447c351446b38f6b54cb76a9a, type: 3}
   Target: {fileID: 5470422795944919962, guid: 428ab89f360327346a2e4ef5436b08cb, type: 3}
---- !u!61 &425768640
-BoxCollider2D:
+--- !u!50 &425768641
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425768636}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!60 &425768642
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1145,35 +1171,58 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.56, y: 2.56}
-  m_EdgeRadius: 0
---- !u!50 &425768641
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425768636}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Points:
+    m_Paths:
+    - - {x: 0.48, y: -0.71}
+      - {x: 0.53999996, y: -0.84}
+      - {x: 0.63, y: -0.83}
+      - {x: 1.22, y: -0.89}
+      - {x: 1.23, y: -0.85999995}
+      - {x: 1.23, y: -0.78}
+      - {x: 0.96, y: -0.14}
+      - {x: 0.87, y: -0.07}
+      - {x: 0.87, y: 0.08}
+      - {x: 0.84999996, y: 0.19}
+      - {x: 0.78999996, y: 0.22999999}
+      - {x: 0.7, y: 0.22999999}
+      - {x: 0.65, y: 0.17}
+      - {x: 0.63, y: 0.049999997}
+      - {x: 0.56, y: 0.12}
+      - {x: 0.47, y: 0.31}
+      - {x: 0.35, y: 0.47}
+      - {x: 0.24, y: 0.71999997}
+      - {x: 0.02, y: 0.95}
+      - {x: -0.03, y: 0.95}
+      - {x: -0.26, y: 0.7}
+      - {x: -0.29, y: 0.48}
+      - {x: -0.35, y: 0.47}
+      - {x: -0.53, y: 0.21}
+      - {x: -0.59, y: 0.07}
+      - {x: -0.65, y: 0.11}
+      - {x: -0.65, y: 0.17999999}
+      - {x: -0.7, y: 0.25}
+      - {x: -0.87, y: 0.19999999}
+      - {x: -0.87, y: 0.08}
+      - {x: -0.9, y: -0.099999994}
+      - {x: -0.96, y: -0.14}
+      - {x: -1.02, y: -0.26}
+      - {x: -1.23, y: -0.78999996}
+      - {x: -1.23, y: -0.85999995}
+      - {x: -1.22, y: -0.9}
+      - {x: -1, y: -0.88}
+      - {x: -0.55, y: -0.82}
+      - {x: -0.51, y: -0.79999995}
+      - {x: -0.48999998, y: -0.69}
+      - {x: -0.45, y: -0.75}
+      - {x: -0.38, y: -0.76}
+      - {x: -0.17999999, y: -0.76}
+      - {x: -0.16, y: -0.81}
+      - {x: -0.04, y: -0.95}
+      - {x: 0.04, y: -0.95}
+      - {x: 0.17, y: -0.81}
+      - {x: 0.17999999, y: -0.76}
+      - {x: 0.45, y: -0.76}
+  m_UseDelaunayMesh: 0
 --- !u!1 &485472222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1744,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7c993462875a94ebf4ef61445f7f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 628107495}
 --- !u!1001 &676934487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1711,6 +1759,10 @@ PrefabInstance:
     - target: {fileID: 2677739805289773744, guid: 65cd392f47718124883afa65b15f672b, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3375537969175810935, guid: 65cd392f47718124883afa65b15f672b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7275114255482683375, guid: 65cd392f47718124883afa65b15f672b, type: 3}
       propertyPath: m_LocalPosition.x

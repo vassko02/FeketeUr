@@ -145,11 +145,15 @@ public class Orion : MonoBehaviour
             progressManagerScript.elapsedTime++;
 
             GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
-
+            GameObject[] targets = GameObject.FindGameObjectsWithTag("KronisAttack");
             // Destroy the found GameObjects
-            foreach (GameObject kronisAttack in rockets)
+            foreach (GameObject rocket in rockets)
             {
-                Destroy(kronisAttack);
+                Destroy(rocket);
+            }
+            foreach (GameObject target in targets)
+            {
+                Destroy(target);
             }
             Destroy(gameObject);
         }

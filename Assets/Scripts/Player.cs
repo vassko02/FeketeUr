@@ -6,6 +6,7 @@ using TMPro;
 using System.IO;
 using System;
 
+
 public class Player : MonoBehaviour
 {
     public bool newGame;
@@ -115,58 +116,7 @@ public class Player : MonoBehaviour
                 nextFireTime = Time.time + fireRate;
             }
         }
-        void keepPlayerInBounds()
-        {
-            // Játékos aktuális pozíciója
-            Vector3 pos = transform.position;
 
-            // Pozíció korlátozása a képernyõn belülre
-            pos.x = Mathf.Clamp(pos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
-            pos.y = Mathf.Clamp(pos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
-
-            // Pozíció firssítése
-            transform.position = pos;
-        }
-
-        // Lövés
-        void Shoot()
-        {
-            // Lövedékek létrehozása
-            float offset = 0.4f;
-            int bulletDamage;
-            Color bulletColor;
-            if (hasDamageBuff)
-            {
-                bulletDamage = buffedBulletDamage;
-                bulletColor = Color.yellow;
-            }
-            else
-            {
-                bulletDamage = normalBulletDamage;
-                bulletColor = Color.white;
-            }
-            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
-
-            Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
-            SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
-            if (bulletScriptL != null)
-            {
-                bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
-                bulletScriptL.speed = bulletSpeed;
-                renderer.color = bulletColor;
-            }
-            Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
-             renderer = bulletRight.GetComponent<SpriteRenderer>();
-
-            if (bulletScriptR != null)
-            {
-                bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
-                bulletScriptR.speed = bulletSpeed;
-                renderer.color = bulletColor;
-
-            }
-        }
 
         if (Time.time >= nextScoreIncreaseTime&&progressManager.gameObject.GetComponent<ProgressManager>().midBossFight==false && progressManager.gameObject.GetComponent<ProgressManager>().midDialog == false)
         {
@@ -175,6 +125,58 @@ public class Player : MonoBehaviour
             UpdateScoreUI();
         }
 
+    }
+    public void keepPlayerInBounds()
+    {
+        // Játékos aktuális pozíciója
+        Vector3 pos = transform.position;
+
+        // Pozíció korlátozása a képernyõn belülre
+        pos.x = Mathf.Clamp(pos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
+        pos.y = Mathf.Clamp(pos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
+
+        // Pozíció firssítése
+        transform.position = pos;
+    }
+
+    // Lövés
+    public void Shoot()
+    {
+        // Lövedékek létrehozása
+        float offset = 0.4f;
+        int bulletDamage;
+        Color bulletColor;
+        if (hasDamageBuff)
+        {
+            bulletDamage = buffedBulletDamage;
+            bulletColor = Color.yellow;
+        }
+        else
+        {
+            bulletDamage = normalBulletDamage;
+            bulletColor = Color.white;
+        }
+        GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+        GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+
+        Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
+        SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
+        if (bulletScriptL != null)
+        {
+            bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptL.speed = bulletSpeed;
+            renderer.color = bulletColor;
+        }
+        Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
+        renderer = bulletRight.GetComponent<SpriteRenderer>();
+
+        if (bulletScriptR != null)
+        {
+            bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptR.speed = bulletSpeed;
+            renderer.color = bulletColor;
+
+        }
     }
     public void TakeDamage(int damage)
     {

@@ -52,7 +52,6 @@ public class ProgressManager : MonoBehaviour
         ToggleSpawner(asteroidSpawnerObject, false);
         ToggleSpawner(buffSpawnerObject, true);
         buffSpawner.spawnRate = 8f;
-        elapsedTime = 269f;
         StartCoroutine(Progress());
     }
 
@@ -64,7 +63,6 @@ public class ProgressManager : MonoBehaviour
             if (timeFromLoad > obstacleSpawnTimes[i])
             {
                 elapsedTime = obstacleSpawnTimes[i] - 1;
-                Debug.Log(elapsedTime);
                 break;
             }
         }
