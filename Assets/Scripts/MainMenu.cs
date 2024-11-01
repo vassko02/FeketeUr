@@ -6,13 +6,13 @@ using System.IO;
 using System.Collections.Generic;
 public class MainMenu : MonoBehaviour
 {
-    public Button continueButton; // Hozzáadás: Referencia a Continue gombhoz
+    public Button continueButton; // Hozzï¿½adï¿½s: Referencia a Continue gombhoz
     private string saveFilePath;
     void Start()
     {
         if (SaveManager.Instance.saveData.currentRunData == null|| SaveManager.Instance.saveData.currentRunData.MaxHealth==0)
         {
-            continueButton.interactable = false; // Continue gomb letiltása
+            continueButton.interactable = false; // Continue gomb letiltï¿½sa
 
         }
         else
