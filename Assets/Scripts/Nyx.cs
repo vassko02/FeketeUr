@@ -19,7 +19,7 @@ public class Nyx : MonoBehaviour
     private Transform playerTransform;
 
     public GameObject overlay;
-    private Vector3 originalScale=new Vector3(5,5,0);
+    private Vector3 originalScale=new Vector3(10,10,0);
 
     public GameObject cursedFieldObject;  // A téglalap GameObject-je
 
