@@ -15,17 +15,24 @@ TagManager:
   - MaxHealthBuff
   - BuffSpawner
   - ShieldBuff
+  - ScoreBuff
+  - Kronis
+  - KronisAttack
+  - ProgressManager
+  - Orion
+  - Nyx
+  - Rocket
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Overlay
   - Water
   - UI
   - enemyLayer
   - enemyProjectile
   - playerProjectile
-  - 
+  - Effects
   - 
   - 
   - 
@@ -51,6 +58,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Effects
+    uniqueID: 2649981221
     locked: 0
   m_RenderingLayers:
   - Default

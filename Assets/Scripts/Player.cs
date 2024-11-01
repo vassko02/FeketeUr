@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
+using System;
+
 
 public class Player : MonoBehaviour
 {
-    public TMP_Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
+    public bool newGame;
+    public string playerName;
+    private Vector3 playerPosition; // Játékos pozíciója
+
+    public Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
     private float buffTimer; // Visszaszámláló idõzítõ
 
     public GameObject bulletPrefabRight; // A lövedék prefabja
@@ -23,21 +30,39 @@ public class Player : MonoBehaviour
     public int maxHealt = 100;
     public int currentHealth;
     public HealthBar healthBar;
+
     public GameObject gameOverScreen;
     public GameObject BuffUI;
 
-    private bool hasShiledBuff=false;
-    private bool hasDamageBuff=false;
-    private float buffDuration = 10f; // Mennyi ideig tart a buff
+    private bool hasShiledBuff = false;
+    private bool hasDamageBuff = false;
+    private float buffDuration = 5f; // Mennyi ideig tart a buff
     private int normalBulletDamage = 50; // Normál lövedék sebzése
     private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
 
+    public float bulletSpeed =10f;
 
     public GameObject shieldBuffUIImage; // Az Image komponens referencia
     public GameObject damageBuffUIImage; // Az Image komponens referencia
 
+    public ProgressManager progressManager;
+
+    public int score = 0;
+    public float scoreIncreaseRate = 0.5f; // Milyen gyakran növekszik a score (másodpercben)
+    public int scoreIncrement = 5; // Mennyivel növekszik a score
+    private float nextScoreIncreaseTime = 0f;
+
+    public Text scoreText; // UI Text, ami megjeleníti a score-t
+    public Text buffPicupText;
     void Start()
     {
+        SaveManager.Instance.Load();
+        if (PlayerPrefs.GetInt("continue")==1)
+        {
+            LoadGame();
+        }
+
+
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
@@ -48,11 +73,12 @@ public class Player : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        currentHealth = maxHealt;
-        healthBar.SetMaxHealth(maxHealt,false);
-
         buffTimer = buffDuration;
 
+        UpdateScoreUI();
+
+
+        InvokeRepeating("SaveGame", 5f, 5f);
     }
 
     void Update()
@@ -90,70 +116,109 @@ public class Player : MonoBehaviour
                 nextFireTime = Time.time + fireRate;
             }
         }
-        void keepPlayerInBounds()
+
+
+        if (Time.time >= nextScoreIncreaseTime&&progressManager.gameObject.GetComponent<ProgressManager>().midBossFight==false && progressManager.gameObject.GetComponent<ProgressManager>().midDialog == false)
         {
-            // Játékos aktuális pozíciója
-            Vector3 pos = transform.position;
-
-            // Pozíció korlátozása a képernyõn belülre
-            pos.x = Mathf.Clamp(pos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
-            pos.y = Mathf.Clamp(pos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
-
-            // Pozíció firssítése
-            transform.position = pos;
-        }
-
-        // Lövés
-        void Shoot()
-        {
-            // Lövedékek létrehozása
-            float offset = 0.4f;
-            int bulletDamage = hasDamageBuff ? buffedBulletDamage : normalBulletDamage; // A sebzés meghatározása
-
-            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
-
-            Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
-            if (bulletScriptL != null)
-            {
-                bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
-            }
-            Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
-            if (bulletScriptR != null)
-            {
-                bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
-            }
+            score += scoreIncrement;
+            nextScoreIncreaseTime = Time.time + scoreIncreaseRate;
+            UpdateScoreUI();
         }
 
     }
-    public void TakeDamage(int damage)
+    public void keepPlayerInBounds()
     {
-        if (currentHealth - damage > 0)
+        // Játékos aktuális pozíciója
+        Vector3 pos = transform.position;
+
+        // Pozíció korlátozása a képernyõn belülre
+        pos.x = Mathf.Clamp(pos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
+        pos.y = Mathf.Clamp(pos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
+
+        // Pozíció firssítése
+        transform.position = pos;
+    }
+
+    // Lövés
+    public void Shoot()
+    {
+        // Lövedékek létrehozása
+        float offset = 0.4f;
+        int bulletDamage;
+        Color bulletColor;
+        if (hasDamageBuff)
         {
-            currentHealth -= damage;
+            bulletDamage = buffedBulletDamage;
+            bulletColor = Color.yellow;
         }
         else
         {
-            BuffUI.SetActive(false);
+            bulletDamage = normalBulletDamage;
+            bulletColor = Color.white;
+        }
+        GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
+        GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y + offset, transform.position.z), Quaternion.Euler(0, 0, 90));
 
-            currentHealth -= damage;
+        Bullet bulletScriptL = bulletLeft.GetComponent<Bullet>();
+        SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
+        if (bulletScriptL != null)
+        {
+            bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptL.speed = bulletSpeed;
+            renderer.color = bulletColor;
+        }
+        Bullet bulletScriptR = bulletRight.GetComponent<Bullet>();
+        renderer = bulletRight.GetComponent<SpriteRenderer>();
 
-            GameObject enemySpawner = GameObject.FindWithTag("EnemySpawner");
-            GameObject buffSpawner = GameObject.FindWithTag("EnemySpawner");
-
-            if (enemySpawner != null)
-            {
-                enemySpawner.SetActive(false);
-            }
-            if (buffSpawner != null)
-            {
-                buffSpawner.SetActive(false);
-            }
-            Destroy(gameObject);
-            gameOverScreen.SetActive(true);
+        if (bulletScriptR != null)
+        {
+            bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptR.speed = bulletSpeed;
+            renderer.color = bulletColor;
 
         }
-        healthBar.setHealth(currentHealth);
+    }
+    public void TakeDamage(int damage)
+    {
+        if (hasShiledBuff==false)
+        {
+            if (currentHealth - damage > 0)
+            {
+                currentHealth -= damage;
+            }
+            else
+            {
+                currentHealth -= damage;
+
+                GameOver();
+            }
+            healthBar.setHealth(currentHealth);
+        }
+
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+
+        BuffUI.SetActive(false);
+        healthBar.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+
+        Destroy(gameObject);
+        gameOverScreen.SetActive(true);
+        SaveManager.Instance.saveData.currentRunData = null;
+        SaveManager.Instance.Save();
+
+    }
+    public void AddToScore(int amount)
+    {
+        score += amount;
+        UpdateScoreUI();
+    }
+
+    void UpdateScoreUI()
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
     public void Heal(int heal)
     {
@@ -171,54 +236,78 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(20);
-            }
+            TakeDamage(20);
+            AddToScore(10);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(25);
-            }
+            TakeDamage(25);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (hasShiledBuff == false)
-            {
-                TakeDamage(35);
-            }
+            TakeDamage(35);
+            AddToScore(20);
             Destroy(collision.gameObject);
         }
-
+        if (collision.gameObject.CompareTag("Kronis"))
+        {
+            TakeDamage(50);
+        }
+        if (collision.gameObject.CompareTag("Orion"))
+        {
+            TakeDamage(50);
+        }
+        if (collision.gameObject.CompareTag("Nyx"))
+        {
+            TakeDamage(50);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        buffPicupText.gameObject.SetActive(true);
         if (collision.gameObject.CompareTag("HealBuff"))
         {
-            Heal(20);
+            buffPicupText.text = "Healed for 30 HP!";
+            Heal(30);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("DamageBuff"))
         {
             ActivateDamageBuff();
+            buffPicupText.text = "Damage increased for 5s!";
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("ShieldBuff"))
         {
             ActivateShieldBuff();
+            buffPicupText.text = "Shield activated for 5s!";
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("MaxHealthBuff"))
         {
+            buffPicupText.text = "Maximum health increased!";
             maxHealt += 20;
-            healthBar.SetMaxHealth(maxHealt,true);
+            healthBar.SetMaxHealth(maxHealt, true);
+            Heal(20);
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("ScoreBuff"))
+        {
+            buffPicupText.text = "Score multiplier increased!";
+            scoreIncrement += 2;
+            Destroy(collision.gameObject);
+        }
+        StartCoroutine(ToggleBuffPicup(2f));
     }
+
+    private IEnumerator ToggleBuffPicup(float v)
+    {
+        yield return new WaitForSeconds(v);
+        buffPicupText.gameObject.SetActive(false);
+    }
+
     void ActivateDamageBuff()
     {
         hasDamageBuff = true; // Buff aktiválva
@@ -248,5 +337,38 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(buffDuration); // Várakozás a buff idejéig
         EndBuff();
+    }
+
+    public void SaveGame()
+    {
+        //SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
+        SaveManager.Instance.saveData.currentRunData.CurrentHealth = currentHealth;
+        SaveManager.Instance.saveData.currentRunData.MaxHealth = maxHealt;
+        SaveManager.Instance.saveData.currentRunData.ScoreIncrement = scoreIncrement;
+        SaveManager.Instance.saveData.currentRunData.Score = score;
+        SaveManager.Instance.saveData.currentRunData.ElapsedTime = progressManager.elapsedTime;
+        // Mentjük a currentRun adatokat
+        SaveManager.Instance.Save();
+    }
+    public void LoadGame()
+    {
+        SaveManager.Instance.Load();
+        if (SaveManager.Instance.saveData.currentRunData != null) // Ellenõrizd, hogy az adatok betöltõdtek
+        {
+            this.currentHealth = SaveManager.Instance.saveData.currentRunData.CurrentHealth;
+            this.maxHealt = SaveManager.Instance.saveData.currentRunData.MaxHealth;
+            this.score = SaveManager.Instance.saveData.currentRunData.Score;
+            this.playerName = SaveManager.Instance.saveData.currentRunData.PlayerName;
+            this.scoreIncrement = SaveManager.Instance.saveData.currentRunData.ScoreIncrement;
+
+            healthBar.SetMaxHealth(maxHealt, true);
+            healthBar.setHealth(currentHealth);
+
+        }
+        else
+        {
+            Debug.LogError("Failed to load CurrentRun data.");
+        }
+
     }
 }

@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     public float speed = 10f; // Lövedék sebessége
     public float deadZone = 7; // Az a zóna, ahol a lövedéket töröljük
     public Vector3 direction = Vector3.right; // Az irány, amerre a lövedék mozog
+    public GameObject explosion;
     private int bulletDamage;
     void Update()
     {
@@ -35,20 +36,53 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ha az objektum amivel ütközött az Enemy taggel rendelkezik
-        if (collision.gameObject.CompareTag("Enemy"))
+        if ((gameObject.tag == "PlayerProjectile" && collision.gameObject.tag == "Player")||(collision.gameObject.tag=="Asteroid")||collision.gameObject.tag=="EnemyProjectile" || collision.gameObject.tag == "PlayerProjectile") { }
+        else
         {
-            // Megkeresi az Enemy scriptet az objektumon
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            GameObject explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(explosionInstance, 3f); // Például ha 3 másodpercig tart az animáció
 
-            // Ha van ilyen script, meghívja a TakeDamage függvényt
-            if (enemy != null)
+            if (collision.gameObject.CompareTag("Enemy"))
             {
-                enemy.TakeDamage(bulletDamage);
-            }
+                // Megkeresi az Enemy scriptet az objektumon
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
-            // Lövedék törlése ütközés után
-            Destroy(gameObject);
-        }
+                // Ha van ilyen script, meghívja a TakeDamage függvényt
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(bulletDamage);
+                }
+
+                // Lövedék törlése ütközés után
+                Destroy(gameObject);
+            }
+            if (collision.gameObject.CompareTag("Kronis"))
+            {
+                Kronis kronis = collision.gameObject.GetComponent<Kronis>();
+                if (kronis != null)
+                {
+                    kronis.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
+            }
+            if (collision.gameObject.CompareTag("Orion"))
+            {
+                Orion orion = collision.gameObject.GetComponent<Orion>();
+                if (orion != null)
+                {
+                    orion.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
+            }
+            if (collision.gameObject.CompareTag("Nyx"))
+            {
+                Nyx nyx = collision.gameObject.GetComponent<Nyx>();
+                if (nyx != null)
+                {
+                    nyx.TakeDamage(bulletDamage);
+                }
+                Destroy(gameObject);
+            }
+        }      
     }
 }

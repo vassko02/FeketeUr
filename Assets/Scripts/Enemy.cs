@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
 
     public float separationRadius = 1.5f; // Minimális távolság az ellenségek között
     public LayerMask enemyLayer;
+    private Player playerScript;
+    public Color color;
 
     void Start()
     {
@@ -29,7 +31,10 @@ public class Enemy : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
+            playerScript = player.GetComponent<Player>();
+
         }
+        
     }
 
     void Update()
@@ -38,7 +43,7 @@ public class Enemy : MonoBehaviour
         SeparateEnemies(); // Elkülönítés hozzáadása
 
         // Az ellenség lövése
-        if (Time.time > nextFireTime)
+        if (Time.deltaTime > nextFireTime)
         {
             if (player != null)
             {
@@ -46,7 +51,7 @@ public class Enemy : MonoBehaviour
                 if (Mathf.Abs(player.transform.position.x - transform.position.x) <= shootRange)
                 {
                     Shoot();
-                    nextFireTime = Time.time + fireRate;
+                    nextFireTime = Time.deltaTime + fireRate;
                 }
             }
         }
@@ -56,8 +61,14 @@ public class Enemy : MonoBehaviour
         {
             // Lövedékek létrehozása
             float offset = 0.5f;
+            
             GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
             GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
+            SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
+            renderer.color = color;
+            renderer= bulletRight.GetComponent<SpriteRenderer>();
+            renderer.color = color;
+
         }
 
         void FollowPlayer()
@@ -95,6 +106,7 @@ public class Enemy : MonoBehaviour
         else
         {
             currentHealth -= damage;
+            playerScript.AddToScore(20);
             Destroy(gameObject);
         }
     }

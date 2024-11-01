@@ -226,6 +226,7 @@ MonoBehaviour:
   speed: 10
   deadZone: -7
   direction: {x: 1, y: 0, z: 0}
+  explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!50 &-4713098065524672109
 Rigidbody2D:
   serializedVersion: 5
