@@ -11,21 +11,21 @@ public class Player : MonoBehaviour
 {
     public bool newGame;
     public string playerName;
-    private Vector3 playerPosition; // Játékos pozíciója
+    private Vector3 playerPosition; // Jï¿½tï¿½kos pozï¿½ciï¿½ja
 
-    public Text countdownText; // A UI Text elem, ami a visszaszámlálót mutatja
-    private float buffTimer; // Visszaszámláló idõzítõ
+    public Text countdownText; // A UI Text elem, ami a visszaszï¿½mlï¿½lï¿½t mutatja
+    private float buffTimer; // Visszaszï¿½mlï¿½lï¿½ idï¿½zï¿½tï¿½
 
-    public GameObject bulletPrefabRight; // A lövedék prefabja
-    public GameObject bulletPrefabLeft; // A lövedék prefabja
-    public float moveSpeed = 5f; // Player mozgási sebessége
-    public float fireRate = 0.5f; // Lövések közötti idõköz
+    public GameObject bulletPrefabRight; // A lï¿½vedï¿½k prefabja
+    public GameObject bulletPrefabLeft; // A lï¿½vedï¿½k prefabja
+    public float moveSpeed = 5f; // Player mozgï¿½si sebessï¿½ge
+    public float fireRate = 0.5f; // Lï¿½vï¿½sek kï¿½zï¿½tti idï¿½kï¿½z
 
-    private Vector2 screenBounds; // A képernyõ szélei
+    private Vector2 screenBounds; // A kï¿½pernyï¿½ szï¿½lei
     private float objectWidth;
     private float objectHeight;
     private float nextFireTime = 0f;
-    private AudioSource audioSource; //Lövés hang
+    private AudioSource audioSource; //Lï¿½vï¿½s hang
 
     public int maxHealt = 100;
     public int currentHealth;
@@ -37,8 +37,8 @@ public class Player : MonoBehaviour
     private bool hasShiledBuff = false;
     private bool hasDamageBuff = false;
     private float buffDuration = 5f; // Mennyi ideig tart a buff
-    private int normalBulletDamage = 50; // Normál lövedék sebzése
-    private int buffedBulletDamage = 100; // Buffolt lövedék sebzése
+    private int normalBulletDamage = 50; // Normï¿½l lï¿½vedï¿½k sebzï¿½se
+    private int buffedBulletDamage = 100; // Buffolt lï¿½vedï¿½k sebzï¿½se
 
     public float bulletSpeed =10f;
 
@@ -48,11 +48,11 @@ public class Player : MonoBehaviour
     public ProgressManager progressManager;
 
     public int score = 0;
-    public float scoreIncreaseRate = 0.5f; // Milyen gyakran növekszik a score (másodpercben)
-    public int scoreIncrement = 5; // Mennyivel növekszik a score
+    public float scoreIncreaseRate = 0.5f; // Milyen gyakran nï¿½vekszik a score (mï¿½sodpercben)
+    public int scoreIncrement = 5; // Mennyivel nï¿½vekszik a score
     private float nextScoreIncreaseTime = 0f;
 
-    public Text scoreText; // UI Text, ami megjeleníti a score-t
+    public Text scoreText; // UI Text, ami megjelenï¿½ti a score-t
     public Text buffPicupText;
     void Start()
     {
@@ -63,11 +63,11 @@ public class Player : MonoBehaviour
         }
 
 
-        // A képernyõ széleinek kiszámítása
+        // A kï¿½pernyï¿½ szï¿½leinek kiszï¿½mï¿½tï¿½sa
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
 
-        // A hajó méretének kiszámítása
+        // A hajï¿½ mï¿½retï¿½nek kiszï¿½mï¿½tï¿½sa
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
 
@@ -89,26 +89,26 @@ public class Player : MonoBehaviour
         Vector3 move = new Vector3(moveX, moveY, 0);
         transform.position += move * moveSpeed * Time.deltaTime;
 
-        // A játékos képernyõn belül tartása
+        // A jï¿½tï¿½kos kï¿½pernyï¿½n belï¿½l tartï¿½sa
         keepPlayerInBounds();
         if (hasDamageBuff)
         {
-            // Csökkentjük az idõzítõt
+            // Csï¿½kkentjï¿½k az idï¿½zï¿½tï¿½t
             buffTimer -= Time.deltaTime;
 
-            // Frissítjük a visszaszámlálót a UI-on
+            // Frissï¿½tjï¿½k a visszaszï¿½mlï¿½lï¿½t a UI-on
             countdownText.text = Mathf.Round(buffTimer).ToString();
         }
         if (hasShiledBuff)
         {
-            // Csökkentjük az idõzítõt
+            // Csï¿½kkentjï¿½k az idï¿½zï¿½tï¿½t
             buffTimer -= Time.deltaTime;
 
-            // Frissítjük a visszaszámlálót a UI-on
+            // Frissï¿½tjï¿½k a visszaszï¿½mlï¿½lï¿½t a UI-on
             countdownText.text = Mathf.Round(buffTimer).ToString();
         }
-        // Lövés
-        if (Input.GetMouseButtonDown(0)) // Bal egérgomb lenyomása
+        // Lï¿½vï¿½s
+        if (Input.GetMouseButtonDown(0)) // Bal egï¿½rgomb lenyomï¿½sa
         {
             if (Time.time >= nextFireTime)
             {
@@ -128,21 +128,21 @@ public class Player : MonoBehaviour
     }
     public void keepPlayerInBounds()
     {
-        // Játékos aktuális pozíciója
+        // Jï¿½tï¿½kos aktuï¿½lis pozï¿½ciï¿½ja
         Vector3 pos = transform.position;
 
-        // Pozíció korlátozása a képernyõn belülre
+        // Pozï¿½ciï¿½ korlï¿½tozï¿½sa a kï¿½pernyï¿½n belï¿½lre
         pos.x = Mathf.Clamp(pos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
         pos.y = Mathf.Clamp(pos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight);
 
-        // Pozíció firssítése
+        // Pozï¿½ciï¿½ firssï¿½tï¿½se
         transform.position = pos;
     }
 
-    // Lövés
+    // Lï¿½vï¿½s
     public void Shoot()
     {
-        // Lövedékek létrehozása
+        // Lï¿½vedï¿½kek lï¿½trehozï¿½sa
         float offset = 0.4f;
         int bulletDamage;
         Color bulletColor;
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
         SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
         if (bulletScriptL != null)
         {
-            bulletScriptL.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptL.SetDamage(bulletDamage); // Sebzï¿½s beï¿½llï¿½tï¿½sa a lï¿½vedï¿½ken
             bulletScriptL.speed = bulletSpeed;
             renderer.color = bulletColor;
         }
@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
 
         if (bulletScriptR != null)
         {
-            bulletScriptR.SetDamage(bulletDamage); // Sebzés beállítása a lövedéken
+            bulletScriptR.SetDamage(bulletDamage); // Sebzï¿½s beï¿½llï¿½tï¿½sa a lï¿½vedï¿½ken
             bulletScriptR.speed = bulletSpeed;
             renderer.color = bulletColor;
 
@@ -310,7 +310,7 @@ public class Player : MonoBehaviour
 
     void ActivateDamageBuff()
     {
-        hasDamageBuff = true; // Buff aktiválva
+        hasDamageBuff = true; // Buff aktivï¿½lva
         shieldBuffUIImage.SetActive(false);
         damageBuffUIImage.SetActive(true);
         BuffUI.SetActive(true);
@@ -318,7 +318,7 @@ public class Player : MonoBehaviour
     }
     void ActivateShieldBuff()
     {
-        hasShiledBuff = true; // Buff aktiválva
+        hasShiledBuff = true; // Buff aktivï¿½lva
         shieldBuffUIImage.SetActive(true);
         damageBuffUIImage.SetActive(false);
 
@@ -327,15 +327,15 @@ public class Player : MonoBehaviour
     }
     private void EndBuff()
     {
-        hasShiledBuff = false; // Buff kikapcsolása
-        hasDamageBuff = false; // Buff kikapcsolása
+        hasShiledBuff = false; // Buff kikapcsolï¿½sa
+        hasDamageBuff = false; // Buff kikapcsolï¿½sa
         BuffUI.SetActive(false);
         buffTimer = buffDuration;
 
     }
     IEnumerator BuffTimer()
     {
-        yield return new WaitForSeconds(buffDuration); // Várakozás a buff idejéig
+        yield return new WaitForSeconds(buffDuration); // Vï¿½rakozï¿½s a buff idejï¿½ig
         EndBuff();
     }
 
@@ -347,13 +347,13 @@ public class Player : MonoBehaviour
         SaveManager.Instance.saveData.currentRunData.ScoreIncrement = scoreIncrement;
         SaveManager.Instance.saveData.currentRunData.Score = score;
         SaveManager.Instance.saveData.currentRunData.ElapsedTime = progressManager.elapsedTime;
-        // Mentjük a currentRun adatokat
+        // Mentjï¿½k a currentRun adatokat
         SaveManager.Instance.Save();
     }
     public void LoadGame()
     {
         SaveManager.Instance.Load();
-        if (SaveManager.Instance.saveData.currentRunData != null) // Ellenõrizd, hogy az adatok betöltõdtek
+        if (SaveManager.Instance.saveData.currentRunData != null) // Ellenï¿½rizd, hogy az adatok betï¿½ltï¿½dtek
         {
             this.currentHealth = SaveManager.Instance.saveData.currentRunData.CurrentHealth;
             this.maxHealt = SaveManager.Instance.saveData.currentRunData.MaxHealth;

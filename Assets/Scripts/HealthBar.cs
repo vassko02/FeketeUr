@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class HealthBar : MonoBehaviour
 {
     public Slider slider;
@@ -7,7 +8,7 @@ public class HealthBar : MonoBehaviour
     public Image fill;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public void SetMaxHealth(int health,bool buff)
+    public void SetMaxHealth(int health, bool buff)
     {
         slider.maxValue = health;
         if (!buff)
@@ -16,7 +17,7 @@ public class HealthBar : MonoBehaviour
 
         }
     }
-   public void setHealth(int health)
+    public void setHealth(int health)
     {
         slider.value = health;
     }
