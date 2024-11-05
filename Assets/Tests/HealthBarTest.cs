@@ -17,6 +17,10 @@ public class HealthBarTest
         healthBar = gameObject.AddComponent<HealthBar>();
 
         slider = new GameObject().AddComponent<Slider>();
+
+        slider.minValue = 0;
+        slider.maxValue = 100;
+
         healthBar.slider = slider;
 
         healthBar.fill = new GameObject().AddComponent<Image>();
