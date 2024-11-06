@@ -5,7 +5,7 @@ public class LeaderBoardManager : MonoBehaviour
 {
     public SaveManager SaveManager => SaveManager.Instance;
     public GameObject row;
-    private void Start()
+    public void Start()
     {
         SaveManager.Load();
         var sortedList = SaveManager.saveData.highScoresData;

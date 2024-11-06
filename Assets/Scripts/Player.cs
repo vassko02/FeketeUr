@@ -192,7 +192,10 @@ public class Player : MonoBehaviour
 
                 GameOver();
             }
-            healthBar.setHealth(currentHealth);
+            if (healthBar != null)
+            {
+                healthBar.setHealth(currentHealth);
+            }
         }
 
     }
@@ -213,7 +216,10 @@ public class Player : MonoBehaviour
     public void AddToScore(int amount)
     {
         score += amount;
-        UpdateScoreUI();
+        if (scoreText !=null)
+        {
+            UpdateScoreUI();
+        }
     }
 
     void UpdateScoreUI()
@@ -232,7 +238,7 @@ public class Player : MonoBehaviour
         }
         healthBar.setHealth(currentHealth);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
@@ -308,7 +314,7 @@ public class Player : MonoBehaviour
         buffPicupText.gameObject.SetActive(false);
     }
 
-    void ActivateDamageBuff()
+    public void ActivateDamageBuff()
     {
         hasDamageBuff = true; // Buff aktiv�lva
         shieldBuffUIImage.SetActive(false);
@@ -316,7 +322,7 @@ public class Player : MonoBehaviour
         BuffUI.SetActive(true);
         StartCoroutine(BuffTimer());
     }
-    void ActivateShieldBuff()
+    public void ActivateShieldBuff()
     {
         hasShiledBuff = true; // Buff aktiv�lva
         shieldBuffUIImage.SetActive(true);

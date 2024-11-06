@@ -14,7 +14,7 @@ public class DialogManager : MonoBehaviour
     public string textfilename;
 
     public TextMeshProUGUI dialogText;
-    private Queue<string> sentences;
+    public Queue<string> sentences;
     public string currentTalkKey;
     public GameObject Descision;
 
@@ -31,7 +31,7 @@ public class DialogManager : MonoBehaviour
     private GameObject textbubbleinstance;
 
     private bool DoneWithDescision = false;
-    private void OnEnable()
+    public void OnEnable()
     {
         dialogText.gameObject.SetActive(true);
         sentences = new Queue<string>();

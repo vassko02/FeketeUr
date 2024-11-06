@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class MoveAsteroid : MonoBehaviour
 {
-    private float speed ;
+    public float speed;
     public float minSpeed = 3;
     public float maxSpeed = 7;
-    public float deadZone =-7;
+    public float deadZone = -7;
     private Player playerScript;
     public GameObject explosion;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
@@ -18,11 +18,10 @@ public class MoveAsteroid : MonoBehaviour
             playerScript = playerObject.GetComponent<Player>();
         }
         speed = Random.Range(minSpeed, maxSpeed);
-
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         transform.position = transform.position + (Vector3.down * speed) * Time.deltaTime;
         if (transform.position.y < deadZone)

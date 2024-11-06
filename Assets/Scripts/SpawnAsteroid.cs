@@ -10,7 +10,6 @@ public class SpawnAsteroid : MonoBehaviour
     public double spawnRate = 0.5;
     private float timer = 0;
 
-    // Új paraméter: Hány aszteroidát spawnol egyszerre
     public int asteroidsPerSpawn = 2;
 
     void Start()
@@ -18,7 +17,7 @@ public class SpawnAsteroid : MonoBehaviour
         spawn();  // Elsõ spawn indításkor
     }
 
-    void Update()
+   public void Update()
     {
         if (timer < spawnRate)
         {
@@ -31,7 +30,7 @@ public class SpawnAsteroid : MonoBehaviour
         }
     }
 
-    void spawn()
+    public void spawn()
     {
         float leftPoint = -10;
         float rightPoint = 10;

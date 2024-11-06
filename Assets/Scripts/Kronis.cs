@@ -10,7 +10,7 @@ public class Kronis : MonoBehaviour
     public HealthBar healthBar;
 
     private Player playerScript;
-    private GameObject player;
+    public GameObject player;
     private Transform playerTransform;
 
     public float moveSpeed = 3f; // Mozgás sebessége
@@ -31,11 +31,13 @@ public class Kronis : MonoBehaviour
     private GameObject progressManager;
     private ProgressManager progressManagerScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void OnEnable()
+    public void OnEnable()
     {
         progressManager = GameObject.FindWithTag("ProgressManager");
-        progressManagerScript = progressManager.GetComponent<ProgressManager>();
-
+        if (progressManager != null) 
+        {
+            progressManagerScript = progressManager.GetComponent<ProgressManager>();
+        }
         player = GameObject.FindWithTag("Player");
 
         if (player != null)
@@ -44,11 +46,12 @@ public class Kronis : MonoBehaviour
             playerTransform = player.transform;
         }
 
-        healthBar.gameObject.SetActive(true);
-
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth, false);
-
+        if (healthBar != null)
+        {
+            healthBar.gameObject.SetActive(true);
+            currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth, false);
+        }
         rightPosition = new Vector3(10f, 3.8f, transform.position.z); // Jobb szél
         leftPosition = new Vector3(-10f, 3.8f, transform.position.z);  // Bal szél
         targetPosition = leftPosition;
@@ -172,7 +175,7 @@ public class Kronis : MonoBehaviour
         {
             currentStage++;
 
-            SlowPLayerSpeed();
+            SlowPlayerSpeed();
         }
         else if (currentHealth <= maxHealth * 0.5f && currentStage < 3)
         {
@@ -184,11 +187,11 @@ public class Kronis : MonoBehaviour
         {
             currentStage++;
 
-            SlowPLayerSpeed();
+            SlowPlayerSpeed();
         }
 
     }
-    void BoostPlayerSpeed()
+    public void BoostPlayerSpeed()
     {
         if (player!=null)
         {
@@ -198,7 +201,7 @@ public class Kronis : MonoBehaviour
         }
 
     }
-    void SlowPLayerSpeed()
+   public void SlowPlayerSpeed()
     {
         if (player != null)
         {
