@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-
+    public ProgressManager progressManager;
+    public Player player;
+    private SaveManager saveManager=>SaveManager.Instance;
     public GameObject pauseMenuUI;
 
     // Update is called once per frame
@@ -33,6 +36,12 @@ public class PauseMenu : MonoBehaviour
     }
     void Pause()
     {
+        SaveManager.Instance.saveData.currentRunData.CurrentHealth = player.currentHealth;
+        SaveManager.Instance.saveData.currentRunData.MaxHealth = player.maxHealt;
+        SaveManager.Instance.saveData.currentRunData.ScoreIncrement = player.scoreIncrement;
+        SaveManager.Instance.saveData.currentRunData.Score = player.score;
+        SaveManager.Instance.saveData.currentRunData.ElapsedTime = progressManager.elapsedTime;
+        saveManager.Save();
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -42,11 +51,5 @@ public class PauseMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
         Resume();
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("Quitting game...");
-        Application.Quit();
     }
 }

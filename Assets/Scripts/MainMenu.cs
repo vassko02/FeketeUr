@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
     private string saveFilePath;
     void Start()
     {
+        Time.timeScale = 1f;
+        SaveManager.Instance.Load();
         if (SaveManager.Instance.saveData.currentRunData == null|| SaveManager.Instance.saveData.currentRunData.MaxHealth==0)
         {
             continueButton.interactable = false; // Continue gomb letilt�sa
@@ -18,7 +20,6 @@ public class MainMenu : MonoBehaviour
         else
         {
             continueButton.interactable = true;
-
         }
     }
 

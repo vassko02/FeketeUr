@@ -27,6 +27,7 @@ public class SaveManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(Instance.saveData, true);
         PlayerPrefs.SetString("GameData", json);
+        Debug.Log(json);
         PlayerPrefs.Save();
     }
     public void Load()

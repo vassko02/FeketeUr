@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         UpdateScoreUI();
 
 
-        InvokeRepeating("SaveGame", 5f, 5f);
+        //InvokeRepeating("SaveGame", 5f, 5f);
     }
 
     void Update()

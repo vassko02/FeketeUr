@@ -1599,15 +1599,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8eeff4f54a5ff624b8d26f9fd05a9987, type: 2}
+  m_sharedMaterial: {fileID: 3621310746206568870, guid: 8eeff4f54a5ff624b8d26f9fd05a9987, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2538,6 +2538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832e7ba0335e1444fa33fbe46abacf9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressManager: {fileID: 1077108454}
+  player: {fileID: 676934488}
   pauseMenuUI: {fileID: 487044763}
 --- !u!1 &807946323
 GameObject:
@@ -2799,6 +2801,7 @@ MonoBehaviour:
   maxHealth: 1500
   currentHealth: 1500
   healthBar: {fileID: 807946326}
+  player: {fileID: 0}
   moveSpeed: 3
   explosion: {fileID: 4074708492655225739, guid: cb9e49516cb333447badc6ad94f4c485, type: 3}
   target: {fileID: 5470422795944919962, guid: 428ab89f360327346a2e4ef5436b08cb, type: 3}
@@ -3115,15 +3118,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8eeff4f54a5ff624b8d26f9fd05a9987, type: 2}
+  m_sharedMaterial: {fileID: 3621310746206568870, guid: 8eeff4f54a5ff624b8d26f9fd05a9987, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3382,7 +3385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -51.745}
+  m_AnchoredPosition: {x: 0, y: -106}
   m_SizeDelta: {x: 551.9462, y: 103.4899}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &987621063
@@ -3448,7 +3451,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987621061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4272,7 +4275,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638860092}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

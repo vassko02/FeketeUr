@@ -15,7 +15,7 @@ public class PlayerTests
         playerObject = new GameObject();
         player = playerObject.AddComponent<Player>();
         player.healthBar = new GameObject().AddComponent<HealthBar>();  // Feltételezve, hogy van egy HealthBar komponens
-        player.currentHealth = 100;
+        player.currentHealth = 50;
         player.maxHealt = 100;
         player.damageBuffUIImage = new GameObject();
         player.shieldBuffUIImage= new GameObject();
@@ -23,8 +23,6 @@ public class PlayerTests
         healthBar = new GameObject("HealthBar").AddComponent<HealthBar>();
         
         // Inicializáljuk a Player komponens szükséges paramétereit
-        player.maxHealt = 100;
-        player.currentHealth = 100; // Kezdeti élet
         player.healthBar = healthBar;
 
     }
