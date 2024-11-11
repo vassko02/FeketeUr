@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        TurnOffMenuMusic();
         // A képernyõ széleinek kiszámítása
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
@@ -36,6 +38,16 @@ public class Player : MonoBehaviour
         currentHealth = maxHealt;
         healthBar.SetMaxHealth(maxHealt);
 
+    }
+
+    private void TurnOffMenuMusic()
+    {
+        MenuBackgroundMusic backgroundMusic = FindObjectOfType<MenuBackgroundMusic>();
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.GetComponent<AudioSource>().Pause();
+        }
+        
     }
 
     void Update()
