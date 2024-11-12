@@ -56,6 +56,11 @@ public class Player : MonoBehaviour
     public Text buffPicupText;
     void Start()
     {
+        MenuMusic backgroundMusic = FindObjectOfType<MenuMusic>();
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.GetComponent<AudioSource>().Pause();
+        }
         SaveManager.Instance.Load();
         if (PlayerPrefs.GetInt("continue")==1)
         {
@@ -76,9 +81,6 @@ public class Player : MonoBehaviour
         buffTimer = buffDuration;
 
         UpdateScoreUI();
-
-
-        //InvokeRepeating("SaveGame", 5f, 5f);
     }
 
     void Update()

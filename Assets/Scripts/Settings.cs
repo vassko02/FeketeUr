@@ -5,13 +5,17 @@ public class Settings
 {
     public float SFXVolume;
     public float MusicVolume;
-    public string Resolution;
+    public int Resolution;
+    public string name;
+    public bool fullScreen;
 
-    public Settings(float sfxVolume, float musicVolume, string resolution)
+    public Settings(float sfxVolume, float musicVolume, int resolution, string name, bool fullScreen)
     {
         SFXVolume = sfxVolume;
         MusicVolume = musicVolume;
         Resolution = resolution;
+        this.name = name;
+        this.fullScreen = fullScreen;
     }
     public Settings()
     {
