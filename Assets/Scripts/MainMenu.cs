@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 public class MainMenu : MonoBehaviour
 {
     public Button continueButton; // Hozz�ad�s: Referencia a Continue gombhoz
@@ -45,4 +46,11 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void Options()
+    {
+        SceneManager.LoadSceneAsync("Options");
+    }
+
+
 }
