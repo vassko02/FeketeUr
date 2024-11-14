@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         FollowPlayer();
-        SeparateEnemies(); // Elkülönítés hozzáadása
+        //SeparateEnemies(); // Elkülönítés hozzáadása
 
         // Az ellenség lövése
         if (Time.deltaTime > nextFireTime)

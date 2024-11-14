@@ -38,7 +38,6 @@ public class ProgressManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SaveManager.Instance.Load();
         buffSpawner = buffSpawnerObject.GetComponent<SpawnBuffs>();
         enemySpawner = enemySpawnerObject.GetComponent<SpawnEnemy>();
         asteroidSpawner = asteroidSpawnerObject.GetComponent<SpawnAsteroid>();
@@ -78,11 +77,11 @@ public class ProgressManager : MonoBehaviour
         else if (elapsedTime >= 90f && elapsedTime < 180f)
         {
             enemySpawner.enemyLimit = 3;
-            enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f);
+            enemySpawner.spawnColor = new Color(1f, 0.5f, 0f); // Narancssárga szín
         }
         else if (elapsedTime >= 180f && elapsedTime < 270f)
         {
-            enemySpawner.spawnColor = Color.blue;
+            enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
             enemySpawner.enemyLimit = 4;
         }
         while (elapsedTime < totalTimerDuration)
@@ -93,7 +92,7 @@ public class ProgressManager : MonoBehaviour
                 if (doneWithDialog!=true)
                 {
                     midDialog = true;
-                    StartDialog("#TALK1", dialogIcons[3]);
+                    StartDialog("#TALK1", dialogIcons[1]);
                 }
                 if (midDialog==false&&doneWithDialog==true) 
                 {
@@ -176,7 +175,7 @@ public class ProgressManager : MonoBehaviour
                 }
                 else if (midDialog == false && doneWithDialog == true) 
                 {
-                    enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
+                    enemySpawner.spawnColor = new Color(1f, 0.5f, 0f); // Narancssárga szín
                     enemySpawner.enemyLimit = 3;
                     ToggleSpawner(asteroidSpawnerObject, true);
                     asteroidSpawner.asteroidsPerSpawn = 3;
@@ -242,7 +241,7 @@ public class ProgressManager : MonoBehaviour
                 }
                 else if (midDialog == false && doneWithDialog == true)
                 {
-                    enemySpawner.spawnColor = Color.blue;
+                    enemySpawner.spawnColor = new Color(0.5f, 0f, 0.5f); // Lila szín
                     enemySpawner.enemyLimit = 4;
                     ToggleSpawner(enemySpawnerObject, true);
                     enemySpawner.enemiesPerSpawn = 2;

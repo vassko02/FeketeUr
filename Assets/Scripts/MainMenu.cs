@@ -14,9 +14,10 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        SaveManager.Instance.Load(); 
+
         resolutions = Screen.resolutions;
         Time.timeScale = 1f;
-        SaveManager.Instance.Load();
         if (SaveManager.Instance.saveData.settingsData!=new Settings())
         {
             Resolution res = resolutions[SaveManager.Instance.saveData.settingsData.Resolution];

@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
         {
             backgroundMusic.GetComponent<AudioSource>().Pause();
         }
-        SaveManager.Instance.Load();
         if (PlayerPrefs.GetInt("continue")==1)
         {
             LoadGame();
@@ -349,7 +348,7 @@ public class Player : MonoBehaviour
 
     public void SaveGame()
     {
-        //SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
+        SaveManager.Instance.saveData.currentRunData.PlayerName = playerName;
         SaveManager.Instance.saveData.currentRunData.CurrentHealth = currentHealth;
         SaveManager.Instance.saveData.currentRunData.MaxHealth = maxHealt;
         SaveManager.Instance.saveData.currentRunData.ScoreIncrement = scoreIncrement;
@@ -360,7 +359,6 @@ public class Player : MonoBehaviour
     }
     public void LoadGame()
     {
-        SaveManager.Instance.Load();
         if (SaveManager.Instance.saveData.currentRunData != null) // Ellen�rizd, hogy az adatok bet�lt�dtek
         {
             this.currentHealth = SaveManager.Instance.saveData.currentRunData.CurrentHealth;

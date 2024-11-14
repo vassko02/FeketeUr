@@ -27,7 +27,6 @@ public class OptionsManager : MonoBehaviour
 
     private void LoadData()
     {
-        saveManager.Load();
         if (saveManager.saveData.settingsData!=new Settings())
         {
             nameField.text = saveManager.saveData.settingsData.name;
