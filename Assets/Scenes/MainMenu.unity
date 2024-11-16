@@ -1003,6 +1003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 852491769}
+  sfxMixer: {fileID: 24100000, guid: e6cc1effdc1adfc4a910944c49710814, type: 2}
+  musicMixer: {fileID: 24100000, guid: e15ad8869130db046b706e20d27dec6d, type: 2}
 --- !u!114 &929266123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1225,9 @@ MonoBehaviour:
     settingsData:
       SFXVolume: 0
       MusicVolume: 0
-      Resolution: 
+      Resolution: 0
+      name: 
+      fullScreen: 0
     highScoresData: []
 --- !u!4 &1072977795
 Transform:
@@ -1278,7 +1282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -98}
+  m_AnchoredPosition: {x: 0, y: -161}
   m_SizeDelta: {x: 833.6788, y: 571.8815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103381726

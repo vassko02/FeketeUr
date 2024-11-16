@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour
         SaveManager.Instance.saveData.currentRunData.ScoreIncrement = player.scoreIncrement;
         SaveManager.Instance.saveData.currentRunData.Score = player.score;
         SaveManager.Instance.saveData.currentRunData.ElapsedTime = progressManager.elapsedTime;
+        SaveManager.Instance.saveData.currentRunData.PlayerName = player.playerName;
         saveManager.Save();
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;

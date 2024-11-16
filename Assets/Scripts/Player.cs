@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public GameObject bulletPrefabLeft; // A l�ved�k prefabja
     public float moveSpeed = 5f; // Player mozg�si sebess�ge
     public float fireRate = 0.5f; // L�v�sek k�z�tti id�k�z
+    private float cooldownTimer = 0f; // Lövési időzítő
 
     private Vector2 screenBounds; // A k�perny� sz�lei
     private float objectWidth;
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
     public int score = 0;
     public float scoreIncreaseRate = 0.5f; // Milyen gyakran n�vekszik a score (m�sodpercben)
     public int scoreIncrement = 5; // Mennyivel n�vekszik a score
-    private float nextScoreIncreaseTime = 0f;
+    private float scoreCooldownTimer = 0f; // Időzítő a pontnöveléshez
 
     public Text scoreText; // UI Text, ami megjelen�ti a score-t
     public Text buffPicupText;
@@ -65,8 +66,7 @@ public class Player : MonoBehaviour
         {
             LoadGame();
         }
-
-
+        playerName = SaveManager.Instance.saveData.settingsData.name;
         // A k�perny� sz�leinek kisz�m�t�sa
         Camera cam = Camera.main;
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
@@ -108,22 +108,30 @@ public class Player : MonoBehaviour
             // Friss�tj�k a visszasz�ml�l�t a UI-on
             countdownText.text = Mathf.Round(buffTimer).ToString();
         }
-        // L�v�s
-        if (Input.GetMouseButtonDown(0)) // Bal eg�rgomb lenyom�sa
+        // Lövési időzítő frissítése
+        cooldownTimer += Time.deltaTime;
+
+        // Bal egérgomb lenyomása esetén
+        if (Input.GetMouseButtonDown(0)) // Bal egérgomb lenyomása
         {
-            if (Time.time >= nextFireTime)
+            if (cooldownTimer >= fireRate) // Ellenőrizzük, hogy letelt-e a cooldown
             {
                 Shoot();
-                nextFireTime = Time.time + fireRate;
+                cooldownTimer = 0f; // Számláló újraindítása
             }
         }
 
+        // Időzítő frissítése
+        scoreCooldownTimer += Time.deltaTime;
 
-        if (Time.time >= nextScoreIncreaseTime&&progressManager.gameObject.GetComponent<ProgressManager>().midBossFight==false && progressManager.gameObject.GetComponent<ProgressManager>().midDialog == false)
+        // Feltételek ellenőrzése
+        if (scoreCooldownTimer >= scoreIncreaseRate &&
+            progressManager.gameObject.GetComponent<ProgressManager>().midBossFight == false &&
+            progressManager.gameObject.GetComponent<ProgressManager>().midDialog == false)
         {
-            score += scoreIncrement;
-            nextScoreIncreaseTime = Time.time + scoreIncreaseRate;
-            UpdateScoreUI();
+            score += scoreIncrement; // Pont hozzáadása
+            scoreCooldownTimer = 0f; // Időzítő újraindítása
+            UpdateScoreUI(); // Felület frissítése
         }
 
     }

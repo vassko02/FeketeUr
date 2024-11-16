@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     private string saveFilePath;
 
     Resolution[] resolutions;
+    public AudioMixer sfxMixer;
+    public AudioMixer musicMixer;
 
     void Start()
     {
@@ -22,6 +24,9 @@ public class MainMenu : MonoBehaviour
         {
             Resolution res = resolutions[SaveManager.Instance.saveData.settingsData.Resolution];
             Screen.SetResolution(res.width,res.height, SaveManager.Instance.saveData.settingsData.fullScreen);
+            musicMixer.SetFloat("volume", (SaveManager.Instance.saveData.settingsData.MusicVolume));
+            sfxMixer.SetFloat("volume", (SaveManager.Instance.saveData.settingsData.SFXVolume));
+
         }
         if (SaveManager.Instance.saveData.currentRunData == null|| SaveManager.Instance.saveData.currentRunData.MaxHealth==0)
         {

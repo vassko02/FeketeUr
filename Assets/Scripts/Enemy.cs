@@ -22,11 +22,12 @@ public class Enemy : MonoBehaviour
     public LayerMask enemyLayer;
     private Player playerScript;
     public Color color;
+    private float cooldownTimer = 0f; // Lövési idõzítõ
+
 
     void Start()
     {
         currentHealth = maxHealt;
-
         player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -34,16 +35,15 @@ public class Enemy : MonoBehaviour
             playerScript = player.GetComponent<Player>();
 
         }
-        
+
     }
 
     void Update()
     {
         FollowPlayer();
-        //SeparateEnemies(); // Elkülönítés hozzáadása
+        cooldownTimer += Time.deltaTime;
 
-        // Az ellenség lövése
-        if (Time.deltaTime > nextFireTime)
+        if (cooldownTimer >= fireRate)
         {
             if (player != null)
             {
@@ -51,52 +51,36 @@ public class Enemy : MonoBehaviour
                 if (Mathf.Abs(player.transform.position.x - transform.position.x) <= shootRange)
                 {
                     Shoot();
-                    nextFireTime = Time.deltaTime + fireRate;
-                }
-            }
-        }
-
-        // Lövés
-        void Shoot()
-        {
-            // Lövedékek létrehozása
-            float offset = 0.5f;
-            
-            GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
-            GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
-            SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
-            renderer.color = color;
-            renderer= bulletRight.GetComponent<SpriteRenderer>();
-            renderer.color = color;
-
-        }
-
-        void FollowPlayer()
-        {
-            if (playerTransform != null)
-            {
-                // Az aktuális objektum X pozícióját folyamatosan a player X pozíciójához igazítjuk
-                Vector3 newPosition = new Vector3(playerTransform.position.x, 3, transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
-            }
-        }
-
-        void SeparateEnemies()
-        {
-            // Környezetben lévõ ellenségek keresése a separationRadius távolságon belül
-            Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, separationRadius, enemyLayer);
-
-            foreach (Collider enemy in nearbyEnemies)
-            {
-                if (enemy.gameObject != gameObject) // Ne ellenõrizze önmagát
-                {
-                    Vector3 directionAway = transform.position - enemy.transform.position; // Távolság számítása
-                    transform.position += directionAway.normalized * moveSpeed * Time.deltaTime; // Elmozdítás az ellenségtõl
+                    cooldownTimer = 0f; // Számláló újraindítása
                 }
             }
         }
     }
 
+    // Lövés
+    public void Shoot()
+    {
+        // Lövedékek létrehozása
+        float offset = 0.5f;
+
+        GameObject bulletRight = Instantiate(bulletPrefabRight, new Vector3(transform.position.x + offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
+        GameObject bulletLeft = Instantiate(bulletPrefabLeft, new Vector3(transform.position.x - offset, transform.position.y - offset, transform.position.z), Quaternion.Euler(0, 0, -90));
+
+        // Színek beállítása
+        SpriteRenderer renderer = bulletLeft.GetComponent<SpriteRenderer>();
+        renderer.color = color;
+        renderer = bulletRight.GetComponent<SpriteRenderer>();
+        renderer.color = color;
+    }
+    public void FollowPlayer()
+    {
+        if (playerTransform != null)
+        {
+            // Az aktuális objektum X pozícióját folyamatosan a player X pozíciójához igazítjuk
+            Vector3 newPosition = new Vector3(playerTransform.position.x, 3, transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, moveSpeed * Time.deltaTime);
+        }
+    }
     public void TakeDamage(int damage)
     {
         if (currentHealth - damage > 0)
