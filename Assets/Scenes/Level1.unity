@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d33e1736ecb7c4ab4e866ee9992030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 1800
   currentHealth: 2000
   healthBar: {fileID: 807946326}
   speed: 7
@@ -2046,7 +2046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a25e68ab2dfa746a642ebf622ffb3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 2000
   currentHealth: 0
   healthBar: {fileID: 807946326}
   overlay: {fileID: 485472222}

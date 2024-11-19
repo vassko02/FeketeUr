@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -20,8 +21,24 @@ public class SaveManager : MonoBehaviour
     }
     public void AddHighScore(HighScore newHS)
     {
-        saveData.highScoresData.Add(newHS);
+        // Keressük meg az adott játékos rekordját
+        var existingHS = saveData.highScoresData.FirstOrDefault(hs => hs.PlayerName == newHS.PlayerName);
 
+        // Ha nincs rekordja, vagy jobb score
+        if (existingHS == null || newHS.Score > existingHS.Score)
+        {
+            if (existingHS != null)
+            {
+                // Ha már van rekord, azt eltávolítjuk
+                saveData.highScoresData.Remove(existingHS);
+            }
+
+            // Új rekord hozzáadása
+            saveData.highScoresData.Add(newHS);
+
+            // Rendezés idõ szerint (növekvõ sorrendben)
+            saveData.highScoresData.Sort((a, b) => a.Score.CompareTo(b.Score));
+        }
     }
     public void Save()
     {

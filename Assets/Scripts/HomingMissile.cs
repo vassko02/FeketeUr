@@ -9,7 +9,6 @@ public class HomingMissile : MonoBehaviour
     private Player playerScript;
     private GameObject playerGO;
     public GameObject explosion;
-    public float lifeSpan = 10f; // A rakéta élettartama
 
     void Start()
     {
