@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public class Dialog
 {
     public string name;
-    public string[] sentences;
+    public List<string> sentences;
 }

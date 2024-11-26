@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -144,8 +145,8 @@ public class Orion : MonoBehaviour
             progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
 
-            GameObject[] rockets = GameObject.FindGameObjectsWithTag("Rocket");
-            GameObject[] targets = GameObject.FindGameObjectsWithTag("KronisAttack");
+            List<GameObject> rockets = GameObject.FindGameObjectsWithTag("Rocket").ToList();
+            List<GameObject> targets = GameObject.FindGameObjectsWithTag("KronisAttack").ToList();
             // Destroy the found GameObjects
             foreach (GameObject rocket in rockets)
             {

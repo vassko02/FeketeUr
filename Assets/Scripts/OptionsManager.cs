@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -17,7 +18,7 @@ public class OptionsManager : MonoBehaviour
     public AudioMixer sfxMixer;
     public AudioMixer musicMixer;
 
-    Resolution[] resolutions;
+    List<Resolution> resolutions;
 
     private void Start()
     {
@@ -57,10 +58,10 @@ public class OptionsManager : MonoBehaviour
     private void LoadResolutions()
     {
         int currentResolutioIndex = 0;
-        resolutions = Screen.resolutions;
+        resolutions = Screen.resolutions.ToList();
         resolutionField.ClearOptions();
         List<string> resOptions = new List<string>();
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < resolutions.Count; i++)
         {
             string format = resolutions[i].width + " x " + resolutions[i].height;
             resOptions.Add(format);

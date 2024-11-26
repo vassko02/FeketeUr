@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Kronis : MonoBehaviour
 {
@@ -113,9 +114,9 @@ public class Kronis : MonoBehaviour
             progressManagerScript.doneWithDialog = false;
             progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
-            GameObject[] kronisAttacks = GameObject.FindGameObjectsWithTag("KronisAttack");
+            List<GameObject> kronisAttacks = new List<GameObject>(GameObject.FindGameObjectsWithTag("KronisAttack"));
 
-            // Destroy the found GameObjects
+            // Megsemmisítjük az összes objektumot a listában
             foreach (GameObject kronisAttack in kronisAttacks)
             {
                 Destroy(kronisAttack);

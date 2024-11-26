@@ -5,12 +5,13 @@ using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using System.Linq;
 public class MainMenu : MonoBehaviour
 {
     public Button continueButton; // Hozz�ad�s: Referencia a Continue gombhoz
     private string saveFilePath;
 
-    Resolution[] resolutions;
+    List<Resolution> resolutions;
     public AudioMixer sfxMixer;
     public AudioMixer musicMixer;
 
@@ -18,7 +19,7 @@ public class MainMenu : MonoBehaviour
     {
         SaveManager.Instance.Load(); 
 
-        resolutions = Screen.resolutions;
+        resolutions = Screen.resolutions.ToList();
         Time.timeScale = 1f;
         if (SaveManager.Instance.saveData.settingsData!=new Settings())
         {

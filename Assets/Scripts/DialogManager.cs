@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using System;
+using System.Linq;
 
 
 
@@ -145,7 +146,7 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
-        string[] lines = textAsset.text.Split('\n');
+        List<string> lines = textAsset.text.Split('\n').ToList();
 
         dialog = new Dialog();
         List<string> sentencesList = new List<string>();
@@ -167,7 +168,7 @@ public class DialogManager : MonoBehaviour
                 sentencesList.Add(line);
             }
         }
-        dialog.sentences = sentencesList.ToArray();
+        dialog.sentences = sentencesList;
     }
 
     public void Choose(string choice)

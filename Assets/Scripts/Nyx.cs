@@ -205,6 +205,7 @@ public class Nyx : MonoBehaviour
 
             healthBar.gameObject.SetActive(false);
             progressManagerScript.doneWithDialog = false;
+            progressManagerScript.midBossFight = false;
             progressManagerScript.elapsedTime++;
 
             Destroy(gameObject);

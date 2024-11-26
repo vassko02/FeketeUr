@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 
 public class ProgressManager : MonoBehaviour
@@ -336,7 +337,7 @@ public class ProgressManager : MonoBehaviour
     }
      void DestroyAllEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
         foreach (GameObject enemy in enemies)
         {
             Destroy(enemy);
