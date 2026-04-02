@@ -1,4 +1,4 @@
-# 🚀 Black Space (Fekete Úr)
+# 🚀 Black Space (Fekete Űr)
 
 **Black Space** is a fast-paced, 2D top-down space shooter developed in **Unity**. This project was created as a collaborative team effort, marking a significant milestone in my professional game development journey with the Unity engine and C#.
 
